@@ -111,26 +111,42 @@ t_list *handle_queotes(char *command)
   int start;
   int end;
   char *tmp;
+  char *tmp2;
   t_list *lst;
 
+  tmp2 = command;
   while (1)
   {
-    tmp = get_next_quote(command);
-    start = command - tmp;
-    end = command - tmp;
-    while (start - 1 > 0 && command[start - 1] != ' ')
+    tmp = get_next_quote(tmp2);
+	if (tmp)
+	{
+		start = tmp - tmp2;
+		end = tmp - tmp2;
+    while (start - 1 > 0 && tmp2[start - 1] != ' ')
       start--;
-    while (end + 1 < ft_strlen(command) && command[end + 1] != tmp[0])
+    while (end < ft_strlen(tmp2) && (tmp2[end] != tmp[0] || &tmp2[end] == tmp))
       end++;
+	}
+	else
+	{
+		start = 0;
+		end = ft_strlen(tmp2);
+		if (end == 0)
+			break;
+	}
     if (start)
     {
-      if (add_to_list((char *[2]){command, &command[end]}, 0, tmp[0], &lst))
+      if (add_to_list((char *[2]){tmp2, &tmp2[start]}, 0, tmp[0], &lst))
         return (ft_lstclear(&lst, &free), NULL);
     }
-    if (add_to_list((char *[2]){&command[start], &command[end]}, 0, tmp[0], &lst))
+    if (add_to_list((char *[2]){&tmp2[start], &tmp2[end]}, 1, tmp[0], &lst))
       return (ft_lstclear(&lst, &free), NULL);
+	if (end == ft_strlen(tmp2))
+		break;
+	tmp2 = &tmp2[end + 1];
   }
-  return (free(command), lst);
+  //return (free(command), lst);
+  return (lst);
 }
 
 
@@ -144,5 +160,4 @@ int main(void)
   {
     printf("%s\n", (char *)lst->content);
     lst = lst->next;
-  }
-}
+  } }
