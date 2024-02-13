@@ -3,6 +3,7 @@
 
 // hello world "this is " blablabla
 
+/*
 char *get_next_quote(char *start, char *str, char quote)
 {
   char *tmp;
@@ -13,6 +14,28 @@ char *get_next_quote(char *start, char *str, char quote)
   while (tmp && tmp[1] != quote)
     tmp = ft_strchr(str, quote);
   return (tmp);
+}
+*/
+
+char *get_next_quote(char *str)
+{
+  char *single;
+  char *doble;
+
+  single = ft_strchr(str, '\'');
+  doble = ft_strchr(str, '"');
+  if (!single && doble)
+    return (doble);
+  if (!doble && single)
+    return (single);
+  if (doble && single)
+  {
+    if (doble > single)
+      return (single);
+    else
+      return (doble);
+  }
+  return (NULL);
 }
 
 int count_char(char *str, char chr)
@@ -58,13 +81,17 @@ char *remove_quotes(char *str, char quote)
   return (free(str), new);
 }
 
-int add_to_list(char *start, char *end, char quote, t_list **lst)
+int add_to_list(char *edges[2], int is_quoted, char quote, t_list **lst)
 {
   char *content;
   t_list *node;
+  char *start;
+  char *end;
 
-  if (start[0] == '"' || start[0] == '\'')
-    content = remove_quotes(ft_substr(start + 1, 0, end - start - 1), quote); // it skips the quotes
+  start = edges[0];
+  end = edges[1];
+  if (is_quoted)
+    content = remove_quotes(ft_substr(start, 0, end - start), quote); // it skips the quotes
   else
     content = ft_substr(start, 0, end - start);
   if (!content)
@@ -78,50 +105,32 @@ int add_to_list(char *start, char *end, char quote, t_list **lst)
 }
 
 // parse command into a linked list
+// frees command on sucess
 t_list *handle_queotes(char *command)
 {
-  int i;
-  char *start;
+  int start;
+  int end;
+  char *tmp;
   t_list *lst;
 
-  i = 0;
-  start = &command[i];
-  lst = NULL;
-  while (command[i])
+  while (1)
   {
-    if (command[i] == '"')
+    tmp = get_next_quote(command);
+    start = command - tmp;
+    end = command - tmp;
+    while (start - 1 > 0 && command[start - 1] != ' ')
+      start--;
+    while (end + 1 < ft_strlen(command) && command[end + 1] != tmp[0])
+      end++;
+    if (start)
     {
-      if (start[0] == '"')
-      {
-        if (get_next_quote(start, &command[i], command[i]) == NULL)
-          return (ft_lstclear(&lst, &free), NULL);
-        i += get_next_quote(start, &command[i], command[i]) - &command[i];
-      }
-      if (add_to_list(start, &command[i], command[i], &lst))
+      if (add_to_list((char *[2]){command, &command[end]}, 0, tmp[0], &lst))
         return (ft_lstclear(&lst, &free), NULL);
-      if (start[0] == '"')
-        start = &command[i + 1];
-      else
-        start = &command[i];
     }
-    else if (command[i] == '\'')
-    {
-      if (start[0] == '\'')
-      {
-        if (get_next_quote(start, &command[i], command[i]) == NULL)
-          return (ft_lstclear(&lst, &free), NULL);
-        i += get_next_quote(start, &command[i], command[i]) - &command[i];
-      }
-      if (add_to_list(start, &command[i], command[i], &lst))
-        return (ft_lstclear(&lst, &free), NULL);
-      if (command[i] == '\'')
-        start = &command[i + 1];
-      else
-        start = &command[i];
-    }
-    i++;
+    if (add_to_list((char *[2]){&command[start], &command[end]}, 0, tmp[0], &lst))
+      return (ft_lstclear(&lst, &free), NULL);
   }
-  return (lst);
+  return (free(command), lst);
 }
 
 
