@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_quotes.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 18:07:20 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/02/13 19:41:36 by ayait-el         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -101,14 +89,32 @@ t_list *handle_queotes(char *command)
   lst = NULL;
   while (command[i])
   {
-    if (command[i] == '"' || command[i] == '\'')
+    if (command[i] == '"')
     {
+      if (start[0] == '"')
+      {
+        if (get_next_quote(start, &command[i], command[i]) == NULL)
+          return (ft_lstclear(&lst, &free), NULL);
+        i += get_next_quote(start, &command[i], command[i]) - &command[i];
+      }
       if (add_to_list(start, &command[i], command[i], &lst))
         return (ft_lstclear(&lst, &free), NULL);
-      if (get_next_quote(start, &command[i], command[i]) == NULL)
+      if (start[0] == '"')
+        start = &command[i + 1];
+      else
+        start = &command[i];
+    }
+    else if (command[i] == '\'')
+    {
+      if (start[0] == '\'')
+      {
+        if (get_next_quote(start, &command[i], command[i]) == NULL)
+          return (ft_lstclear(&lst, &free), NULL);
+        i += get_next_quote(start, &command[i], command[i]) - &command[i];
+      }
+      if (add_to_list(start, &command[i], command[i], &lst))
         return (ft_lstclear(&lst, &free), NULL);
-      i += get_next_quote(start, &command[i], command[i]) - &command[i];
-      if (start[0] == '"' || command[i] == '\'')
+      if (command[i] == '\'')
         start = &command[i + 1];
       else
         start = &command[i];
