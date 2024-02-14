@@ -233,6 +233,7 @@ t_list *handle_queotes(char *command)
 }
 
 
+/*
 #include <stdio.h>
 int main(void)
 {
@@ -251,3 +252,4 @@ int main(void)
   }
   ft_lstclear(&lst, &free);
 }
+*/
