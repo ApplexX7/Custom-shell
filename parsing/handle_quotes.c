@@ -81,26 +81,40 @@ char *remove_quotes(char *str, char quote)
   return (free(str), new);
 }
 
+// adds a new node to the back of the list
+int add_new_to_list(void *content, t_list **lst)
+{
+  t_list *new;
+
+  new = ft_lstnew(content);
+  if (new == NULL)
+    return (1);
+  ft_lstadd_back(lst, new);
+  return (0);
+}
+
+// allocs content
 int add_to_list(char *edges[2], int is_quoted, char quote, t_list **lst)
 {
   char *content;
-  t_list *node;
   char *start;
   char *end;
 
   start = edges[0];
   end = edges[1];
   if (is_quoted)
+  {
     content = remove_quotes(ft_substr(start, 0, end - start), quote); // it skips the quotes
+    if (add_new_to_list(NULL, lst))
+      return (free(content), 1);
+  }
   else
     content = ft_substr(start, 0, end - start);
   if (!content)
     return (1);
   // TODO: pass to handle unquoted before adding
-  node = ft_lstnew(content);
-  if (node == NULL)
-    return (1);
-  ft_lstadd_back(lst, node);
+  if (add_new_to_list(content, lst))
+    return (free(content), 1);
   return (0);
 }
 
@@ -118,22 +132,22 @@ t_list *handle_queotes(char *command)
   while (1)
   {
     tmp = get_next_quote(tmp2);
-	if (tmp)
-	{
-		start = tmp - tmp2;
-		end = tmp - tmp2;
-    while (start - 1 > 0 && tmp2[start - 1] != ' ')
-      start--;
-    while (end < ft_strlen(tmp2) && (tmp2[end] != tmp[0] || &tmp2[end] == tmp))
-      end++;
-	}
-	else
-	{
-		start = 0;
-		end = ft_strlen(tmp2);
-		if (end == 0)
-			break;
-	}
+    if (tmp)
+    {
+      start = tmp - tmp2;
+      end = tmp - tmp2;
+      while (start - 1 > 0 && tmp2[start - 1] != ' ')
+        start--;
+      while (end < ft_strlen(tmp2) && (tmp2[end] != tmp[0] || &tmp2[end] == tmp))
+        end++;
+    }
+    else
+    {
+      start = 0;
+      end = ft_strlen(tmp2);
+      if (end == 0)
+        break;
+    }
     if (start)
     {
       if (add_to_list((char *[2]){tmp2, &tmp2[start]}, 0, tmp[0], &lst))
@@ -141,9 +155,9 @@ t_list *handle_queotes(char *command)
     }
     if (add_to_list((char *[2]){&tmp2[start], &tmp2[end]}, 1, tmp[0], &lst))
       return (ft_lstclear(&lst, &free), NULL);
-	if (end == ft_strlen(tmp2))
-		break;
-	tmp2 = &tmp2[end + 1];
+    if (end == ft_strlen(tmp2))
+      break;
+    tmp2 = &tmp2[end + 1];
   }
   //return (free(command), lst);
   return (lst);
