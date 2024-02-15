@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/14 22:15:37 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:16:32 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ int ft_issspace(int c)
 	
 }
 
-/* i meade some changing on some 
-	funtion in libft so let them like
-	that tell tomorow
-*/
 
+int	ft_isspecial(int c)
+{
+	if (c == '|' || c == '>' || c == '<' || c == '&')
+		return 1;
+	return 0;
+}
 
 void hanlde_unquatoes(char *av)
 {
@@ -84,7 +86,7 @@ void hanlde_unquatoes(char *av)
 		while (ft_issspace(av[i]) && av[i])
 			i++;
 		start = i;
-		while(av[i] && ft_isalpha(av[i]) && !ft_issspace(av[i]))
+		while(av[i] && !ft_isspecial(av[i]) && !ft_issspace(av[i]))
 			i++;
 		if (i > 0)
 		{	
@@ -97,7 +99,7 @@ void hanlde_unquatoes(char *av)
 		while (ft_issspace(av[i]) && av[i])
 			i++;
 		start = i;
-		while (av[i] && (!ft_isalpha(av[i])) && !ft_issspace(av[i]))
+		while (av[i] && (ft_isspecial(av[i]) && !ft_issspace(av[i])))
 		{
 			if (av[i] == av[i + 1])
 			{
