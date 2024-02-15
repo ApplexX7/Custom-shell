@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/15 12:09:12 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:46:30 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int main()
     while (1)
     {
         promt = readline("minishell %% ");
-        hanlde_unquatoes(promt);
+        split_tokens(promt);
     }
 }
