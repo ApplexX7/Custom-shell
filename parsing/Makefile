@@ -6,11 +6,11 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/02/15 18:29:33 by mohilali         ###   ########.fr        #
+#    Updated: 2024/02/16 15:49:41 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c ft_split_tokens.c
+SRC = main.c ft_split_tokens.c labling.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
@@ -21,7 +21,7 @@ NAME = mini
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -o $(NAME) libft.a
+	$(CC) -lreadline  $(OBJCT) -o $(NAME) ../Libft-42/Mandatory/libft.a
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@
