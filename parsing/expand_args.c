@@ -237,7 +237,7 @@ int add_node(t_list **dest, t_list *node)
   new_node = ft_lstnew(content);
   if (!new_node)
     return (free(content), 1);
-  ft_lstadd_back(dest, node);
+  ft_lstadd_back(dest, new_node);
   return (0);
 }
 
@@ -259,13 +259,15 @@ t_list *expand_args(t_list **lst, char **env)
       j = elem_is_single_quoted(i, *lst);
       if (j == -1)
         return (ft_lstclear(&new, &free), NULL);
-      else if (j == 0)
+      else if (j == 0 && get_env_value(tmp->content, env))
       {
-        if (get_env_value(tmp->content, env))
-        {
-          if (add_env_arg_to_lst(get_env_value(tmp->content, env), &new, tmp))
-            return (ft_lstclear(&new, &free), NULL);
-        }
+        if (add_env_arg_to_lst(get_env_value(tmp->content, env), &new, tmp))
+          return (ft_lstclear(&new, &free), NULL);
+      }
+      else if (j == 1)
+      {
+        if (add_node(&new, tmp))
+          return (ft_lstclear(&new, &free), NULL);
       }
     }
     else if (add_node(&new, tmp))
@@ -274,6 +276,15 @@ t_list *expand_args(t_list **lst, char **env)
     i++;
   }
   return (new);
+}
+
+void print_list(t_list *lst)
+{
+  while (lst)
+  {
+    printf("%s\n", (char *) lst->content);
+    lst = lst->next;
+  }
 }
 
 int main(int argc, char **argv, char **env)
@@ -292,12 +303,9 @@ int main(int argc, char **argv, char **env)
   ft_lstadd_back(&head, ft_lstnew(ft_strdup("$USER")));
   ft_lstadd_back(&head, ft_lstnew(ft_strdup("$USER")));
   ft_lstadd_back(&head, ft_lstnew(ft_strdup("'")));
+  ft_lstadd_back(&head, ft_lstnew(ft_strdup("$USERsdsdf")));
   new = expand_args(&head, env);
-  while (new)
-  {
-    printf("%s\n", (char *) new->content);
-    new = new->next;
-  }
+  print_list(new);
 }
 
 /*
