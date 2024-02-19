@@ -16,7 +16,6 @@ int main(int argc, char **argv, char **env)
 {
     char *promt;
 	t_list *lst;
-	t_list *tmp;
 
 	(void) argc;
 	(void) argv;
@@ -27,11 +26,8 @@ int main(int argc, char **argv, char **env)
 		if (!lst) // TODO: handle error printing
 			return (1);
 		lable_list(lst);
-		tmp = expand_args(&lst, env);
-		ft_lstclear(&lst, &free);
-		if (tmp == NULL)
-			return (1); // TODO: handle error
-		lst = tmp;
+		if (expand_args(&lst, env))
+			return (ft_lstclear(&lst, &free), 1); // TODO: handle error
 		print_ouput(lst);
     }
 }

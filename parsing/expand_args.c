@@ -244,8 +244,9 @@ int add_node(t_list **dest, t_list *node)
 }
 
 // lst should be labled before passing
+// it frees lst on success
 // allocs: new
-t_list *expand_args(t_list **lst, char **env)
+int expand_args(t_list **lst, char **env)
 {
   t_list *tmp;
   t_list *new;
@@ -259,20 +260,20 @@ t_list *expand_args(t_list **lst, char **env)
       if (tmp->is_op != '\'' && get_env_value(tmp->content, env))
       {
         if (lst_add_env_arg(get_env_value(tmp->content, env), &new))
-          return (ft_lstclear(&new, &free), NULL);
+          return (ft_lstclear(&new, &free), 1);
       }
       else if (tmp->is_op == '\'')
       {
         // if element is single quoted just add it
         if (add_node(&new, tmp))
-          return (ft_lstclear(&new, &free), NULL);
+          return (ft_lstclear(&new, &free), 1);
       }
     }
     else if (add_node(&new, tmp)) // add node if it's not env arg
-      return (ft_lstclear(&new, &free), NULL);
+      return (ft_lstclear(&new, &free), 1);
     tmp = tmp->next;
   }
-  return (new);
+  return (ft_lstclear(lst, &free), *lst = new, 0);
 }
 
 /*

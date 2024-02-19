@@ -35,7 +35,7 @@ void lst_delete_node(t_list **lst, t_list *node);
 int arr_len(char **arr);
 int lst_add_env_arg(char *arg, t_list **dest);
 int add_node(t_list **dest, t_list *node);
-t_list *expand_args(t_list **lst, char **env);
+int expand_args(t_list **lst, char **env);
 
 
 // split tokens
