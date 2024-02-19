@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:27:36 by mohilali          #+#    #+#             */
-/*   Updated: 2023/12/18 16:18:32 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:24:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-int		ft_isalpha(char c);
+int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_tolower(int c);
 int		ft_isdigit(int c);
@@ -37,7 +37,6 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_atoi(const char *str);
 char	*ft_strrchr(const char *s, int c);

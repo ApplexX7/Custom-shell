@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 16:54:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/14 21:32:01 by mohilali         ###   ########.fr       */
+/*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
+/*   Updated: 2024/02/15 17:46:30 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_isalpha(int c)
+int main()
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '-'))
-		return (1);
-	else
-		return (0);
+    char *promt;
+
+    while (1)
+    {
+        promt = readline("minishell %% ");
+        split_tokens(promt);
+    }
 }
