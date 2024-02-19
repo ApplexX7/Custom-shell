@@ -1,10 +1,21 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
+/*   Updated: 2024/02/19 14:52:40 by ayait-el         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
 #include "../Libft-42/libft.h"
 
+// expand args
 void free_3d_arr(void **arr);
 void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
@@ -18,5 +29,14 @@ int arr_len(char **arr);
 int lst_add_env_arg(char *arg, t_list **dest);
 int add_node(t_list **dest, t_list *node);
 t_list *expand_args(t_list **lst, char **env);
+
+
+// split tokens
+void 	split_tokens(char *av);
+char 	**ft_srtok(char *av);
+char	**ft_split(char const *s, char c);
+void    lable_list(t_list *lst);
+void print_ouput(t_list *node);
+void print_ouput_op(t_list *node);
 
 #endif
