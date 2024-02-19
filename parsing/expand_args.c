@@ -60,15 +60,17 @@ t_list *convert_arr_to_list(char **arr)
   return (new);
 }
 
+// the is_op is set to 0 here
 void append_list(t_list *source, t_list **dest)
 {
   t_list *tmp;
 
   while (source)
   {
-	tmp = source;
-	source = source->next;
-	tmp->next = NULL;
+    tmp = source;
+    source = source->next;
+    tmp->next = NULL;
+    tmp->is_op = '\0';
     ft_lstadd_back(dest, tmp);
   }
 }
@@ -239,6 +241,7 @@ int add_node(t_list **dest, t_list *node)
   new_node = ft_lstnew(content);
   if (!new_node)
     return (free(content), 1);
+  new_node->is_op = node->is_op;
   ft_lstadd_back(dest, new_node);
   return (0);
 }
