@@ -6,11 +6,11 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/02/19 14:07:15 by mohilali         ###   ########.fr        #
+#    Updated: 2024/02/19 14:11:44 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c ft_split_tokens.c labling.c debug.c
+SRC = ../main.c ft_split_tokens.c labling.c debug.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc

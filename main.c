@@ -6,11 +6,11 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/15 17:46:30 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:12:16 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing/minishell.h"
 
 int main()
 {
