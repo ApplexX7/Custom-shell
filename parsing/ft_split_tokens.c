@@ -6,32 +6,26 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/16 16:06:20 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:06:17 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_ouput(t_list *node)
+
+void free_node(t_list **head)
 {
-	while (node != NULL)
+	t_list *current;
+
+	current = *head;
+	while (current)
 	{
-		printf("%s\t", (char *)node->content);
-		node = node->next;
+		free(current->content);
+		current = current->next;
 	}
-	printf("\n");
+	free(head);
 }
 
-
-void print_ouput_op(t_list *node)
-{
-	while (node != NULL)
-	{
-		printf("%c\t", node->is_op);
-		node = node->next;
-	}
-	printf("\n");
-}
 
 int ft_issspace(int c)
 {
@@ -57,12 +51,27 @@ int	ft_isspecial(int c)
 	return 0;
 }
 
-void	ft_normalcharacters(char *av, t_list **head, int *index)
+int add_tolist(char *av, t_list **head, int index, int start)
+{
+	int end;
+	t_list *new;
+
+	if ((index) > 0)
+	{	
+		end = (index);
+		new = ft_lstnew(ft_substr(av, start, end - start));
+		if (!new)
+			return (1);
+		if (((char *)new->content)[0] != '\0')
+			ft_lstadd_back(head, new);
+	}
+	return (0);
+}
+
+int	ft_normalcharacters(char *av, t_list **head, int *index)
 {
 	int	start;
-	t_list *new;
 	int	count;
-	int end;
 	
 	start = *index;
 	count = 0;
@@ -83,20 +92,14 @@ void	ft_normalcharacters(char *av, t_list **head, int *index)
 		}
 		(*index)++;
 	}
-	if ((*index) > 0)
-	{	
-		end = (*index);
-		new = ft_lstnew(ft_substr(av, start, end - start));
-		if (((char *)new->content)[0] != '\0')
-			ft_lstadd_back(head, new);
-	}
+	if (add_tolist(av, head, *index, start))
+		return (1);
+	return (0);
 }
 
-void	ft_tokencharcters(char *av, t_list **head, int *index)
+int	ft_tokencharcters(char *av, t_list **head, int *index)
 {
 	int start;
-	t_list *new;
-	int end;
 	
 	start = *index;
 	while (av[(*index)] && (ft_isspecial(av[(*index)])))
@@ -112,13 +115,9 @@ void	ft_tokencharcters(char *av, t_list **head, int *index)
 			break;
 		}
 	}
-	if ((*index) > 0)
-	{
-		end = (*index);
-		new = ft_lstnew(ft_substr(av, start, end - start));
-		if (((char *)new->content)[0] != '\0')
-			ft_lstadd_back(head, new);
-	}
+	if (add_tolist(av,  head, *index, start))
+		return (1);
+	return (0);
 }
 
 void split_tokens(char *av)
@@ -133,10 +132,18 @@ void split_tokens(char *av)
 	{
 		while (ft_issspace(av[i]) && av[i] != ' ' && av[i])
 			i++;
-		ft_normalcharacters(av, &cmd, &i);
+		if (ft_normalcharacters(av, &cmd, &i))
+		{
+			free_node(&cmd);
+			return ;
+		}
 		while (ft_issspace(av[i]) && av[i])
 			i++;
-		ft_tokencharcters(av, &cmd, &i);
+		if (ft_tokencharcters(av, &cmd, &i))
+		{
+			free_node(&cmd);
+			return ;			
+		}
 	}
 	lable_list(cmd);
 	print_ouput(cmd);

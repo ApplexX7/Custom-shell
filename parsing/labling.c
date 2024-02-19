@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:02:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/16 17:16:41 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:04:54 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static void lable_doublequotes(t_list **current)
 	while ((*current))
 	{
 		if (!ft_strncmp((*current)->content, "\"", 2))
-			break;
+		{
+			(*current) = (*current)->next;
+			return;
+		}
 		(*current)->is_op = '"';
 		(*current) = (*current)->next;
 	}
@@ -32,7 +35,10 @@ static void lable_sinlgequotes(t_list **current)
 	while ((*current))
 	{
 		if (!ft_strncmp((*current)->content, "'", 2))
-			break;
+		{
+			(*current) = (*current)->next;
+			return;
+		}
 		(*current)->is_op = '\'';
 		(*current) = (*current)->next;
 	}

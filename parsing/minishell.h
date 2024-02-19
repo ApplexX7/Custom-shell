@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/16 13:05:47 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:06:43 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ void 	split_tokens(char *av);
 char 	**ft_srtok(char *av);
 char	**ft_split(char const *s, char c);
 void    lable_list(t_list *lst);
+void print_ouput(t_list *node);
+void print_ouput_op(t_list *node);
 
 #endif
