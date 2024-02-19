@@ -64,11 +64,12 @@ void append_list(t_list *source, t_list **dest)
 {
   t_list *tmp;
 
-  tmp = source;
-  while (tmp)
+  while (source)
   {
+	tmp = source;
+	source = source->next;
+	tmp->next = NULL;
     ft_lstadd_back(dest, tmp);
-    tmp = tmp->next;
   }
 }
 
@@ -274,6 +275,7 @@ t_list *expand_args(t_list **lst, char **env)
   return (new);
 }
 
+/*
 void print_list(t_list *lst)
 {
   while (lst)
@@ -282,6 +284,7 @@ void print_list(t_list *lst)
     lst = lst->next;
   }
 }
+*/
 
 /*
 int main(int argc, char **argv, char **env)

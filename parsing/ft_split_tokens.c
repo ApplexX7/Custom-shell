@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 14:06:17 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:58:29 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	ft_tokencharcters(char *av, t_list **head, int *index)
 	return (0);
 }
 
-void split_tokens(char *av)
+t_list *split_tokens(char *av)
 {
 	int i;
 	t_list *cmd;
@@ -135,17 +135,15 @@ void split_tokens(char *av)
 		if (ft_normalcharacters(av, &cmd, &i))
 		{
 			free_node(&cmd);
-			return ;
+			return (NULL);
 		}
 		while (ft_issspace(av[i]) && av[i])
 			i++;
 		if (ft_tokencharcters(av, &cmd, &i))
 		{
 			free_node(&cmd);
-			return ;			
+			return (NULL);			
 		}
 	}
-	lable_list(cmd);
-	print_ouput(cmd);
-	print_ouput_op(cmd);
+	return (cmd);
 }
