@@ -118,6 +118,7 @@ char **convert_list_to_arr(t_list *lst)
   return (arr);
 }
 
+/*
 int elem_is_single_quoted(int index, t_list *lst)
 {
   int flag1;
@@ -160,6 +161,7 @@ int elem_is_single_quoted(int index, t_list *lst)
   else
     return (0);
 }
+*/
 
 char *get_env_value(char *arg, char **env)
 {
@@ -208,10 +210,9 @@ int arr_len(char **arr)
 }
 
 // allocs: list, new_lst
-int add_env_arg_to_lst(char *arg, t_list **dest, t_list *node)
+int lst_add_env_arg(char *arg, t_list **dest)
 {
   char **arr;
-  t_list *right_node;
   t_list *new_lst;
 
   arr = ft_split(arg, ' ');
@@ -241,39 +242,34 @@ int add_node(t_list **dest, t_list *node)
   return (0);
 }
 
+// lst should be labled before passing
 // allocs: new
 t_list *expand_args(t_list **lst, char **env)
 {
   t_list *tmp;
-  int i;
-  int j;
   t_list *new;
 
-  i = 0;
   tmp = *lst;
   new = NULL;
   while (tmp)
   {
     if (ft_strchr(tmp->content, '$'))
     {
-      j = elem_is_single_quoted(i, *lst);
-      if (j == -1)
-        return (ft_lstclear(&new, &free), NULL);
-      else if (j == 0 && get_env_value(tmp->content, env))
+      if (tmp->is_op != '\'' && get_env_value(tmp->content, env))
       {
-        if (add_env_arg_to_lst(get_env_value(tmp->content, env), &new, tmp))
+        if (lst_add_env_arg(get_env_value(tmp->content, env), &new))
           return (ft_lstclear(&new, &free), NULL);
       }
-      else if (j == 1)
+      else if (tmp->is_op == '\'')
       {
+        // if element is single quoted just add it
         if (add_node(&new, tmp))
           return (ft_lstclear(&new, &free), NULL);
       }
     }
-    else if (add_node(&new, tmp))
+    else if (add_node(&new, tmp)) // add node if it's not env arg
       return (ft_lstclear(&new, &free), NULL);
     tmp = tmp->next;
-    i++;
   }
   return (new);
 }
@@ -287,6 +283,7 @@ void print_list(t_list *lst)
   }
 }
 
+/*
 int main(int argc, char **argv, char **env)
 {
   t_list *head;
@@ -307,6 +304,7 @@ int main(int argc, char **argv, char **env)
   new = expand_args(&head, env);
   print_list(new);
 }
+*/
 
 /*
 int main(int argc, char **argv, char **env)
