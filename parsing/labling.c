@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:02:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 15:00:11 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:01:49 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void lable_doublequotes(t_list **current)
 		{
 			(*current)->is_op = 0;
 			(*current) = (*current)->next;
-			return;
+			return ;
 		}
 		(*current)->is_op = '"';
 		(*current) = (*current)->next;

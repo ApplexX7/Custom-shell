@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 14:58:29 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:34:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int ft_issspace(int c)
 
 int	ft_isnotdouble(int c)
 {
-	if (c != '"' && c != '\'' && c != '(' && c != ')')
+	if (c != '"' && c != '\'' && c != '(' && c != ')' && c != ' ')
 		return (1);
 	return (0);
 }

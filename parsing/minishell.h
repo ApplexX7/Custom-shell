@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 15:07:05 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:13:49 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ char	**ft_split(char const *s, char c);
 void    lable_list(t_list *lst);
 void print_ouput(t_list *node);
 void print_ouput_op(t_list *node);
+
+//check syntax error
+void check_syn(t_list *list);
 
 #endif
