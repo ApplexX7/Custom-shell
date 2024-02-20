@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 14:58:29 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:36:29 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int ft_issspace(int c)
 
 int	ft_isnotdouble(int c)
 {
-	if (c != '"' && c != '\'' && c != '(' && c != ')')
+	if (c != '"' && c != '\'' && c != '(' && c != ')' && c != ' ')
 		return (1);
 	return (0);
 }
@@ -55,13 +55,17 @@ int add_tolist(char *av, t_list **head, int index, int start)
 {
 	int end;
 	t_list *new;
+  char *content;
 
 	if ((index) > 0)
 	{	
 		end = (index);
-		new = ft_lstnew(ft_substr(av, start, end - start));
+    content = ft_substr(av, start, end - start);
+    if (!content)
+      return (1);
+		new = ft_lstnew(content);
 		if (!new)
-			return (1);
+			return (free(content), 1);
 		if (((char *)new->content)[0] != '\0')
 			ft_lstadd_back(head, new);
 	}

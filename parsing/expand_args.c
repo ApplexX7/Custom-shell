@@ -61,7 +61,7 @@ t_list *convert_arr_to_list(char **arr)
 }
 
 // the is_op is set to 0 here
-void append_list(t_list *source, t_list **dest)
+void append_list(t_list *source, t_list **dest, char op)
 {
   t_list *tmp;
 
@@ -70,7 +70,7 @@ void append_list(t_list *source, t_list **dest)
     tmp = source;
     source = source->next;
     tmp->next = NULL;
-    tmp->is_op = '\0';
+    tmp->is_op = op;
     ft_lstadd_back(dest, tmp);
   }
 }
@@ -100,6 +100,7 @@ void append_list(t_list **source, t_list *pos, t_list *dest)
 }
 */
 
+// allocs: arr
 char **convert_list_to_arr(t_list *lst)
 {
   int len;
@@ -224,7 +225,7 @@ int lst_add_env_arg(char *arg, t_list **dest)
   new_lst = convert_arr_to_list(arr);
   if (!new_lst)
     return (free_3d_arr((void **)arr), 1);
-  append_list(new_lst, dest);
+  append_list(new_lst, dest, '\'');
   free(arr);
   return (0);
 }
