@@ -6,61 +6,11 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 12:22:12 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:48:14 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void lst_remove_node(t_list **lst, t_list *node)
-{
-  t_list *tmp;
-
-  tmp = *lst;
-  if (tmp == node)
-  {
-    *lst = node->next;
-    ft_lstdelone(node, &free);
-  }
-  while (tmp->next)
-  {
-    if (tmp->next == node)
-    {
-      tmp->next = node->next;
-      ft_lstdelone(node, &free);
-      return ;
-    }
-    tmp = tmp->next;
-  }
-}
-
-int is_space(t_list *node)
-{
-  if (!strncmp(node->content, " ", 2) && !node->is_op)
-    return (1);
-  else
-    return (0);
-}
-
-void del_spaces(t_list **lst)
-{
-  t_list *tmp;
-
-  tmp = *lst;
-  while (tmp)
-  {
-    if (is_space(tmp))
-      lst_remove_node(lst, tmp);
-    tmp = tmp->next;
-  }
-}
-
-t_list *skip_spaces(t_list *start)
-{
-  while (start && is_space(start))
-    start = start->next;
-  return (start);
-}
 
 int checkttokenspace(t_list *list)
 {
@@ -239,7 +189,7 @@ void	syntax_error_handling(t_list *list, t_list *copy)
 	printf("bash: syntax error in tokens\n");
 }
 
-void check_syn(t_list *list)
+int check_syn(t_list *list)
 {
 	t_list *copy;
 
@@ -248,21 +198,22 @@ void check_syn(t_list *list)
 	if (valid_struct(copy))
 	{
 		syntax_error_handling(list, copy);
-		return ;
+		return (1);
 	}
-	else if (valid_syntax(copy))
+	if (valid_syntax(copy))
 	{
 		syntax_error_handling(list, copy);
-		return ;
+		return (1);
 	}
-	else if (check_operatoresorder(copy))
+	if (check_operatoresorder(copy))
 	{
 		syntax_error_handling(list, copy);
-		return ;
+		return (1);
 	}
-	else if (check_parentis(copy))
+	if (check_parentis(copy))
 	{
 		syntax_error_handling(list, copy);
-		return ;
+		return (1);
 	}
+	return (0);
 }
