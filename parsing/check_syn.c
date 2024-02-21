@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 14:48:14 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:36:16 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ int	valid_struct(t_list *list)
 			count_parentisright++;
 		current = current->next;
 	}
-	if (count_parentisright != count_parentislift
-		|| (count_quotes % 2 != 0 && count_quotes != 0))
+	if (count_parentisright != count_parentislift || (count_quotes % 2 != 0 && count_quotes != 0))
 			return (1);
 	return (0);
 }
@@ -68,17 +67,17 @@ int ensurevalid_syntax(t_list *list)
 {
 	if (checkttokenspace(list) && checkttokenspace(list->next))
 	{
-		if (list->next && !ft_strncmp(list->content, ">", 2)
-			&& !ft_strncmp(list->next->content, "|", 2))
-			return (0);
-		else if (list->next && !ft_strncmp(list->content, "|", 2)
-			&& !ft_strncmp(list->next->content, "<", 2))
-			return (0);
-		else if (list->next && !ft_strncmp(list->content, "|", 2)
+		if (list->next && !ft_strncmp(list->content, "|", 2)
 			&& !ft_strncmp(list->next->content, "<<", 3))
 			return (0);
 		else if (list->next && !ft_strncmp(list->content, "|", 2)
 			&& !ft_strncmp(list->next->content, ">>", 3))
+			return (0);
+		else if (list->next && !ft_strncmp(list->content, "|", 2)
+			&& !ft_strncmp(list->next->content, ">", 3))
+			return (0);
+		else if (list->next && !ft_strncmp(list->content, "|", 2)
+			&& !ft_strncmp(list->next->content, "<", 3))
 			return (0);
 		return (1);
 	}
