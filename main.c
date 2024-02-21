@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 20:08:46 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:36:33 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 int main(int argc, char **argv, char **env)
 {
-  char *promt;
-  t_list *lst;
+	char *promt;
+	t_list *lst;
 
-  (void) argc;
-  (void) argv;
-  while (1)
-  {
-    promt = readline("minishell %% ");
-    lst = split_tokens(promt);
-    if (!lst) // TODO: handle error printing
-      return (1);
-    lable_list(lst);
-    if (expand_args(&lst, env))
-      return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-    if (combine_list(&lst))
-      return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-    print_ouput(lst);
-  }
+	(void) argc;
+	(void) argv;
+	while (1)
+	{
+		promt = readline("minishell %% ");
+		lst = split_tokens(promt);
+		if (lst) // TODO: handle error printing
+		{	
+			lable_list(lst);
+			if (expand_args(&lst, env))
+				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
+			check_syn(lst);
+			if (combine_list(&lst))
+				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
+		}
+		// print_ouput(lst);
+		// print_ouput_op(lst);
+	}
 }

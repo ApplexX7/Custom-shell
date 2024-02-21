@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 20:13:45 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:39:29 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void print_ouput_op(t_list *node)
 {
 	while (node != NULL)
 	{
-		printf("%c\n", node->is_op);
+		printf("%d\t", (int)node->is_op);
 		node = node->next;
 	}
 	printf("\n");

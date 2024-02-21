@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/20 15:33:06 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:40:16 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,8 @@ void print_ouput_op(t_list *node);
 
 // combine_list
 int combine_list(t_list **lst);
+
+//check syntax error
+void check_syn(t_list *list);
 
 #endif
