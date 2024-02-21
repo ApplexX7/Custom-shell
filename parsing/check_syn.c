@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/20 18:59:11 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:22:12 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,14 @@ int checkttokenspace(t_list *list)
 	return (0);
 }
 
+/*
+	function that check if 
+	the "(,), ', ", " unclosed 
+	or are node the same;
+	TODO: move "(,)" in the 
+	Mandatory part
+*/
+
 int	valid_struct(t_list *list)
 {
 	t_list *current;
@@ -100,7 +108,8 @@ int	valid_struct(t_list *list)
 			count_parentisright++;
 		current = current->next;
 	}
-	if (count_parentisright != count_parentislift || (count_quotes % 2 != 0 && count_quotes != 0))
+	if (count_parentisright != count_parentislift
+		|| (count_quotes % 2 != 0 && count_quotes != 0))
 			return (1);
 	return (0);
 }
@@ -114,6 +123,12 @@ int ensurevalid_syntax(t_list *list)
 			return (0);
 		else if (list->next && !ft_strncmp(list->content, "|", 2)
 			&& !ft_strncmp(list->next->content, "<", 2))
+			return (0);
+		else if (list->next && !ft_strncmp(list->content, "|", 2)
+			&& !ft_strncmp(list->next->content, "<<", 3))
+			return (0);
+		else if (list->next && !ft_strncmp(list->content, "|", 2)
+			&& !ft_strncmp(list->next->content, ">>", 3))
 			return (0);
 		return (1);
 	}
@@ -178,15 +193,50 @@ t_list *copy_lst(t_list *lst)
   return (new);
 }
 
-void	check_parentis(t_list *list)
+int tokenparencheck(t_list *list)
 {
-	int count;
-	
-	count = 0;
+
 	while (list)
 	{
-		if (!ft_strncmp(list->content, "("))
+		if (checkttokenspace(list))
+		{
+			list = list->next;
+			if (!list)
+				return (1);
+			if (!ft_strncmp(list->content, ")", 2))
+				return (1);
+		}
+		else if (valid_syntax(list))
+			return (1);
+		list = list->next;
 	}
+	return (0);
+}
+
+int	check_parentis(t_list *list)
+{
+	while (list)
+	{
+		if (!ft_strncmp(list->content, "(", 2))
+		{
+			list = list->next;
+			if (!list)
+				return (1);
+			if (!ft_strncmp(list->content, ")", 2))
+				return (1);
+		}
+		if (tokenparencheck(list))
+			return (1);
+		list = list->next;
+	}
+	return (0);
+}
+
+void	syntax_error_handling(t_list *list, t_list *copy)
+{
+	ft_lstclear(&copy, &free);
+	ft_lstclear(&list, &free);
+	printf("bash: syntax error in tokens\n");
 }
 
 void check_syn(t_list *list)
@@ -197,25 +247,22 @@ void check_syn(t_list *list)
 	del_spaces(&copy);
 	if (valid_struct(copy))
 	{
-		printf("syntax error: unclosed charcters\n");
-		ft_lstclear(&copy, &free);
-		ft_lstclear(&list, &free);
+		syntax_error_handling(list, copy);
 		return ;
 	}
-	if (valid_syntax(copy))
+	else if (valid_syntax(copy))
 	{
-		printf("syntax error: near unexpected tokens '%s' \n", (char *)copy->content);
-		ft_lstclear(&copy, &free);
-		ft_lstclear(&list, &free);
+		syntax_error_handling(list, copy);
 		return ;
 	}
-	if (check_operatoresorder(copy))
+	else if (check_operatoresorder(copy))
 	{
-		printf("sybtax error: near unexpected token '%s'\n", (char *)copy->content);
-		ft_lstclear(&copy, &free);
-		ft_lstclear(&list, &free);
+		syntax_error_handling(list, copy);
 		return ;
 	}
-	if (check_parentis(copy))
-		;
+	else if (check_parentis(copy))
+	{
+		syntax_error_handling(list, copy);
+		return ;
+	}
 }
