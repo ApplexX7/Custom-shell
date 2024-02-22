@@ -92,3 +92,25 @@ char **convert_list_to_arr(t_list *lst)
   arr[i] = NULL;
   return (arr);
 }
+
+t_list *copy_lst(t_list *lst)
+{
+  char *content;
+  t_list *new;
+  t_list *node;
+
+  new = NULL;
+  while (lst)
+  {
+    content = ft_strdup(lst->content);
+    if (!content)
+      return (ft_lstclear(&new, &free), NULL);
+    node = ft_lstnew(content);
+    if (!node)
+      return (ft_lstclear(&new, &free), free(content), NULL);
+    node->is_op = lst->is_op;
+    ft_lstadd_back(&new, node);
+    lst = lst->next;
+  }
+  return (new);
+}

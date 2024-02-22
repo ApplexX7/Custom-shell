@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 13:40:11 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:26:50 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int is_wildcard(t_list *node);
 void del_spaces(t_list **lst);
 int new_and_add(t_list **head, void *content);
 char **convert_list_to_arr(t_list *lst);
+t_list *copy_lst(t_list *lst);
 
 
 // wildcard
