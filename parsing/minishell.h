@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 14:48:25 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:40:11 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "../Libft-42/Mandatory/libft.h"
+#include <dirent.h>
 
 // expand args
 void free_3d_arr(void **arr);
@@ -28,7 +29,6 @@ void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
 t_list *convert_arr_to_list(char **arr);
 void append_list(t_list *source, t_list **dest, char op);
-char **convert_list_to_arr(t_list *lst);
 char *get_env_value(char *arg, char **env);
 t_list *get_right_node(t_list *head ,t_list *node);
 void lst_delete_node(t_list **lst, t_list *node);
@@ -57,6 +57,13 @@ int check_syn(t_list *list);
 
 void lst_remove_node(t_list **lst, t_list *node);
 int is_space(t_list *node);
+int is_wildcard(t_list *node);
 void del_spaces(t_list **lst);
+int new_and_add(t_list **head, void *content);
+char **convert_list_to_arr(t_list *lst);
+
+
+// wildcard
+int expand_wildcard();
 
 #endif

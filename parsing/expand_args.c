@@ -100,27 +100,6 @@ void append_list(t_list **source, t_list *pos, t_list *dest)
 }
 */
 
-// allocs: arr
-char **convert_list_to_arr(t_list *lst)
-{
-  int len;
-  char **arr;
-  int i;
-
-  len = ft_lstsize(lst);
-  arr = (char **) malloc(sizeof(char *) * (len + 1));
-  if (!arr)
-    return (NULL);
-  i = 0;
-  while (i < len)
-  {
-    arr[i] = (char *) lst->content;
-    lst = lst->next;
-    i++;
-  }
-  arr[i] = NULL;
-  return (arr);
-}
 
 /*
 int elem_is_single_quoted(int index, t_list *lst)
