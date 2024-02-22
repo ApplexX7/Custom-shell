@@ -52,10 +52,23 @@ int lst_next_wildcard(t_list *head, t_list **start, t_list **end)
   return (0);
 }
 
+// allocs: new
+t_list *lst_copy_portion(t_list *start, t_list *end)
+{
+  t_list *tmp;
+  t_list *new;
+
+  tmp = end->next;
+  end->next = NULL;
+  new = copy_lst(start);
+  end->next = tmp;
+  if (!new)
+    return (NULL);
+  return (new);
+}
+
 int expand_wildcard(t_list **lst)
 {
-  //t_list *lst = get_current_files();
-  //print_ouput(lst);
   t_list *start;
   t_list *end;
 
@@ -63,9 +76,7 @@ int expand_wildcard(t_list **lst)
   end = NULL;
   lst_next_wildcard(*lst, &start, &end);
   printf("-------------\n");
-  if (start)
-    printf("%s\n", start->content);
-  if (end)
-    printf("%s\n", end->content);
+  if (start && end)
+    print_ouput(lst_copy_portion(start, end));
   return (0);
 }
