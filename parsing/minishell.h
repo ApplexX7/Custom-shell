@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 14:48:25 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:46:48 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdio.h> // TODO: remove this
 #include <readline/history.h>
 #include <readline/readline.h>
-#include "../Libft-42/Mandatory/libft.h"
+#include "../Libft-42/libft.h"
 
 // expand args
 void free_3d_arr(void **arr);
@@ -58,5 +58,8 @@ int check_syn(t_list *list);
 void lst_remove_node(t_list **lst, t_list *node);
 int is_space(t_list *node);
 void del_spaces(t_list **lst);
+
+//find roottree
+t_list *find_roottree(t_list *list);
 
 #endif

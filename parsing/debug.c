@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 14:39:29 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:25:16 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void print_ouput(t_list *node)
 {
 	while (node != NULL)
 	{
-		printf("%s\n", (char *)node->content);
+		printf("%s\t", (char *)node->content);
 		node = node->next;
 	}
 	printf("\n");

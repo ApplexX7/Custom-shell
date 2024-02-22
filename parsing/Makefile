@@ -6,11 +6,12 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/02/21 15:11:28 by mohilali         ###   ########.fr        #
+#    Updated: 2024/02/22 15:55:50 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = ../main.c ft_split_tokens.c labling.c debug.c expand_args.c check_syn.c combine_list.c helper.c
+SRC = ../main.c ft_split_tokens.c labling.c debug.c expand_args.c check_syn.c combine_list.c helper.c \
+	find_roottree.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 15:36:16 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:25:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,5 +214,6 @@ int check_syn(t_list *list)
 		syntax_error_handling(list, copy);
 		return (1);
 	}
+	ft_lstclear(&copy, &free);
 	return (0);
 }

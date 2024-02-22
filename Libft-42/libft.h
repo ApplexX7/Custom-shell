@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:27:36 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/19 13:16:13 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:46:34 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-  char is_op;
+  	char			is_op;
+	int 			prio;
 }	t_list;
 
 int		ft_isalpha(char c);

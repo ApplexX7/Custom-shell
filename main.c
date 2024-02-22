@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 15:19:15 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:26:33 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int main(int argc, char **argv, char **env)
 {
 	char *promt;
 	t_list *lst;
+	t_list *cmp;
 
 	(void) argc;
 	(void) argv;
@@ -29,12 +30,23 @@ int main(int argc, char **argv, char **env)
 			if (expand_args(&lst, env))
 				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
 			if (check_syn(lst))
+			{
+				free(promt);
 				continue ;
+			}
 			if (combine_list(&lst))
 				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-			print_ouput(lst);
-			print_ouput_op(lst);
+			cmp = find_roottree(lst);
+			if (cmp)
+			{
+				printf("%s\n", (char *)cmp->content);
+				printf("%d\n", (int)cmp->prio);
+			}
+			// print_ouput(lst);
+			// print_ouput_op(lst);
 		}
 		// print_ouput_op(lst);
+		free(promt);
+		ft_lstclear(&lst, &free);
 	}
 }

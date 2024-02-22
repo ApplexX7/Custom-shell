@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/21 14:39:53 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:20:39 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ int add_tolist(char *av, t_list **head, int index, int start)
 			return (free(content), 1);
 		if (((char *)new->content)[0] != '\0')
 			ft_lstadd_back(head, new);
+		else
+		{
+			free(new->content);
+			free(new);
+		}
 	}
 	return (0);
 }
@@ -138,14 +143,14 @@ t_list *split_tokens(char *av)
 			i++;
 		if (ft_normalcharacters(av, &cmd, &i))
 		{
-			free_node(&cmd);
+			ft_lstclear(&cmd, &free);
 			return (NULL);
 		}
 		while (ft_issspace(av[i]) && av[i])
 			i++;
 		if (ft_tokencharcters(av, &cmd, &i))
 		{
-			free_node(&cmd);
+			ft_lstclear(&cmd, &free);
 			return (NULL);			
 		}
 	}
