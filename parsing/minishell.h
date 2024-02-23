@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 15:46:48 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:30:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "../Libft-42/libft.h"
+
+
+typedef struct s_tree
+{
+    t_list *node;
+    struct s_tree *left;
+    struct s_tree *right;
+
+} t_tree;
+
+
+
 
 // expand args
 void free_3d_arr(void **arr);
@@ -59,7 +71,13 @@ void lst_remove_node(t_list **lst, t_list *node);
 int is_space(t_list *node);
 void del_spaces(t_list **lst);
 
-//find roottree
-t_list *find_roottree(t_list *list);
+//labling priority
+t_list *find_roottree(t_list **list);
+void del_parentis(t_list **lst);
+void labling_prio(t_list *list);
+
+/*build tree*/
+t_tree *build_tree(t_list *list);
+void treeprint(t_tree *root);
 
 #endif

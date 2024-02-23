@@ -6,17 +6,35 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 16:25:16 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/23 12:59:54 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void treeprint(t_tree *root)
+{
+    if (root == NULL)
+             return;
+	if (root->node != NULL)
+	{
+		while (root->node)
+		{
+ 			printf("%s\n", (char *)root->node->content);
+			root->node = root->node->next;
+		}
+		printf("------\n");
+	}
+	treeprint(root->left);
+	treeprint(root->right);
+}
+
 void print_ouput(t_list *node)
 {
 	while (node != NULL)
 	{
-		printf("%s\t", (char *)node->content);
+		printf("%s", (char *)node->content);
+		printf(" %d\t", node->prio);
 		node = node->next;
 	}
 	printf("\n");

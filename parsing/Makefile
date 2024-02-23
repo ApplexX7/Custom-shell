@@ -6,12 +6,12 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/02/22 15:55:50 by mohilali         ###   ########.fr        #
+#    Updated: 2024/02/23 11:54:24 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ../main.c ft_split_tokens.c labling.c debug.c expand_args.c check_syn.c combine_list.c helper.c \
-	find_roottree.c
+	labling_priority.c build_tree.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
@@ -23,11 +23,10 @@ NAME = mini
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -o $(NAME) ../Libft-42/libft.a
+	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) ../Libft-42/libft.a
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@
-
 clean : 
 	$(RM) $(OBJCT)
 
