@@ -56,7 +56,7 @@ void del_spaces(t_list **lst)
   }
 }
 
-int new_and_add(t_list **head, void *content)
+int new_and_add(t_list **head, void *content, char is_op)
 {
   char *duped_content;
   t_list *new;
@@ -67,6 +67,7 @@ int new_and_add(t_list **head, void *content)
   new = ft_lstnew(duped_content);
   if (!new)
     return (free(duped_content), 1);
+  new->is_op = is_op;
   ft_lstadd_back(head, new);
   return (0);
 }
@@ -113,4 +114,62 @@ t_list *copy_lst(t_list *lst)
     lst = lst->next;
   }
   return (new);
+}
+
+void free_2d_arr(void **arr)
+{
+  int i;
+
+  i = 0;
+  while (arr[i])
+  {
+    free(arr[i]);
+    i++;
+  }
+  free(arr);
+}
+
+// allocs: new
+char *join_list(t_list *lst)
+{
+  char *new;
+  char *tmp;
+
+  new = malloc(1);
+  if (!new)
+    return (NULL);
+  new[0] = '\0';
+  while (lst)
+  {
+    tmp = new;
+    new = ft_strjoin(new, lst->content);
+    free(tmp);
+    if (!new)
+      return (NULL);
+    lst = lst->next;
+  }
+  return (new);
+}
+
+// allocs: str, new
+int join_and_add(t_list **dest, t_list *start, t_list *end)
+{
+  t_list *tmp;
+  char *str;
+  t_list *new;
+
+  tmp = start;
+  while (tmp->next != end)
+    tmp = tmp->next;
+  tmp->next = NULL;
+  str = join_list(start);
+  tmp->next = end;
+  if (!str)
+    return (1);
+  new = ft_lstnew(str);
+  if (!new)
+    return (free(str), 1);
+  new->is_op = 1;
+  ft_lstadd_back(dest, new);
+  return (0);
 }

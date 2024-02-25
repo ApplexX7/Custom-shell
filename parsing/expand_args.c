@@ -3,19 +3,6 @@
 #include "minishell.h"
 #include <stdio.h>
 
-void free_3d_arr(void **arr)
-{
-  int i;
-
-  i = 0;
-  while (arr[i])
-  {
-    free(arr[i]);
-    i++;
-  }
-  free(arr);
-}
-
 
 void push_to_front(t_list **source, t_list *dest)
 {
@@ -203,7 +190,7 @@ int lst_add_env_arg(char *arg, t_list **dest)
     return (1);
   new_lst = convert_arr_to_list(arr);
   if (!new_lst)
-    return (free_3d_arr((void **)arr), 1);
+    return (free_2d_arr((void **)arr), 1);
   append_list(new_lst, dest, '\'');
   free(arr);
   return (0);

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 18:26:50 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/22 21:45:04 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #include <dirent.h>
 
 // expand args
-void free_3d_arr(void **arr);
 void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
 t_list *convert_arr_to_list(char **arr);
@@ -59,9 +58,12 @@ void lst_remove_node(t_list **lst, t_list *node);
 int is_space(t_list *node);
 int is_wildcard(t_list *node);
 void del_spaces(t_list **lst);
-int new_and_add(t_list **head, void *content);
+int new_and_add(t_list **head, void *content, char is_op);
 char **convert_list_to_arr(t_list *lst);
 t_list *copy_lst(t_list *lst);
+void free_2d_arr(void **arr);
+int join_and_add(t_list **dest, t_list *start, t_list *end);
+char *join_list(t_list *lst);
 
 
 // wildcard
