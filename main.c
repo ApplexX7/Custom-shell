@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 16:26:33 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:44:25 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int main(int argc, char **argv, char **env)
 {
 	char *promt;
 	t_list *lst;
-	t_list *cmp;
+	// t_list *copy;
+	t_tree *root;
 
 	(void) argc;
 	(void) argv;
@@ -35,18 +36,24 @@ int main(int argc, char **argv, char **env)
 				continue ;
 			}
 			if (combine_list(&lst))
-				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-			cmp = find_roottree(lst);
-			if (cmp)
+				return (ft_lstclear(&lst, &free), 1);
+			labling_prio(lst);
+			del_spaces(&lst);
+			if (ft_open_herdocs(lst) == 1)
 			{
-				printf("%s\n", (char *)cmp->content);
-				printf("%d\n", (int)cmp->prio);
+				ft_lstclear(&lst, &free);
+				continue ;
 			}
-			// print_ouput(lst);
-			// print_ouput_op(lst);
+			if (ft_open_redirections(lst) != 0)
+				ft_lstclear(&lst, &free);
+			// root = build_tree(lst);
+			// if (!root)
+			// 	return 0;
+			// treeprint(root, 0);
+			print_ouput(lst);
+			freetree(&root);
+			free(promt);
+			// ft_lstclear(&copy, &free);
 		}
-		// print_ouput_op(lst);
-		free(promt);
-		ft_lstclear(&lst, &free);
 	}
 }

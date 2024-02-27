@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:27:36 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 15:46:34 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:45:15 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_list
 	struct s_list	*next;
   	char			is_op;
 	int 			prio;
+	int				fd;
 }	t_list;
 
 int		ft_isalpha(char c);
@@ -43,7 +44,7 @@ char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_atoi(const char *str);
 char	*ft_strrchr(const char *s, int c);
-int		ft_strlen(const char *s);
+size_t		ft_strlen(const char *s);
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
