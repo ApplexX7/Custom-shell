@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 12:40:05 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:39:56 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ int main(int argc, char **argv, char **env)
 			}
 			if (ft_open_redirections(lst) != 0)
 				ft_lstclear(&lst, &free);
-			// root = build_tree(lst);
-			// if (!root)
-			// 	return 0;
-			// treeprint(root, 0);
-			print_ouput(lst);
+			root = build_tree(lst);
+			if (!root)
+				return 0;
+			treeprint(root, 0);
 			freetree(&root);
 			free(promt);
 			// ft_lstclear(&copy, &free);

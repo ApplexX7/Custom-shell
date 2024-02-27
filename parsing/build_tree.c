@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/26 17:38:58 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:49:46 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_tree *insert_tree(t_list *list, t_tree **root)
 
 	if (!list)
 		return (*root);
+  tree_set_io(*root);
 	tmp = find_roottree(&list);
 	if (tmp)
 	{

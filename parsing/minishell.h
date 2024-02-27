@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 12:45:15 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:34:10 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,14 @@ int ft_open_redirections(t_list *lst);
 
 // wildcard
 int expand_wildcard();
+
+// set_tree_io
+t_list *check_combined_redirection(t_list *lst);
+int is_redirect_op(t_list *lst);
+int is_input_redirect(t_list *lst);
+int is_output_redirect(t_list *lst);
+int set_io(t_tree *node, t_list *start);
+void remove_redirections(t_tree *node, t_list *start);
+int tree_set_io(t_tree *node);
 
 #endif
