@@ -1,26 +1,5 @@
 #include "minishell.h"
 
-// allocs: new
-char *join_list(t_list *lst)
-{
-  char *new;
-  char *tmp;
-
-  new = malloc(1);
-  if (!new)
-    return (NULL);
-  new[0] = '\0';
-  while (lst)
-  {
-    tmp = new;
-    new = ft_strjoin(new, lst->content);
-    free(tmp);
-    if (!new)
-      return (NULL);
-    lst = lst->next;
-  }
-  return (new);
-}
 
 // spaces are usefull but after will be useless
 int is_useless_token(t_list *node)
@@ -46,10 +25,12 @@ int handle_consecutive_quotes(t_list *node)
 void del_useless_tokens(t_list **lst)
 {
   t_list *tmp;
+  t_list *tmp2;
 
   tmp = *lst;
   while (tmp)
   {
+    tmp2 = tmp->next;
     if (handle_consecutive_quotes(tmp))
     {
       tmp->is_op = ((char *)tmp->content)[0];
@@ -57,31 +38,8 @@ void del_useless_tokens(t_list **lst)
     }
     else if (is_useless_token(tmp))
       lst_remove_node(lst, tmp);
-    tmp = tmp->next;
+    tmp = tmp2;
   }
-}
-
-// allocs: str, new
-int join_and_add(t_list **dest, t_list *start, t_list *end)
-{
-  t_list *tmp;
-  char *str;
-  t_list *new;
-
-  tmp = start;
-  while (tmp->next != end)
-    tmp = tmp->next;
-  tmp->next = NULL;
-  str = join_list(start);
-  tmp->next = end;
-  if (!str)
-    return (1);
-  new = ft_lstnew(str);
-  if (!new)
-    return (free(str), 1);
-  new->is_op = 1;
-  ft_lstadd_back(dest, new);
-  return (0);
 }
 
 

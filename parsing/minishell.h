@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 10:34:06 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:45:15 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include "../Libft-42/libft.h"
-
+#include <dirent.h>
 
 typedef struct s_tree
 {
@@ -34,16 +34,11 @@ typedef struct s_tree
 
 } t_tree;
 
-
-
-
 // expand args
-void free_3d_arr(void **arr);
 void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
 t_list *convert_arr_to_list(char **arr);
 void append_list(t_list *source, t_list **dest, char op);
-char **convert_list_to_arr(t_list *lst);
 char *get_env_value(char *arg, char **env);
 t_list *get_right_node(t_list *head ,t_list *node);
 void lst_delete_node(t_list **lst, t_list *node);
@@ -71,7 +66,14 @@ int check_syn(t_list *list);
 // helpers
 void lst_remove_node(t_list **lst, t_list *node);
 int is_space(t_list *node);
+int is_wildcard(t_list *node);
 void del_spaces(t_list **lst);
+int new_and_add(t_list **head, void *content, char is_op);
+char **convert_list_to_arr(t_list *lst);
+t_list *copy_lst(t_list *lst);
+void free_2d_arr(void **arr);
+int join_and_add(t_list **dest, t_list *start, t_list *end);
+char *join_list(t_list *lst);
 t_list *copy_lst(t_list *lst);
 
 //labling priority
@@ -88,5 +90,8 @@ void freetree(t_tree **root);
 int ft_open_herdocs(t_list *list);
 char	*get_next_line(int fd);
 int ft_open_redirections(t_list *lst);
+
+// wildcard
+int expand_wildcard();
 
 #endif

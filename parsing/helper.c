@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/26 11:28:44 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:46:38 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void freetree(t_tree **root)
 }
 
 
+/*
 void lst_remove_node(t_list **lst, t_list *node)
 {
 	t_list *tmp;
@@ -51,7 +52,9 @@ void lst_remove_node(t_list **lst, t_list *node)
 		tmp = tmp->next;
 	}
 }
+*/
 
+/*
 int is_space(t_list *node)
 {
 	if (!strncmp(node->content, " ", 2) && !node->is_op)
@@ -59,7 +62,9 @@ int is_space(t_list *node)
 	else
 		return (0);
 }
+*/
 
+/*
 void del_spaces(t_list **lst)
 {
 	t_list *tmp;
@@ -77,6 +82,7 @@ void del_spaces(t_list **lst)
 		tmp = tmp2;
 	}
 }
+*/
 
 t_list *skip_spaces(t_list *start)
 {

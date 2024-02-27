@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 14:25:03 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:42:13 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,28 +119,6 @@ int	check_operatoresorder(t_list *list)
 	return (0);
 }
 
-
-t_list *copy_lst(t_list *lst)
-{
-  char *content;
-  t_list *new;
-  t_list *node;
-
-  new = NULL;
-  while (lst)
-  {
-    content = ft_strdup(lst->content);
-    if (!content)
-      return (ft_lstclear(&new, &free), NULL);
-    node = ft_lstnew(content);
-    if (!node)
-      return (ft_lstclear(&new, &free), free(content), NULL);
-	node->is_op = lst->is_op;
-    ft_lstadd_back(&new, node);
-    lst = lst->next;
-  }
-  return (new);
-}
 
 int tokenparencheck(t_list *list)
 {

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 10:44:25 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:40:05 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int main(int argc, char **argv, char **env)
 				continue ;
 			}
 			if (combine_list(&lst))
+				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
+													  //print_ouput(lst);
+			if (expand_wildcard(&lst))
 				return (ft_lstclear(&lst, &free), 1);
 			labling_prio(lst);
 			del_spaces(&lst);
