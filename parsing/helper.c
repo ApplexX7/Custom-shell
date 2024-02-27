@@ -6,11 +6,29 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/23 09:25:35 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:28:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void freetree(t_tree **root)
+{
+	if (!(*root))
+		return ;
+	freetree(&(*root)->right);
+	freetree(&(*root)->left);
+	while ((*root)->node != NULL)
+	{
+		t_list *tmp = (*root)->node;
+		(*root)->node = (*root)->node->next;
+		free(tmp->content);
+		free(tmp);
+	}
+	free((*root));
+	*root = NULL;
+}
+
 
 void lst_remove_node(t_list **lst, t_list *node)
 {

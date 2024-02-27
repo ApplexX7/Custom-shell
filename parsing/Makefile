@@ -6,12 +6,12 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/02/23 11:54:24 by mohilali         ###   ########.fr        #
+#    Updated: 2024/02/26 18:52:10 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ../main.c ft_split_tokens.c labling.c debug.c expand_args.c check_syn.c combine_list.c helper.c \
-	labling_priority.c build_tree.c
+	labling_priority.c build_tree.c open_redirections.c get_next_line.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc

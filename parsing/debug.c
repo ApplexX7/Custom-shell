@@ -6,35 +6,47 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/23 12:59:54 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:35:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void treeprint(t_tree *root)
+void treeprint(t_tree *root1, int level)
 {
+	t_tree *root;
+
+	root = root1;
     if (root == NULL)
              return;
+	for (int i = 0; i < level; i++)
+        printf(i == 0 ? "|-" : "   ");
 	if (root->node != NULL)
 	{
-		while (root->node)
+		t_list *tmp;
+
+		tmp = root->node;
+		while (tmp)
 		{
- 			printf("%s\n", (char *)root->node->content);
-			root->node = root->node->next;
+ 			printf("%s\t", (char *)tmp->content);
+			tmp = tmp->next;
 		}
-		printf("------\n");
+		printf("\n");
 	}
-	treeprint(root->left);
-	treeprint(root->right);
+	else
+		printf("[NULL]\n");
+	treeprint(root->left, level + 1);
+	treeprint(root->right, level + 1);
 }
 
 void print_ouput(t_list *node)
 {
 	while (node != NULL)
 	{
-		printf("%s", (char *)node->content);
-		printf(" %d\t", node->prio);
+		printf("%s ", (char *)node->content);
+		if ((!ft_strncmp(node->content, "<<", 3) || !ft_strncmp(node->content, ">", 2) || !ft_strncmp(node->content, "<", 2) || !ft_strncmp(node->content, ">>", 3))&& !node->is_op)
+			printf(" %d", node->fd);
+		printf("\n");
 		node = node->next;
 	}
 	printf("\n");

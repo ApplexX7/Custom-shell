@@ -6,13 +6,14 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/23 11:30:58 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:34:06 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#define BUFFER_SIZE 42
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -28,6 +29,8 @@ typedef struct s_tree
     t_list *node;
     struct s_tree *left;
     struct s_tree *right;
+    int input;
+    int output;
 
 } t_tree;
 
@@ -66,10 +69,10 @@ int combine_list(t_list **lst);
 int check_syn(t_list *list);
 
 // helpers
-
 void lst_remove_node(t_list **lst, t_list *node);
 int is_space(t_list *node);
 void del_spaces(t_list **lst);
+t_list *copy_lst(t_list *lst);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -78,6 +81,12 @@ void labling_prio(t_list *list);
 
 /*build tree*/
 t_tree *build_tree(t_list *list);
-void treeprint(t_tree *root);
+void treeprint(t_tree *root, int level);
+void freetree(t_tree **root);
+
+/*handle redirections*/
+int ft_open_herdocs(t_list *list);
+char	*get_next_line(int fd);
+int ft_open_redirections(t_list *lst);
 
 #endif
