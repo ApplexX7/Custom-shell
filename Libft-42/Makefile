@@ -13,7 +13,7 @@ OBJCTB = ${SRCSB:.c=.o}
 CC = cc
 RM = rm -rf
 NAME = libft.a
-GFLAGS = -Wall -Wextra -Werror
+GFLAGS = -Wall -Wextra -Werror -g
 
 all : ${NAME}
 

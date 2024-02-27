@@ -152,6 +152,7 @@ char *join_list(t_list *lst)
 }
 
 // allocs: str, new
+// TODO: change this to have is_op passed as an arg
 int join_and_add(t_list **dest, t_list *start, t_list *end)
 {
   t_list *tmp;

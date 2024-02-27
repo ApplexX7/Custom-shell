@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/25 20:49:26 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:14:37 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int main(int argc, char **argv, char **env)
 			if (combine_list(&lst))
 				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
 			//print_ouput(lst);
-      expand_wildcard(&lst);
+      if (expand_wildcard(&lst))
+        return (ft_lstclear(&lst, &free), 1);
+      print_ouput(lst);
 		}
-		// print_ouput_op(lst);
 	}
 }
