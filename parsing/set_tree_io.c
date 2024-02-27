@@ -124,9 +124,9 @@ int tree_set_io(t_tree *node)
   if (!tmp)
     return (0);
   tmp2 = tmp;
-  while (is_redirect_op(tmp))
+  while (tmp && is_redirect_op(tmp))
     tmp = tmp->next->next;
-  if (tmp)
+  if (tmp != NULL)
     return (0);
   if (set_io(node, tmp2))
     return (1);
