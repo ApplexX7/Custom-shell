@@ -84,7 +84,7 @@ int set_io(t_tree *node, t_list *start)
     }
     else if (is_output_redirect(start))
     {
-      if (node->output != 0)
+      if (node->output != 1)
       {
         if (close(node->output))
           return (write(2, "error closing fd\n", 17), 1);
