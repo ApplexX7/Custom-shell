@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/28 18:09:16 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:31:53 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv, char **env)
 			if (!root)
 				return 0;
 			add_history(promt);
-			// treeprint(root, 0);
+			treeprint(root, 0);
 			freetree(&root);
 			free(promt);
 			// ft_lstclear(&copy, &free);
