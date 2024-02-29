@@ -174,3 +174,19 @@ int join_and_add(t_list **dest, t_list *start, t_list *end)
   ft_lstadd_back(dest, new);
   return (0);
 }
+
+int is_open_parenth(t_list *node)
+{
+  if (!ft_strncmp(node->content, "(", 2) && !node->is_op)
+    return (1);
+  else
+    return (0);
+}
+
+int is_close_parenth(t_list *node)
+{
+  if (!ft_strncmp(node->content, ")", 2) && !node->is_op)
+    return (1);
+  else
+    return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 17:34:10 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:49:05 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void free_2d_arr(void **arr);
 int join_and_add(t_list **dest, t_list *start, t_list *end);
 char *join_list(t_list *lst);
 t_list *copy_lst(t_list *lst);
+int is_open_parenth(t_list *node);
+int is_close_parenth(t_list *node);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -102,5 +104,10 @@ int is_output_redirect(t_list *lst);
 int set_io(t_tree *node, t_list *start);
 void remove_redirections(t_tree *node, t_list *start);
 int tree_set_io(t_tree *node);
+
+// remove parenthesis
+void remove_parenthesis(t_list **lst);
+void remove_inclosing_parenth(t_list *start, t_list *end, t_list **lst);
+void set_end(t_list *lst, t_list **end);
 
 #endif
