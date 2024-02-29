@@ -18,15 +18,15 @@ t_list *check_combined_redirection(t_list *lst)
 {
   int level;
 
-  if (lst && !ft_strncmp(lst->content, "(", 2) && !lst->is_op)
+  if (lst && is_open_parenth(lst))
   {
     level = 0;
     lst = lst->next;
     while (lst)
     {
-      if (!ft_strncmp(lst->content, "(", 2) && !lst->is_op)
+      if (is_open_parenth(lst))
         level++;
-      else if (!ft_strncmp(lst->content, ")", 2) && !lst->is_op)
+      else if (is_close_parenth(lst))
       {
         if (level == 0)
           return (lst->next);
