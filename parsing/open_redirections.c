@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 10:58:28 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/02/29 09:36:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int open_redirections(t_list *current)
 	int fd;
 	if (!ft_strncmp(current->content, "<", 2) && !current->is_op)
 	{
-		printf("%s\n", (char *)current->next->content);
 		fd = open_file(current->next->content, 0);
 		if (fd == -1)
 			return (-1);
