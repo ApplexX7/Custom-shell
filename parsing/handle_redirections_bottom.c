@@ -46,6 +46,7 @@ void remove_redirectiosn2(t_tree *node)
     else
       tmp = tmp->next;
   }
+  node->node = head;
 }
 
 int handle_redirections_bottom(t_tree *node)

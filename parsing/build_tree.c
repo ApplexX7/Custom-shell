@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 15:06:47 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:00:48 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_tree *insert_tree(t_list *list, t_tree **root)
 		new_node->node = list;
 		new_node->left = NULL;
 		new_node->right = NULL;
+		handle_redirections_bottom(new_node);
 		*root = new_node;
 	}
 	return *root;
