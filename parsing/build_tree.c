@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 12:00:00 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:06:47 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void inherente_reidirections(t_tree *root, int output, int input)
 {
 	if (root == NULL)
 		return ;
-	root->input = input;
-	root->output = output;
+	if(root->input  == 0)
+		root->input = input;
+	if (root->output == 1)
+		root->output = output;
 	inherente_reidirections(root->left, root->output, root->input);
 	inherente_reidirections(root->right, root->output, root->input);
 }
