@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 15:44:14 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:45:18 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ typedef struct s_tree
     t_list *node;
     struct s_tree *left;
     struct s_tree *right;
-    int input;
-    int output;
+    int fd;
+    char *input_file;
+    char *output_file;
 
 } t_tree;
 

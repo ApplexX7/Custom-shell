@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 10:31:19 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:41:43 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,22 @@ void treeprint(t_tree *root1, int level)
 		t_list *tmp;
 
 		tmp = root->node;
-		printf("%d / %d", root->input, root->output);
+		// printf("%s / %s", root->input, root->output);
 		while (tmp)
 		{
  			printf("%s\t", (char *)tmp->content);
+			if ((!ft_strncmp(tmp->content, ">", 2) || !ft_strncmp(tmp->content, ">>", 3))&& !tmp->is_op)
+			{
+				printf(" %s", tmp->fd_output);
+			}
+			else if (!ft_strncmp(tmp->content, "<", 2))
+			{
+				printf(" %s", tmp->fd_input);
+			}
+			else if (!ft_strncmp(tmp->content, "<<", 3))
+			{
+				printf(" %d", tmp->fd_herdoc);
+			}
 			tmp = tmp->next;
 		}
 		printf("\n");
@@ -46,7 +58,7 @@ void print_ouput(t_list *node)
 	{
 		printf("%s ", (char *)node->content);
 		if ((!ft_strncmp(node->content, "<<", 3) || !ft_strncmp(node->content, ">", 2) || !ft_strncmp(node->content, "<", 2) || !ft_strncmp(node->content, ">>", 3))&& !node->is_op)
-			printf(" %d", node->fd);
+			printf(" %s", node->fd_output);
 		printf("\n");
 		node = node->next;
 	}
