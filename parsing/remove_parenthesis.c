@@ -46,5 +46,5 @@ void remove_parenthesis(t_list **lst)
   set_end(tmp, &end);
   if (end && end == ft_lstlast(*lst))
     remove_inclosing_parenth(start, end, lst);
-  print_ouput(*lst);
+  // print_ouput(*lst);
 }
