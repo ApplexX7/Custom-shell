@@ -53,7 +53,7 @@ int is_input_redirect(t_list *lst)
 {
   if (!ft_strncmp(lst->content, "<" ,2) && !lst->is_op)
     return (1);
-  else if (!ft_strncmp(lst->content, "<<" ,2) && !lst->is_op)
+  else if (!ft_strncmp(lst->content, "<<", 3) && !lst->is_op)
     return (1);
   else
     return (0);
@@ -63,7 +63,15 @@ int is_output_redirect(t_list *lst)
 {
   if (!ft_strncmp(lst->content, ">" ,2) && !lst->is_op)
     return (1);
-  else if (!ft_strncmp(lst->content, ">>" ,2) && !lst->is_op)
+  else if (!ft_strncmp(lst->content, ">>" ,3) && !lst->is_op)
+    return (1);
+  else
+    return (0);
+}
+
+int is_herdoc(t_list *lst)
+{
+  if (!ft_strncmp(lst->content, ">>", 3) || !ft_strncmp(lst->content, "<<", 3))
     return (1);
   else
     return (0);
@@ -75,21 +83,35 @@ int set_io(t_tree *node, t_list *start)
   {
     if (is_input_redirect(start))
     {
-      if (node->input != 0)
+      free(node->input_file);
+      if (is_herdoc(start))
       {
-        if (close(node->input))
-          return (write(2, "error closing fd\n", 17), 1);
+        node->input_file = NULL;
+        node->fd = start->fd;
       }
-      node->input = start->fd;
+      else
+      {
+        node->input_file = ft_strdup(start->next->content);
+        if (node->input_file == NULL)
+          return (write(2, "Malloc Failure\n", 15), 1);
+        node->fd = 0;
+      }
     }
     else if (is_output_redirect(start))
     {
-      if (node->output != 1)
+      free(node->output_file);
+      if (is_herdoc(start))
       {
-        if (close(node->output))
-          return (write(2, "error closing fd\n", 17), 1);
+        node->output_file = NULL;
+        node->fd = start->fd;
       }
-      node->output = start->fd;
+      else
+      {
+        node->output_file = ft_strdup(start->next->content);
+        if (node->output_file == NULL)
+          return (write(2, "Malloc Failure\n", 15), 1);
+        node->fd = 0;
+      }
     }
     start = start->next->next;
   }
@@ -118,8 +140,9 @@ int tree_set_io(t_tree *node)
 
   if (!node)
     return (0);
-  node->input = 0;
-  node->output = 1;
+  node->fd = 0;
+  node->input_file = NULL;
+  node->output_file = NULL;
   tmp = check_combined_redirection(node->node);
   if (!tmp)
     return (0);

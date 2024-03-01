@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 11:49:05 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:06:36 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ typedef struct s_tree
     t_list *node;
     struct s_tree *left;
     struct s_tree *right;
-    int input;
-    int output;
+    int fd;
+    char *input_file;
+    char *output_file;
 
 } t_tree;
 
@@ -104,10 +105,16 @@ int is_output_redirect(t_list *lst);
 int set_io(t_tree *node, t_list *start);
 void remove_redirections(t_tree *node, t_list *start);
 int tree_set_io(t_tree *node);
+int is_herdoc(t_list *lst);
 
 // remove parenthesis
 void remove_parenthesis(t_list **lst);
 void remove_inclosing_parenth(t_list *start, t_list *end, t_list **lst);
 void set_end(t_list *lst, t_list **end);
+
+// handle redirections bottom
+int handle_redirections_bottom(t_tree *node);
+void remove_redirectiosn2(t_tree *node);
+int set_single_io(t_tree *node, t_list *pos);
 
 #endif

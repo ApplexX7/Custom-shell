@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 12:42:13 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:56:51 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,26 @@ int	valid_struct(t_list *list)
 
 int ensurevalid_syntax(t_list *list)
 {
-	if (checkttokenspace(list) && checkttokenspace(list->next))
-	{
-		if (list->next && !ft_strncmp(list->content, "|", 2)
-			&& !ft_strncmp(list->next->content, "<<", 3))
-			return (0);
-		else if (list->next && !ft_strncmp(list->content, "|", 2)
-			&& !ft_strncmp(list->next->content, ">>", 3))
-			return (0);
-		else if (list->next && !ft_strncmp(list->content, "|", 2)
-			&& !ft_strncmp(list->next->content, ">", 3))
-			return (0);
-		else if (list->next && !ft_strncmp(list->content, "|", 2)
-			&& !ft_strncmp(list->next->content, "<", 3))
-			return (0);
+	if (checkttokenspace(list) && checkttokenspace(list->next) && list->next->next == NULL)
 		return (1);
+	else
+	{
+		if (list->next && !ft_strncmp(list->content, ">", 2)
+			&& !ft_strncmp(list->next->content, "|", 2))
+			return (1);
+		else if (list->next && !ft_strncmp(list->content, "&&", 3)
+			&& !ft_strncmp(list->next->content, "|", 2))
+			return (1);
+		else if (list->next && !ft_strncmp(list->content, "||", 3)
+			&& !ft_strncmp(list->next->content, "|", 2))
+			return (1);
+		else if (list->next && !ft_strncmp(list->content, "|", 2)
+			&& !ft_strncmp(list->next->content, "&&", 3))
+			return (1);
+		else if (list->next && !ft_strncmp(list->content, "|", 3)
+			&& !ft_strncmp(list->next->content, "||", 2))
+			return (1);
+		return (0);
 	}
 	return (0);
 }

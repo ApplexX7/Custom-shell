@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 09:36:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:59:56 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int ft_open_herdocs(t_list *list)
 				return (1);
 			current->fd = fd;			
 		}
+		else
+			current->fd = 0;
 		current = current->next;
 	}
 	return (0);
@@ -88,45 +90,4 @@ int open_file(char *str, int red)
 		return (-1);
 	}
 	return (fd);
-}
-
-int open_redirections(t_list *current)
-{
-	int fd;
-	if (!ft_strncmp(current->content, "<", 2) && !current->is_op)
-	{
-		fd = open_file(current->next->content, 0);
-		if (fd == -1)
-			return (-1);
-		current->fd = fd;
-	}
-	if (!ft_strncmp(current->content, ">", 2) && !current->is_op)
-	{
-		fd = open_file(current->next->content, 1);
-		if (fd == -1)
-			return (-1);
-		current->fd = fd;
-	}
-	if (!ft_strncmp(current->content, ">>", 3) && !current->is_op)
-	{
-		fd = open_file(current->next->content, 2);
-		if (fd == -1)
-			return (-1);
-		current->fd = fd;
-	}
-	return (0);
-}
-
-int ft_open_redirections(t_list *lst)
-{
-	t_list *current;
-
-	current = lst;
-	while (current)
-	{
-		if (open_redirections(current) == -1)
-			return (1);
-		current = current->next;
-	}
-	return (0);
 }
