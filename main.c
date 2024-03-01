@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/29 16:56:24 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:07:19 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ int main(int argc, char **argv, char **env)
 			{
 				ft_lstclear(&lst, &free);
 				continue ;
-			}
-			if (ft_open_redirections(lst) != 0)
-			{
-				ft_lstclear(&lst, &free);
-				continue;
 			}
 			root = build_tree(lst);
 			if (!root)

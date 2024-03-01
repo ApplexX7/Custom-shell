@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/01 10:34:00 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:04:00 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int ft_open_herdocs(t_list *list)
 			fd = create_heredocchild(current->next->content);
 			if (fd == -1)
 				return (1);
-			current->fd_herdoc = fd;			
+			current->fd = fd;			
 		}
-		current->fd_herdoc = 0;
+		current->fd = 0;
 		current = current->next;
 	}
 	return (0);
@@ -91,6 +91,7 @@ int open_file(char *str, int red)
 	return (fd);
 }
 
+/*
 int open_redirections(t_list *current)
 {
 	if (!ft_strncmp(current->content, "<", 2) && !current->is_op)
@@ -101,7 +102,9 @@ int open_redirections(t_list *current)
 		current->fd_output = current->next->content;
 	return (0);
 }
+*/
 
+/*
 int ft_open_redirections(t_list *lst)
 {
 	t_list *current;
@@ -115,3 +118,4 @@ int ft_open_redirections(t_list *lst)
 	}
 	return (0);
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/01 10:57:24 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:06:36 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int is_output_redirect(t_list *lst);
 int set_io(t_tree *node, t_list *start);
 void remove_redirections(t_tree *node, t_list *start);
 int tree_set_io(t_tree *node);
+int is_herdoc(t_list *lst);
 
 // remove parenthesis
 void remove_parenthesis(t_list **lst);

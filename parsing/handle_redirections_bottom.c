@@ -4,25 +4,39 @@
 
 int set_single_io(t_tree *node, t_list *pos)
 {
-  if (is_input_redirect(pos))
-  {
-    if (node->input != 0)
-    {
-      if (close(node->input))
-        return (write(2, "error closing fd\n", 17), 1);
-    }
-    node->input = pos->fd;
-  }
-  else if (is_output_redirect(pos))
-  {
-    if (node->output != 1)
-    {
-      if (close(node->output))
-        return (write(2, "error closing fd\n", 17), 1);
-    }
-    node->output = pos->fd;
-  }
-  return (0);
+	if (is_input_redirect(pos))
+	{
+		free(node->input_file);
+		if (is_herdoc(pos))
+		{
+			node->input_file = NULL;
+			node->fd = pos->fd;
+		}
+		else
+		{
+			node->input_file = ft_strdup(pos->next->content);
+			if (node->input_file == NULL)
+				return (write(2, "Malloc Failure\n", 15), 1);
+			node->fd = 0;
+		}
+	}
+	else if (is_output_redirect(pos))
+	{
+		free(node->output_file);
+		if (is_herdoc(pos))
+		{
+			node->output_file = NULL;
+			node->fd = pos->fd;
+		}
+		else
+		{
+			node->output_file = ft_strdup(pos->next->content);
+			if (node->output_file == NULL)
+				return (write(2, "Malloc Failure\n", 15), 1);
+			node->fd = 0;
+		}
+	}
+	return (0);
 }
 
 // TODO: replace it with remove_redirections
