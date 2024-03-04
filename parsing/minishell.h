@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/01 11:06:36 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/01 15:35:36 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <readline/readline.h>
 #include "../Libft-42/libft.h"
 #include <dirent.h>
+#include <errno.h>
 
 typedef struct s_tree
 {
