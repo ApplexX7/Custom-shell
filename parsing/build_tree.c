@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 17:13:36 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:26:33 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void inherente_reidirections(t_tree *root, char *output, char *input, int fd)
 	if (root == NULL)
 		return ;
 	if(root->input_file  == NULL)
-		root->input_file = input;
+		root->input_file = ft_strdup(input);
 	if (root->output_file == NULL)
-		root->output_file = output;
+		root->output_file = ft_strdup(output);
 	if (root->fd == 0)
 		root->fd = fd;
 	inherente_reidirections(root->left, root->output_file, root->input_file, root->fd);
@@ -57,7 +57,6 @@ t_tree *insert_tree(t_list *list, t_tree **root)
 		new_node->node = list;
 		new_node->left = NULL;
 		new_node->right = NULL;
-		handle_redirections_bottom(new_node);
 		*root = new_node;
 	}
 	return *root;
@@ -73,4 +72,15 @@ t_tree *build_tree(t_list *list)
 		return (NULL);
 	inherente_reidirections(root, root->output_file, root->input_file, root->fd);
 	return (root);
+}
+
+void inheritance_bottom(t_tree *root)
+{
+	if (root->left == NULL && root->right == NULL)
+		handle_redirections_bottom(root);
+	else
+	{
+		inheritance_bottom(root->left);
+		inheritance_bottom(root->right);
+	}
 }

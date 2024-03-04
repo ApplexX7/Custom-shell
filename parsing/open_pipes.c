@@ -1,7 +1,7 @@
 
 
 #include "minishell.h"
-
+/*
 void set_input_fd(t_tree *node, int fd)
 {
   if (node)
@@ -11,7 +11,7 @@ void set_input_fd(t_tree *node, int fd)
     node->input_file = NULL;
     node->fd = fd;
   }
-}
+}*/
 
 int tree_copy_output(char *output_file, int out_fd, t_tree *to)
 {
@@ -26,7 +26,7 @@ int tree_copy_output(char *output_file, int out_fd, t_tree *to)
       return (1);
     free(to->output_file);
     to->output_file = new;
-    to->out_fd = 0;
+    to->out_fd = 1;
   }
   else
   {
@@ -77,7 +77,7 @@ int open_pipes(t_tree *root)
       return (write(2, "failed to copy tree output\n", 26), 1);
     if (tree_copy_input(NULL, pip[0], root->right))
       return (write(2, "failed to copy tree input\n", 25), 1);
-    if (tree_copy_output(NULL, root->out_fd, root->right))
+    if (tree_copy_output(root->output_file, root->out_fd, root->right))
       return (write(2, "failed to copy tree input\n", 25), 1);
   }
   if (open_pipes(root->left))

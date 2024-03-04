@@ -33,7 +33,7 @@ int set_single_io(t_tree *node, t_list *pos)
 			node->output_file = ft_strdup(pos->next->content);
 			if (node->output_file == NULL)
 				return (write(2, "Malloc Failure\n", 15), 1);
-			node->fd = 0;
+			node->out_fd = 1;
 		}
 	}
 	return (0);
