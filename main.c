@@ -51,6 +51,8 @@ int main(int argc, char **argv, char **env)
 			root = build_tree(lst);
 			if (!root)
 				return 0;
+      if (open_pipes(root))
+        return (0);
 			add_history(promt);
 			treeprint(root, 0);
 			freetree(&root);

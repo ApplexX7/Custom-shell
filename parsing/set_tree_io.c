@@ -151,6 +151,7 @@ int tree_set_io(t_tree *node)
   if (!node)
     return (0);
   node->fd = 0;
+  node->out_fd = 1;
   node->input_file = NULL;
   node->output_file = NULL;
   tmp = check_combined_redirection(node->node);

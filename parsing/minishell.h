@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/01 15:35:36 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:40:30 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_tree
     struct s_tree *left;
     struct s_tree *right;
     int fd;
+    int out_fd;
     char *input_file;
     char *output_file;
 
@@ -117,5 +118,11 @@ void set_end(t_list *lst, t_list **end);
 int handle_redirections_bottom(t_tree *node);
 void remove_redirectiosn2(t_tree *node);
 int set_single_io(t_tree *node, t_list *pos);
+
+
+// open_pipes
+int tree_copy_output(char *output_file, int out_fd, t_tree *to);
+int tree_copy_input(char *input_file, int fd, t_tree *to);
+int open_pipes(t_tree *root);
 
 #endif
