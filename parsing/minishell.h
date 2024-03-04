@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 18:55:20 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:40:38 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <string.h>
 #include <stdio.h> // TODO: remove this
 #include <readline/history.h>
@@ -36,6 +37,16 @@ typedef struct s_tree
     char *output_file;
 
 } t_tree;
+
+typedef enum fd_action {
+        CAPTURE,
+        CLOSE,
+} t_fd_action;
+
+typedef enum pid_action {
+        CAPTURED,
+        WAIT,
+} t_pid_action;
 
 // expand args
 void push_to_front(t_list **source, t_list *dest);
