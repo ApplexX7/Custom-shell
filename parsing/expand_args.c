@@ -227,7 +227,7 @@ int expand_args(t_list **lst, char **env)
   {
     if (ft_strchr(tmp->content, '$'))
     {
-      if (tmp->is_op != '\'' && get_env_value(tmp->content, env))
+      if (tmp->is_op != '\'' && get_env_value(tmp->content, env) && ft_strncmp(tmp->content, "$", 2))
       {
         if (lst_add_env_arg(get_env_value(tmp->content, env), &new))
           return (ft_lstclear(&new, &free), 1);
