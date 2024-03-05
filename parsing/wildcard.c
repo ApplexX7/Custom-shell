@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/28 15:59:09 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:32:33 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,24 @@ int add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched)
   return (0);
 }
 
+void remove_points_dir(t_list *start, t_list **lst)
+{
+  t_list *tmp;
+
+  tmp = *lst;
+  if (start && ((char *)start->content)[0] != '.')
+  {
+    while (tmp)
+    {
+      if (!ft_strncmp(tmp->content, ".", 2))
+        lst_remove_node(lst, tmp);
+      else if (!ft_strncmp(tmp->content, "..", 3))
+        lst_remove_node(lst, tmp);
+      tmp = tmp->next;
+    }
+  }
+}
+
 // allocs: portion
 int get_matched_list(t_list *start, t_list *end, t_list **dest)
 {
@@ -273,6 +291,7 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
     if (add_if_nomatch(dest, start, end, matched))
       return (ft_lstclear(&portion, &free), 1);
   }
+  remove_points_dir(start, dest);
   return (0);
 }
 
