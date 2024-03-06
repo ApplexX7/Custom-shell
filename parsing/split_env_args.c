@@ -65,6 +65,8 @@ int split_env_arg(t_list **lst)
         if (split_arg_node(tmp, &new))
           return (ft_lstclear(&new, &free), 1);
       }
+      else if (add_node(&new, tmp))
+        return (ft_lstclear(&new, &free), 1);
     }
     else if (add_node(&new, tmp))
       return (ft_lstclear(&new, &free), 1);
