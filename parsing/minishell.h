@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 19:40:38 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:07:41 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,9 @@ int tree_copy_output(char *output_file, int out_fd, t_tree *to);
 int tree_copy_input(char *input_file, int fd, t_tree *to);
 int open_pipes(t_tree *root);
 void inheritance_bottom(t_tree *root);
+
+// split_env_arg
+int split_env_arg(t_list **lst);
+int split_arg_node(t_list *node, t_list **dest);
 
 #endif

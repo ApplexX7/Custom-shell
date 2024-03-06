@@ -6,13 +6,13 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/04 16:32:15 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/06 11:03:41 by ayait-el         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ../main.c ft_split_tokens.c labling.c debug.c expand_args.c check_syn.c combine_list.c helper.c \
 	labling_priority.c build_tree.c open_redirections.c get_next_line.c helpers.c wildcard.c set_tree_io.c \
-	remove_parenthesis.c handle_redirections_bottom.c open_pipes.c
+	remove_parenthesis.c handle_redirections_bottom.c open_pipes.c split_env_args.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
