@@ -215,7 +215,7 @@ int add_node(t_list **dest, t_list *node)
 
 static int handle_single_dolor(t_list *node, t_list **dest)
 {
-  if (!ft_strncmp(node->content, "$", 2) && node->is_op == '"')
+  if (!ft_strncmp(node->content, "$", 2) && (node->is_op == '"' || node->is_op == 0))
     return (add_node(dest, node));
   else
     return (0);
