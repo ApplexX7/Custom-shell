@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 19:40:56 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:52:08 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int manage_fds(int fd, t_fd_action action)
 		fds[index] = fd;
 		index++;
 	}
-	else if (action = CLOSE)
+	else if (action == CLOSE)
 	{
 		while (i < index)
 		{
 			if (close(fds[i]))
 			{
-				ft_hnalde_error(errno);
+				perror("Error :");
 				return (1);
 			}
 			i++;
@@ -56,7 +56,7 @@ int manage_pid(int pid, t_pid_action action)
 	}
 	else if (action == WAIT)
 	{
-		while (i < index)
+		while (i < pid_index)
 		{
 			waitpid(pids[i], &status, 0);
 			i++;

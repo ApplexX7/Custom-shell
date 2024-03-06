@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 19:26:33 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:24:57 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_tree *build_tree(t_list *list)
 	root = insert_tree(list, &root);
 	if (!root)
 		return (NULL);
-	inherente_reidirections(root, root->output_file, root->input_file, root->fd);
+	// inherente_reidirections(root, root->output_file, root->input_file, root->fd);
 	return (root);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 19:40:38 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:53:13 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void print_ouput_op(t_list *node);
 int combine_list(t_list **lst);
 
 //check syntax error
-int check_syn(t_list *list);
+int check_syntax(t_list *lst);
 
 // helpers
 void lst_remove_node(t_list **lst, t_list *node);
@@ -136,5 +136,10 @@ int tree_copy_output(char *output_file, int out_fd, t_tree *to);
 int tree_copy_input(char *input_file, int fd, t_tree *to);
 int open_pipes(t_tree *root);
 void inheritance_bottom(t_tree *root);
+
+//manage pids and fds and executing 
+void executing_tree(t_tree *root, char **env);
+int manage_fds(int fd, t_fd_action action);
+int manage_pid(int pid, t_pid_action action);
 
 #endif
