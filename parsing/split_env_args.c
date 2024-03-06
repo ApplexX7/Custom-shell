@@ -2,15 +2,33 @@
 
 #include "minishell.h"
 
+// this function shouldn't fail fail
+static int handle_digit_arg(t_list *node)
+{
+  if (ft_isdigit(((char *) node->content)[1]))
+  {
+    char *tmp;
+
+    tmp = &((char *) node->content)[2];
+    if (*tmp == '\0')
+      return (1);
+    ft_memmove(node->content, tmp, ft_strlen(tmp) + 1);
+    return (1);
+  }
+  return (0);
+}
+
 // allocs: tmp
 int split_arg_node(t_list *node, t_list **dest)
 {
   char *content;
   char *tmp;
 
+  if (handle_digit_arg(node))
+    return (add_node(dest, node));
   content = node->content;
   content++;
-  while (ft_isalpha(*content) || *content == '_')
+  while (ft_isalpha(*content) || ft_isdigit(*content) || *content == '_')
     content++;
   if (*content == '\0')
   {
