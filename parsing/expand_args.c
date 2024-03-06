@@ -213,6 +213,14 @@ int add_node(t_list **dest, t_list *node)
   return (0);
 }
 
+static int handle_single_dolor(t_list *node, t_list **dest)
+{
+  if (!ft_strncmp(node->content, "$", 2) && node->is_op == '"')
+    return (add_node(dest, node));
+  else
+    return (0);
+}
+
 // lst should be labled before passing
 // it frees lst on success
 // allocs: new
@@ -238,6 +246,8 @@ int expand_args(t_list **lst, char **env)
         if (add_node(&new, tmp))
           return (ft_lstclear(&new, &free), 1);
       }
+      else if (handle_single_dolor(tmp, &new))
+        return (ft_lstclear(&new, &free), 1);
     }
     else if (add_node(&new, tmp)) // add node if it's not env arg
       return (ft_lstclear(&new, &free), 1);
