@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/05 13:52:08 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:27:35 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 int manage_fds(int fd, t_fd_action action)
 {
 	static int 	fds[OPEN_MAX];
-	static int 	index;
+	static int 	index = 0;
 	int			i;
 
-	index = 0;
 	i = 0;
 	if (action == CAPTURE)
 	{
@@ -36,6 +35,7 @@ int manage_fds(int fd, t_fd_action action)
 			}
 			i++;
 		}
+		index = 0;
 	}
 	return (0);
 }
@@ -43,11 +43,10 @@ int manage_fds(int fd, t_fd_action action)
 int manage_pid(int pid, t_pid_action action)
 {
 	static int	pids[CHILD_MAX];
-	static int	pid_index;
-	int			i = 0;
+	static int	pid_index = 0;
+	int			i;
 	int status;
 
-	pid_index = 0;
 	i = 0;
 	if (action == CAPTURED)
 	{
@@ -61,6 +60,7 @@ int manage_pid(int pid, t_pid_action action)
 			waitpid(pids[i], &status, 0);
 			i++;
 		}
+		pid_index = 0;
 	}
 	return (0);
 }

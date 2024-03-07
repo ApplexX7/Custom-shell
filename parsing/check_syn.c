@@ -6,16 +6,15 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 13:02:53 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/07 10:29:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	syntax_error_handling(t_list *list, t_list *copy)
+void	syntax_error_handling(t_list *copy)
 {
 	ft_lstclear(&copy, &free);
-	ft_lstclear(&list, &free);
 	printf("bash: syntax error in tokens\n");
 }
 
@@ -100,6 +99,26 @@ int handle_oppositions(t_list *lst)
 	return (0);
 }
 
+int valid_parentis(t_list *lst)
+{
+	t_list *current;
+	int index;
+
+	current = lst;
+	index = 0;
+	while (current)
+	{
+		if (!ft_strncmp(current->content, "(", 2) && !current->is_op)
+			index++;
+		else if (index && !ft_strncmp(current->content, ")", 2) && !current->is_op)
+			return (1);
+		else
+			index = 0;
+		current = current->next;
+	}
+	return (0);
+}
+
 int valid_syntax(t_list *lst)
 {
 	if (check_opsyntax(lst))
@@ -107,6 +126,8 @@ int valid_syntax(t_list *lst)
 	if (ft_handle_parentiserror(lst))
 		return (1);
 	if (handle_oppositions(lst))
+		return (1);
+	if (valid_parentis(lst))
 		return (1);
 	return (0);
 }
@@ -144,19 +165,19 @@ int closed_qpsayntax(t_list *lst)
 int check_syntax(t_list *lst)
 {
 	t_list *current;
-	// int 	index;
 	
 	current = copy_lst(lst);
 	del_spaces(&current);
 	if (closed_qpsayntax(current))
 	{
-		syntax_error_handling(lst, current);
+		syntax_error_handling(current);
 		return (1);
 	}
 	if (valid_syntax(current))
 	{
-		syntax_error_handling(lst, current);
+		syntax_error_handling(current);
 		return (1);
 	}
+	ft_lstclear(&current, &free);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 10:30:04 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:57:42 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ void dup_iofile(int fd_in, int fd_out)
 		handle_error();
 		exit(errno);
 	}
+	if (fd_in != 0)
+		close(fd_in);
 	if (dup2(fd_out, STDOUT_FILENO) == -1)
 	{
 		handle_error();
 		exit(errno);
 	}
-	if (fd_in != 0)
-		close(fd_in);
 	if (fd_out != 1)
 		close(fd_out);
 }
@@ -199,11 +199,12 @@ void create_chdilren(t_tree *content, char **env)
 		executing_command(content, env);
 	}
 	if (content->fd != 0)
-		manage_fds(content->fd, CAPTURE);
+		close(content->fd);
 	if (content->out_fd != 1)
-		manage_fds(content->out_fd, CAPTURE);
+		close(content->out_fd);
 	manage_pid(pid, CAPTURED);
 }
+
 void set_back_io(int save_state)
 {
 	if (dup2(save_state, STDOUT_FILENO) == -1)

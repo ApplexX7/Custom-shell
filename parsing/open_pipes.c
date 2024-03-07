@@ -67,7 +67,7 @@ int open_pipes(t_tree *root)
 
   if (!root)
     return (0);
-  if (!ft_strncmp(root->node->content, "|", 2))
+  if (root->node && !ft_strncmp(root->node->content, "|", 2))
   {
     if (pipe(pip))
       return (write(2, "failed to create pipe\n", 22), 1);
