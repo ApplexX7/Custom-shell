@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 10:29:05 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:22:06 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int ft_handle_parentiserror(t_list *lst)
 	{
 		if (index_key && !ft_strncmp(current->content, "(", 2) && !current->is_op)
 			return (1);
-		if (ft_special_operators(current) || (!ft_strncmp(current->content, "(", 2) && !current->is_op))
+		if (ft_special_operators(current) || (!ft_strncmp(current->content, "(", 2) && !current->is_op) ||
+			(!ft_strncmp(current->content, "<<", 3) && !current->is_op) )
 			index_key = 0;
 		else
 			index_key++;
@@ -181,3 +182,4 @@ int check_syntax(t_list *lst)
 	ft_lstclear(&current, &free);
 	return (0);
 }
+

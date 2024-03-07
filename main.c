@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 10:17:08 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:41:01 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int main(int argc, char **argv, char **env)
 			}
 			if (combine_list(&lst))
 				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-													  print_ouput(lst);
 			if (expand_wildcard(&lst))
 				return (ft_lstclear(&lst, &free), 1);
 			labling_prio(lst);
@@ -55,11 +54,10 @@ int main(int argc, char **argv, char **env)
 				return 0;
       		if (open_pipes(root))
 	  			return (0);
-			inheritance_bottom(root);
-			treeprint(root, 0);
-			// executing_tree(root, env);
-			// manage_pid(-1, WAIT);
-			// manage_fds(0, CLOSE);
+			// treeprint(root, 0);
+			executing_tree(root, env);
+			manage_pid(-1, WAIT);
+			manage_fds(0, CLOSE);
 			add_history(promt);
 			freetree(&root);
 			// ft_lstclear(&lst, &free);

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 18:57:42 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:35:36 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void executing_tree(t_tree *root, char **env)
 
 	if (root->left == NULL && root->right == NULL)
 	{
+		inheritance_bottom(root);
 		create_chdilren(root, env);
 		return ;
 	}
