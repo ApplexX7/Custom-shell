@@ -2,6 +2,16 @@
 
 #include "minishell.h"
 
+
+// note: only use in set_single_io
+static int is_herdoc(t_list *lst)
+{
+  if (!ft_strncmp(lst->content, ">>", 3) || !ft_strncmp(lst->content, "<<", 3))
+    return (1);
+  else
+    return (0);
+}
+
 int set_single_io(t_tree *node, t_list *pos)
 {
 	if (is_input_redirect(pos))
@@ -31,6 +41,7 @@ int set_single_io(t_tree *node, t_list *pos)
 		{
 			node->output_file = NULL;
 			node->fd = pos->fd;
+      node->open_mod = O_WRONLY | O_APPEND;
 		}
 		else
 		{
@@ -38,6 +49,7 @@ int set_single_io(t_tree *node, t_list *pos)
 			if (node->output_file == NULL)
 				return (write(2, "Malloc Failure\n", 15), 1);
 			node->out_fd = 1;
+      node->open_mod = O_WRONLY | O_TRUNC;
 		}
 	}
 	return (0);

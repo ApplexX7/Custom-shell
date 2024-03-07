@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/03 14:59:42 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:26:54 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,6 @@ int is_output_redirect(t_list *lst)
   if (!ft_strncmp(lst->content, ">" ,2) && !lst->is_op)
     return (1);
   else if (!ft_strncmp(lst->content, ">>" ,3) && !lst->is_op)
-    return (1);
-  else
-    return (0);
-}
-
-int is_herdoc(t_list *lst)
-{
-  if (!ft_strncmp(lst->content, ">>", 3) || !ft_strncmp(lst->content, "<<", 3))
     return (1);
   else
     return (0);

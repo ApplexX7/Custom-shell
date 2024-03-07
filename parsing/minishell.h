@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 11:07:41 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:22:29 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_tree
     int out_fd;
     char *input_file;
     char *output_file;
-
+    int open_mod;
 } t_tree;
 
 typedef enum fd_action {
