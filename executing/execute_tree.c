@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 18:35:36 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/07 19:20:52 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,12 +174,18 @@ void executing_command(t_tree *content, char **env)
 
 	path = valid_path(content->node->content);
 	if (!path)
-		exit(0);
+	{
+		handle_error();
+		exit(errno);
+	}
 	if (set_file_io(content))
-		exit(0);
+	{
+		handle_error();
+		exit(errno);
+	}
 	cmd = setup_command(content);
 	if (!cmd)
-		exit(0);
+		exit(errno);
 	if (execve(path, cmd, env) == -1)
 	{
 		perror("Error");
@@ -237,26 +243,55 @@ int	ft_dup_parent(t_tree *root)
 	return (save_state);
 }
 
-void executing_tree(t_tree *root, char **env)
+int is_andor(t_tree *root)
+{
+	if (!ft_strncmp(root->node->content, "&&", 3) && !root->node->is_op)
+		return (1);
+	if (!ft_strncmp(root->node->content, "||", 3) && !root->node->is_op)
+		return (1);
+	return (0);
+}
+
+int check_operators(t_tree *root ,char **env)
 {
 	int save_state;
+	int status;
 
+	if (!ft_strncmp(root->node->content, "&&", 3) && !root->node->is_op)
+	{
+		save_state = ft_dup_parent(root);
+		if (save_state == -1)
+			return 0;
+		executing_tree(root->left, env);
+		status = manage_pid(0, WAIT);
+		if (status >> 8 == 0)
+			executing_tree(root->right, env);
+		set_back_io(save_state);
+	}
+	else if (!ft_strncmp(root->node->content, "||", 3) && !root->node->is_op)
+	{
+		save_state = ft_dup_parent(root);
+		if (save_state == -1)
+			return 0;
+		executing_tree(root->left, env);
+		status = manage_pid(0, WAIT);
+		if (status >> 8 != 0)
+			executing_tree(root->right, env);
+		set_back_io(save_state);
+	}
+	return (0);
+}
+
+void executing_tree(t_tree *root, char **env)
+{
 	if (root->left == NULL && root->right == NULL)
 	{
 		inheritance_bottom(root);
 		create_chdilren(root, env);
 		return ;
 	}
-	else if(!ft_strncmp(root->node->content, "&&", 3))
-	{
-		save_state = ft_dup_parent(root);
-		if (save_state == -1)
-			return ;
-		executing_tree(root->left, env);
-		waitpid(-1, NULL, 0);
-		executing_tree(root->right, env);
-		set_back_io(save_state);
-	}
+	else if (is_andor(root))
+		check_operators(root, env);
 	else
 	{
 		executing_tree(root->left, env);
