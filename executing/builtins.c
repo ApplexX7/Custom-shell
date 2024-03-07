@@ -65,6 +65,7 @@ int check_export_syntax(char *content)
 
 void print_export(t_list *lst, int fd)
 {
+  bubbleSort(lst);
   while (lst)
   {
     ft_putstr_fd("declare -x ", fd);
@@ -109,12 +110,13 @@ int main(void)
   t_list *node;
   node = NULL;
   ft_lstadd_back(&node, ft_lstnew("export"));
-  ft_lstadd_back(&node, ft_lstnew("hello=sdfsdf"));
+  ft_lstadd_back(&node, ft_lstnew("hello=ssss"));
   ft_lstadd_back(&node, ft_lstnew("world="));
   ft_lstadd_back(&node, ft_lstnew("=hello"));
   ft_lstadd_back(&node, ft_lstnew("=hello"));
   ft_lstadd_back(&node, ft_lstnew("a=hello"));
-  t_tree t = {node, NULL, NULL, 0, 1, NULL, "test"};
+  ft_lstadd_back(&node, ft_lstnew("aaaa=hello"));
+  t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL};
   ft_export(&t);
   //ft_lstclear(&node, &free);
   node = NULL;

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 11:07:41 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/07 22:32:42 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char *join_list(t_list *lst);
 t_list *copy_lst(t_list *lst);
 int is_open_parenth(t_list *node);
 int is_close_parenth(t_list *node);
+void swap(t_list *a, t_list *b);
+void bubbleSort(t_list *start);
 
 //labling priority
 t_list *find_roottree(t_list **list);
