@@ -6,6 +6,8 @@ int set_single_io(t_tree *node, t_list *pos)
 {
 	if (is_input_redirect(pos))
 	{
+    if (node->fd)
+      close(node->fd);
 		free(node->input_file);
 		if (is_herdoc(pos))
 		{
@@ -22,6 +24,8 @@ int set_single_io(t_tree *node, t_list *pos)
 	}
 	else if (is_output_redirect(pos))
 	{
+    if (node->out_fd != 1)
+      close(node->out_fd);
 		free(node->output_file);
 		if (is_herdoc(pos))
 		{
