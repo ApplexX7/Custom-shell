@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/05 20:32:33 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:53:45 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,9 +259,7 @@ void remove_points_dir(t_list *start, t_list **lst)
   {
     while (tmp)
     {
-      if (!ft_strncmp(tmp->content, ".", 2))
-        lst_remove_node(lst, tmp);
-      else if (!ft_strncmp(tmp->content, "..", 3))
+      if (!ft_strncmp(tmp->content, ".", 1))
         lst_remove_node(lst, tmp);
       tmp = tmp->next;
     }
@@ -295,23 +293,27 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
   return (0);
 }
 
+// allocs: new
 int add_matched_list(t_list **dest, t_list *lst)
 {
   t_list *start;
   t_list *end;
+  t_list *new;
 
   lst_next_wildcard(lst, &start, &end);
   while (start && end)
   {
+    new = NULL;
     while (lst != start)
     {
       if (new_and_add(dest, lst->content, lst->is_op))
         return (1);
       lst = lst->next;
     }
-    if (get_matched_list(start, end, dest))
-      return (1);
+    if (get_matched_list(start, end, &new))
+      return (ft_lstclear(&new, &free), 1);
     lst = end->next;
+    append_list(new, dest, '\'');
     lst_next_wildcard(lst, &start, &end);
   }
   while (lst)
