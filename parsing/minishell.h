@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 13:15:35 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:20:33 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int	open_files(char *file_name, int level);
 void dup_iofile(int fd_in, int fd_out);
 int set_file_io(t_tree *content);
 int	ft_dup_parent(t_tree *root);
-void set_back_io(int save_state);
+void set_back_io(int input, int output);
 void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);

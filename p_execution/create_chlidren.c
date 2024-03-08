@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 15:17:01 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:54:23 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void executing_command(t_tree *content, char **env)
 		exit(errno);
 	if (execve(path, cmd, env) == -1)
 	{
-		perror("Error");
+		write(2, "Hello\n", 6);
+		perror("Execve");
 		exit(errno);
 	}
 }

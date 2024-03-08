@@ -6,40 +6,75 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 10:28:44 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:59:17 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
-void set_back_io(int save_state)
+void set_back_io(int input, int output)
 {
-	if (dup2(save_state, STDOUT_FILENO) == -1)
+	if (dup2(input, STDIN_FILENO) == -1)
 	{
-		perror("Error");
+		perror("dup");
+		return ;
+	}
+	if (dup2(output, STDOUT_FILENO) == -1)
+	{
+		perror("dup");
 		return ;
 	}
 }
 
 int	ft_dup_parent(t_tree *root)
 {
-	int save_state;
-	int fd;
+	int fd_out = 1;
+	int fd_int = 0;
 
-	save_state = 1;
+	if (root->input_file != NULL)
+	{
+		root->fd = dup(STDIN_FILENO);
+		if (root->fd == -1)
+			return (-1);
+		fd_int = open_files(root->input_file, 1);
+		if (fd_int == -1)
+			perror("Errorww");
+	}
+	else if (root->fd != 0)
+	{
+		fd_int = root->fd;
+		root->fd = dup(STDIN_FILENO);
+	}
 	if (root->output_file != NULL)
 	{
-		save_state = dup(STDOUT_FILENO);
-		if (save_state == -1)
+		root->out_fd = dup(STDOUT_FILENO);
+		if (root->out_fd == -1)
 			return (-1);
-		fd = open_files(root->output_file, 2);
-		if (fd == -1)
+		if (root->open_mod == O_APPEND)
+			fd_out = open_files(root->output_file, 3);
+		else
+			fd_out = open_files(root->output_file, 2);
+		if (fd_out == -1)
 			return (-1);
-		if (dup2(fd, STDOUT_FILENO) == -1)
-		{
-			handle_error();
-			return (1);
-		}
 	}
-	return (save_state);
+	else if (root->out_fd != 0)
+	{
+		fd_out = root->out_fd;
+		root->out_fd = dup(STDOUT_FILENO);
+	}
+	if (dup2(fd_int, STDIN_FILENO) == -1)
+	{
+		perror("dup");
+		return (1);
+	}
+	if (dup2(fd_out, STDOUT_FILENO) == -1)
+	{
+		perror("dup");
+		return (1);
+	}
+	if (fd_int != 0)
+		close(fd_int);
+	if (fd_out != 1)
+		close(fd_out);
+	return (0);
 }

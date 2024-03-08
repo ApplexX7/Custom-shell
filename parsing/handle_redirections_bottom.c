@@ -1,8 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_redirections_bottom.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
+/*   Updated: 2024/03/08 16:53:41 by mohilali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int set_single_io(t_tree *node, t_list *pos)
 {
@@ -29,15 +37,15 @@ int set_single_io(t_tree *node, t_list *pos)
     node->output_file = NULL;
 		if (is_herdoc(pos))
 		{
-			node->fd = pos->fd;
-      node->open_mod = O_WRONLY | O_APPEND; // TODO: useless maybe
+			node->out_fd = open(pos->next->content, O_WRONLY | O_APPEND | O_CREAT, 0644);
+      if (node->fd == -1)
+        return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
 		}
 		else
 		{
 			node->out_fd = open(pos->next->content, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 			if (node->out_fd == -1)
 				return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
-      node->open_mod = O_WRONLY | O_TRUNC; // TODO: useless maybe
 		}
 	}
 	return (0);

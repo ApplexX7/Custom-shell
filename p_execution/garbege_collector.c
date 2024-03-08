@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 13:29:02 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:57:43 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ int manage_fds(int fd, t_fd_action action)
 	{
 		while (i < index)
 		{
-			if (close(fds[i]))
-			{
-				perror("Error :");
-				return (1);
-			}
+			close(fds[i]);
 			i++;
 		}
 		index = 0;

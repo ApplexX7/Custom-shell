@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 13:20:43 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:04:23 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int is_output_redirect(t_list *lst)
   if (!ft_strncmp(lst->content, ">" ,2) && !lst->is_op)
     return (1);
   else if (!ft_strncmp(lst->content, ">>" ,3) && !lst->is_op)
-    return (printf("test\n"), 1);
+    return (1);
   else
     return (0);
 }
@@ -111,9 +111,11 @@ int set_io(t_tree *node, t_list *start)
       free(node->output_file);
       if (is_herdoc(start))
       {
-        node->output_file = NULL;
-        node->out_fd = start->fd;
-        node->open_mod = O_WRONLY | O_APPEND;
+        node->output_file = ft_strdup(start->next->content);
+        if (node->output_file == NULL)
+          return (write(2, "Malloc Failure\n", 15), 1);
+        node->out_fd = 1;
+        node->open_mod = O_APPEND;
       }
       else
       {
@@ -121,7 +123,7 @@ int set_io(t_tree *node, t_list *start)
         if (node->output_file == NULL)
           return (write(2, "Malloc Failure\n", 15), 1);
         node->out_fd = 1;
-        node->open_mod = O_WRONLY | O_TRUNC;
+        node->open_mod = O_TRUNC;
       }
     }
     start = start->next->next;
