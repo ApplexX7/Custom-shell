@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/08 18:55:27 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/08 18:58:53 by ayait-el         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME = mini
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC)  $(OBJCT) -lreadline -g -o $(NAME) ../Libft-42/libft.a
+	$(CC)  $(OBJCT) -lreadline -g -o $(NAME) Libft-42/libft.a
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@
