@@ -259,15 +259,17 @@ int add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched)
 void remove_points_dir(t_list *start, t_list **lst)
 {
   t_list *tmp;
+  t_list *tmp2;
 
   tmp = *lst;
   if (start && ((char *)start->content)[0] != '.')
   {
     while (tmp)
     {
+      tmp2 = tmp->next;
       if (!ft_strncmp(tmp->content, ".", 1))
         lst_remove_node(lst, tmp);
-      tmp = tmp->next;
+      tmp = tmp2;
     }
   }
 }

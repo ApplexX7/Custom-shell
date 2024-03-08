@@ -92,9 +92,7 @@ int ensurevalid_syntax(t_list *list)
 int valid_syntax(t_list *list)
 {
 	t_list *current;
-	int		count;
 	
-	count = 0;
 	current = list;
 	while(current)
 	{

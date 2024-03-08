@@ -24,7 +24,7 @@ NAME = mini
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) ../Libft-42/libft.a
+	$(CC)  $(OBJCT) -lreadline -g -o $(NAME) ../Libft-42/libft.a
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@
