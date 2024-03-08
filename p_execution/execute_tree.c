@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 18:55:54 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:17:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,13 @@ int check_operators(t_tree *root ,char **env)
 	else if (!ft_strncmp(root->node->content, "||", 3) && !root->node->is_op)
 	{
 		save_state = ft_dup_parent(root);
+		input = root->fd;
+		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
 		executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
-		if (status >> 8 != 0)
+		if (status >> 8 !=  0)
 			executing_tree(root->right, env);
 		set_back_io(input, output);
 		return (status);
