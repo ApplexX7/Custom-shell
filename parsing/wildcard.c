@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 17:57:19 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:52:26 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,7 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
       return (ft_lstclear(&portion, &free), 1);
   }
   remove_points_dir(start, dest);
+  ft_lstclear(&portion, &free);
   return (0);
 }
 
