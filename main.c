@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 15:14:52 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:29:28 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int main(int argc, char **argv, char **env)
 		if (lst) // TODO: handle error printing
 		{	
 			lable_list(lst);
+			if (split_env_arg(&lst))
+				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
 			if (expand_args(&lst, env))
 				return (ft_lstclear(&lst, &free), 1);
 			status_code =  check_syntax(lst); // TODO: handle error
