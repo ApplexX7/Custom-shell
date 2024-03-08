@@ -11,6 +11,7 @@ void lst_remove_node(t_list **lst, t_list *node)
   {
     *lst = node->next;
     ft_lstdelone(node, &free);
+    return ;
   }
   while (tmp->next)
   {

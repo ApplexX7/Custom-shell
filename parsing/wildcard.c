@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/28 15:59:09 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:52:26 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_list *get_current_files()
     content = readdir(current_dir);
   }
   closedir(current_dir);
-  return (lst);
+  return (free(cwd), lst);
 }
 
 int lst_next_wildcard(t_list *head, t_list **start, t_list **end)
@@ -228,26 +228,50 @@ int add_if_nomatch(t_list **dest, t_list *start, t_list *end, int matched)
   return (0);
 }
 
+// allocs: files
 int add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched)
 {
   t_list *files;
   int open_end;
   int open_start;
+  t_list *tmp;
 
   open_end = ends[0];
   open_start = ends[1];
   files = get_current_files();
-  while (files)
+  if (!files)
+    return (1);
+  tmp = files;
+  while (tmp)
   {
-    if (is_matched(files->content, portion, open_end, open_start))
+    if (is_matched(tmp->content, portion, open_end, open_start))
     {
       *matched = 1;
-      if (new_and_add(dest, files->content, '\''))
-        return (1);
+      if (new_and_add(dest, tmp->content, '\''))
+        return (ft_lstclear(&files, &free), 1);
     }
-    files = files->next;
+    tmp = tmp->next;
   }
+  ft_lstclear(&files, &free);
   return (0);
+}
+
+void remove_points_dir(t_list *start, t_list **lst)
+{
+  t_list *tmp;
+  t_list *tmp2;
+
+  tmp = *lst;
+  if (start && ((char *)start->content)[0] != '.')
+  {
+    while (tmp)
+    {
+      tmp2 = tmp->next;
+      if (!ft_strncmp(tmp->content, ".", 1))
+        lst_remove_node(lst, tmp);
+      tmp = tmp2;
+    }
+  }
 }
 
 // allocs: portion
@@ -273,26 +297,32 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
     if (add_if_nomatch(dest, start, end, matched))
       return (ft_lstclear(&portion, &free), 1);
   }
+  remove_points_dir(start, dest);
+  ft_lstclear(&portion, &free);
   return (0);
 }
 
+// allocs: new
 int add_matched_list(t_list **dest, t_list *lst)
 {
   t_list *start;
   t_list *end;
+  t_list *new;
 
   lst_next_wildcard(lst, &start, &end);
   while (start && end)
   {
+    new = NULL;
     while (lst != start)
     {
       if (new_and_add(dest, lst->content, lst->is_op))
         return (1);
       lst = lst->next;
     }
-    if (get_matched_list(start, end, dest))
-      return (1);
+    if (get_matched_list(start, end, &new))
+      return (ft_lstclear(&new, &free), 1);
     lst = end->next;
+    append_list(new, dest, '\'');
     lst_next_wildcard(lst, &start, &end);
   }
   while (lst)
