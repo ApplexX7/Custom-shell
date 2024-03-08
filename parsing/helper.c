@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/27 12:46:38 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:22:46 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void freetree(t_tree **root)
 		free(tmp->content);
 		free(tmp);
 	}
+	free((*root)->input_file);
+	free((*root)->output_file);
 	free((*root));
 	*root = NULL;
 }

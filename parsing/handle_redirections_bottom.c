@@ -22,19 +22,10 @@ int set_single_io(t_tree *node, t_list *pos)
 	}
 	else if (is_output_redirect(pos))
 	{
-		free(node->output_file);
-		if (is_herdoc(pos))
-		{
-			node->output_file = NULL;
-			node->fd = pos->fd;
-		}
-		else
-		{
 			node->output_file = ft_strdup(pos->next->content);
 			if (node->output_file == NULL)
 				return (write(2, "Malloc Failure\n", 15), 1);
 			node->out_fd = 1;
-		}
 	}
 	return (0);
 }

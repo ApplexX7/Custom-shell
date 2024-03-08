@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 16:41:51 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/07 10:06:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void treeprint(t_tree *root1, int level)
 		while (tmp)
 		{
  			printf("%s\t", (char *)tmp->content);
+ 			// printf("%c\t", (char )tmp->is_op);
 			tmp = tmp->next;
 		}
 		printf("\n");

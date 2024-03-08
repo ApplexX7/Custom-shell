@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/03 14:59:42 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:04:51 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,19 @@ int is_input_redirect(t_list *lst)
 
 int is_output_redirect(t_list *lst)
 {
+ 	// printf("%d\t", (int)lst->is_op);
+ 	// printf("%s\n", (char *)lst->content);
   if (!ft_strncmp(lst->content, ">" ,2) && !lst->is_op)
     return (1);
   else if (!ft_strncmp(lst->content, ">>" ,3) && !lst->is_op)
-    return (1);
+    return (printf("test\n"), 1);
   else
     return (0);
 }
 
 int is_herdoc(t_list *lst)
 {
-  if (!ft_strncmp(lst->content, ">>", 3) || !ft_strncmp(lst->content, "<<", 3))
+  if (!ft_strncmp(lst->content, "<<", 3))
     return (1);
   else
     return (0);
@@ -109,19 +111,11 @@ int set_io(t_tree *node, t_list *start)
     }
     else if (is_output_redirect(start))
     {
-      free(node->output_file);
-      if (is_herdoc(start))
-      {
-        node->output_file = NULL;
-        node->fd = start->fd;
-      }
-      else
-      {
+
         node->output_file = ft_strdup(start->next->content);
         if (node->output_file == NULL)
           return (write(2, "Malloc Failure\n", 15), 1);
         node->fd = 0;
-      }
     }
     start = start->next->next;
   }
