@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 12:44:25 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:14:52 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ int main(int argc, char **argv, char **env)
 	  			return (0);
 			// treeprint(root, 0);
 			status_code = executing_tree(root, env);
-			code = manage_pid(0 , WAIT);
-			if (code != -11)
-				status_code = code;
+			code = manage_pid(0 , WAIT, &status_code);
 			manage_fds(0, CLOSE);
 			add_history(promt);
 			freetree(&root);
