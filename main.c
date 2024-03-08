@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 19:30:14 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:56:03 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int main(int argc, char **argv, char **env)
 			inheritance_bottom(root);
 			add_history(promt);
 			treeprint(root, 0);
-			// freetree(&root);
-			// free(promt);
-			// ft_lstclear(&copy, &free);
+			freetree(&root);
+			free(promt);
+			//ft_lstclear(&lst, &free);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 16:53:45 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:57:19 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_list *get_current_files()
     content = readdir(current_dir);
   }
   closedir(current_dir);
-  return (lst);
+  return (free(cwd), lst);
 }
 
 int lst_next_wildcard(t_list *head, t_list **start, t_list **end)
@@ -228,25 +228,31 @@ int add_if_nomatch(t_list **dest, t_list *start, t_list *end, int matched)
   return (0);
 }
 
+// allocs: files
 int add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched)
 {
   t_list *files;
   int open_end;
   int open_start;
+  t_list *tmp;
 
   open_end = ends[0];
   open_start = ends[1];
   files = get_current_files();
-  while (files)
+  if (!files)
+    return (1);
+  tmp = files;
+  while (tmp)
   {
-    if (is_matched(files->content, portion, open_end, open_start))
+    if (is_matched(tmp->content, portion, open_end, open_start))
     {
       *matched = 1;
-      if (new_and_add(dest, files->content, '\''))
-        return (1);
+      if (new_and_add(dest, tmp->content, '\''))
+        return (ft_lstclear(&files, &free), 1);
     }
-    files = files->next;
+    tmp = tmp->next;
   }
+  ft_lstclear(&files, &free);
   return (0);
 }
 
