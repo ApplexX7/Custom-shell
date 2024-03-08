@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 11:44:51 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:15:35 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@
 
 typedef struct s_tree
 {
-	t_list *node;
-	struct s_tree *left;
-	struct s_tree *right;
-	int fd;
-	int out_fd;
-	char *input_file;
-	char *output_file;
-
+    t_list *node;
+    struct s_tree *left;
+    struct s_tree *right;
+    int fd;
+    int out_fd;
+    char *input_file;
+    char *output_file;
+    int open_mod;
 } t_tree;
 
 typedef enum fd_action {
@@ -161,5 +161,9 @@ void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
 int check_operators(t_tree *root ,char **env);
+
+// split_env_arg
+int split_env_arg(t_list **lst);
+int split_arg_node(t_list *node, t_list **dest);
 
 #endif

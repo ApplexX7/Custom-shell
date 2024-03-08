@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 12:42:11 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:29:02 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int manage_pid(int pid, t_pid_action action)
 	{
 		if (waitpid(pids[pid_index], &status, 0) == -1)
 			return (-11);
-		// pid_index = 0;
+		pid_index = 0;
 		return (WEXITSTATUS(status));
 	}
 	pid_index++;
