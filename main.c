@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 19:21:32 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 12:44:25 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 int main(int argc, char **argv, char **env)
 {
 	char *promt;
+	int code;
+	static int status_code;
 	t_list *lst;
-	// t_list *copy;
 	t_tree *root;
 
 	(void) argc;
 	(void) argv;
 	(void) env;
+	status_code = 0;
 	while (1)
 	{
 		promt = readline("minishell %% ");
@@ -31,9 +33,11 @@ int main(int argc, char **argv, char **env)
 		{	
 			lable_list(lst);
 			if (expand_args(&lst, env))
-				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-			if (check_syntax(lst))
+				return (ft_lstclear(&lst, &free), 1);
+			status_code =  check_syntax(lst); // TODO: handle error
+			if (status_code)
 			{
+				printf("status == %d\n", status_code);
 				ft_lstclear(&lst, &free);
 				free(promt);
 				continue ;
@@ -55,8 +59,10 @@ int main(int argc, char **argv, char **env)
       		if (open_pipes(root))
 	  			return (0);
 			// treeprint(root, 0);
-			executing_tree(root, env);
-			manage_pid(-1, WAIT);
+			status_code = executing_tree(root, env);
+			code = manage_pid(0 , WAIT);
+			if (code != -11)
+				status_code = code;
 			manage_fds(0, CLOSE);
 			add_history(promt);
 			freetree(&root);

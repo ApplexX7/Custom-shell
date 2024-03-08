@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 18:22:06 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 11:30:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,12 @@ int check_syntax(t_list *lst)
 	if (closed_qpsayntax(current))
 	{
 		syntax_error_handling(current);
-		return (1);
+		return (EXIT_CODEPARSING);
 	}
 	if (valid_syntax(current))
 	{
 		syntax_error_handling(current);
-		return (1);
+		return (EXIT_CODEPARSING);
 	}
 	ft_lstclear(&current, &free);
 	return (0);

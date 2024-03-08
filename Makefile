@@ -6,13 +6,14 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/05 13:50:38 by mohilali         ###   ########.fr        #
+#    Updated: 2024/03/08 10:32:56 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = ../main.c ft_split_tokens.c labling.c debug.c expand_args.c check_syn.c combine_list.c helper.c \
-	labling_priority.c build_tree.c open_redirections.c get_next_line.c helpers.c wildcard.c set_tree_io.c \
-	remove_parenthesis.c handle_redirections_bottom.c open_pipes.c ../executing/execute_tree.c ../executing/garbege_collector.c
+SRC = main.c parsing/ft_split_tokens.c parsing/labling.c parsing/debug.c parsing/expand_args.c parsing/check_syn.c parsing/combine_list.c parsing/helper.c \
+	parsing/labling_priority.c parsing/build_tree.c parsing/open_redirections.c parsing/get_next_line.c parsing/helpers.c parsing/wildcard.c parsing/set_tree_io.c \
+	parsing/remove_parenthesis.c parsing/handle_redirections_bottom.c parsing/open_pipes.c p_execution/execute_tree.c p_execution/garbege_collector.c \
+	p_execution/change_state.c p_execution/create_chlidren.c p_execution/open_files.c p_execution/path.c 
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
@@ -24,7 +25,7 @@ NAME = mini
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) ../Libft-42/libft.a
+	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) Libft-42/libft.a
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@
