@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 11:27:27 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:17:01 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void create_chdilren(t_tree *content, char **env)
 		close(content->fd);
 	if (content->out_fd != 1)
 		close(content->out_fd);
-	manage_pid(pid, CAPTURED);
+	manage_pid(pid, CAPTURED, NULL);
 }
