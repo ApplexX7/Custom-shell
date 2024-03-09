@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 15:15:25 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/09 09:31:42 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,9 @@ void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
 int check_operators(t_tree *root ,char **env);
+
+// split_env_arg
+int split_env_arg(t_list **lst);
+int split_arg_node(t_list *node, t_list **dest);
 
 #endif
