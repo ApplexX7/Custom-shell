@@ -35,6 +35,11 @@ int split_arg_node(t_list *node, t_list **dest)
     if (new_and_add(dest, node->content, node->is_op))
       return (1);
   }
+  else if (content - (char *) node->content == 1)
+  {
+    if (new_and_add(dest, node->content, '\''))
+      return (1);
+  }
   else
   {
     tmp = ft_substr(node->content, 0, content - (char *)node->content);
