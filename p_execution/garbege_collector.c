@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 15:16:48 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:41:48 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ int manage_fds(int fd, t_fd_action action)
 	{
 		while (i < index)
 		{
-			if (close(fds[i]))
-			{
-				perror("Error :");
-				return (1);
-			}
+			close(fds[i]);
 			i++;
 		}
 		index = 0;
@@ -56,8 +52,8 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 	{
 		while (i < pid_index)
 		{
-			if (waitpid(pids[i], last_status, WUNTRACED) == -1)
-				return (perror("waitpid"), 1);
+			if (waitpid(pids[i], last_status, 0) == -1)
+				return (1);
 			i++;
 		}
 		pid_index = 0;

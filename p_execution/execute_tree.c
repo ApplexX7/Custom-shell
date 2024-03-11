@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 15:16:28 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:17:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void handle_error()
 {
-	perror("Error :");
+	perror("Handle:");
 }
 
 int transfer_todoublearr(t_list *list)
@@ -69,31 +69,37 @@ int is_andor(t_tree *root)
 
 int check_operators(t_tree *root ,char **env)
 {
+	int input = 0;
+	int output = 1;
 	int save_state;
 	int status;
 
 	if (!ft_strncmp(root->node->content, "&&", 3) && !root->node->is_op)
 	{
 		save_state = ft_dup_parent(root);
+		input = root->fd;
+		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
 		executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
 		if (status >> 8 ==  0)
 			executing_tree(root->right, env);
-		set_back_io(save_state);
+		set_back_io(input, output);
 		return (status);
 	}
 	else if (!ft_strncmp(root->node->content, "||", 3) && !root->node->is_op)
 	{
 		save_state = ft_dup_parent(root);
+		input = root->fd;
+		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
 		executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
-		if (status >> 8 != 0)
+		if (status >> 8 !=  0)
 			executing_tree(root->right, env);
-		set_back_io(save_state);
+		set_back_io(input, output);
 		return (status);
 	}
 	return (0);

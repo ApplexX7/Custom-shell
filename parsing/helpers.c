@@ -191,3 +191,12 @@ int is_close_parenth(t_list *node)
   else
     return (0);
 }
+//
+// note: only use in set_single_io
+int is_herdoc(t_list *lst)
+{
+  if (!ft_strncmp(lst->content, ">>", 3) || !ft_strncmp(lst->content, "<<", 3))
+    return (1);
+  else
+    return (0);
+}
