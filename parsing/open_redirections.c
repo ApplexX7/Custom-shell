@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 15:38:58 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:30:35 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void create_herdoc(char *limite, int *fd)
 {
 	char *str;
 
-	close(fd[0]);
+	ft_close(fd[0]);
 	while (1)
 	{
 		write(1, "here_doc> ", 10);
@@ -26,7 +26,7 @@ void create_herdoc(char *limite, int *fd)
 		if (!ft_strncmp(str, limite, ft_strlen(str) - 1))
 		{
 			free(str);
-			close(fd[1]);
+			ft_close(fd[1]);
 			exit(0);
 		}
 		ft_putstr_fd(str, fd[1]);
@@ -47,7 +47,7 @@ int create_heredocchild(char *limite)
 	else if (pid == 0)
 		create_herdoc(limite, fdpipe);
 	waitpid(pid, NULL, 0);
-	close(fdpipe[1]);
+	ft_close(fdpipe[1]);
 	manage_fds(fdpipe[0], CAPTURE);
 	return (fdpipe[0]);
 }
@@ -80,11 +80,11 @@ int open_file(char *str, int red)
 	int fd = -1;
 
 	if (red == 0)
-		fd = open(str, O_RDONLY);
+		fd = ft_open(str, O_RDONLY, 0644);
 	else if (red == 1)
-		fd = open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		fd = ft_open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (red == 2)
-		fd = open(str, O_CREAT | O_RDWR | O_APPEND, 0644);
+		fd = ft_open(str, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror("Error ");

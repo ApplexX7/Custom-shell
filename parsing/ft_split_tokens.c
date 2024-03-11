@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:31:01 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/22 14:20:39 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:51:37 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,14 +139,14 @@ t_list *split_tokens(char *av)
 	i = 0;
 	while (av[i])
 	{
-		while (ft_issspace(av[i]) && av[i] != ' ' && av[i])
+		while (av[i] && ft_issspace(av[i]) && av[i] != ' ')
 			i++;
 		if (ft_normalcharacters(av, &cmd, &i))
 		{
 			ft_lstclear(&cmd, &free);
 			return (NULL);
 		}
-		while (ft_issspace(av[i]) && av[i])
+		while (av[i] && ft_issspace(av[i]))
 			i++;
 		if (ft_tokencharcters(av, &cmd, &i))
 		{

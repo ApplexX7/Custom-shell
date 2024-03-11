@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 18:04:23 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:01:38 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int set_io(t_tree *node, t_list *start)
     if (is_input_redirect(start))
     {
       if (node->fd)
-        close(node->fd); // TODO: maybe protect ???
+        ft_close(node->fd); // TODO: maybe protect ???
       free(node->input_file);
       if (is_herdoc(start))
       {
@@ -107,7 +107,7 @@ int set_io(t_tree *node, t_list *start)
     else if (is_output_redirect(start))
     {
       if (node->out_fd != 1)
-        close(node->fd);
+        ft_close(node->fd);
       free(node->output_file);
       if (is_herdoc(start))
       {

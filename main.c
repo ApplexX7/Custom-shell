@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 14:58:28 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:57:22 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int executing_part(t_tree *root, int *status_code, char **env)
 		return (0);
 	*status_code = executing_tree(root, env);
 	code = manage_pid(0, WAIT, status_code);
-	manage_fds(0, CLOSE);
+	manage_fds(0, CLOSE_ALL);
 	return (0);
 }
 
