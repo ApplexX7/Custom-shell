@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 18:57:43 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:41:48 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 	{
 		while (i < pid_index)
 		{
-			if (waitpid(pids[i], last_status, WUNTRACED) == -1)
-				return (perror("waitpid"), 1);
+			if (waitpid(pids[i], last_status, 0) == -1)
+				return (1);
 			i++;
 		}
 		pid_index = 0;

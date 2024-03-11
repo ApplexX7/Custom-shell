@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/08 13:13:07 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/10 17:52:26 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,14 +21,15 @@ CC = cc
 CFALGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 NAME = mini
+READLINEDIR  =  $(shell brew --prefix readline)
 
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) Libft-42/libft.a
+	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline
 
 %.o : %.c
-	$(CC) $(CFALGS) -c $< -o $@
+	$(CC) $(CFALGS) -c $< -o $@ -I$(READLINEDIR)/include
 clean : 
 	$(RM) $(OBJCT)
 

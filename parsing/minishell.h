@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 18:20:33 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:36:01 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 #define MINISHELL_H
 
 #define BUFFER_SIZE 42
+#include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <limits.h>
 #include <string.h>
 #include <stdio.h> // TODO: remove this
-#include <readline/history.h>
-#include <readline/readline.h>
+#include "readline/history.h"
+#include "readline/readline.h"
 #include "../Libft-42/libft.h"
 #include <dirent.h>
 #include <errno.h>
+#include <termios.h>
 
 
 #define EXIT_CODEPARSING 258
