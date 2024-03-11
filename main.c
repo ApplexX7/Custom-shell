@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 15:45:42 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:12:01 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ int main(int argc, char **argv, char **env)
 		}
 		free(promt);
 	}
+  get_exported_arg_value(NULL, NULL, 1); // free the export list
 }

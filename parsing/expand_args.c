@@ -146,7 +146,7 @@ char *get_env_value(char *arg, char **env)
       return (env[i] + ft_strlen(arg) + 1);
     i++;
   }
-  value = get_exported_arg_value(arg, NULL);
+  value = get_exported_arg_value(arg, NULL, 0);
   if (value)
     return (value);
   else

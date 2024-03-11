@@ -75,12 +75,14 @@ void print_export(t_list *lst, int fd)
   }
 }
 
-char *get_exported_arg_value(char *arg, t_list **local_lst)
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit)
 {
   static t_list **lst = NULL;
   t_list *tmp;
 
-  if (local_lst)
+  if (free_bit)
+    (ft_lstclear(lst, &free), *lst = NULL);
+  else if (local_lst)
     lst = local_lst;
   else if (lst)
   {
@@ -102,7 +104,7 @@ int ft_export(t_tree *root)
   t_list *tmp;
   int fd;
 
-  get_exported_arg_value(NULL, &local_env);
+  get_exported_arg_value(NULL, &local_env, 0);
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
