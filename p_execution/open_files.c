@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 10:27:00 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:30:15 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	open_files(char *file_name, int level)
 	int fd = -1;
 
 	if (level == 1)
-		fd = open(file_name, O_RDONLY);
+		fd = ft_open(file_name, O_RDONLY, 0644);
 	else if (level == 2)
-		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = ft_open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (level == 3)
-		fd = open(file_name, O_RDONLY | O_CREAT | O_APPEND, 0644);
+		fd = ft_open(file_name, O_RDONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		handle_error();
@@ -38,14 +38,14 @@ void dup_iofile(int fd_in, int fd_out)
 		exit(errno);
 	}
 	if (fd_in != 0)
-		close(fd_in);
+		ft_close(fd_in);
 	if (dup2(fd_out, STDOUT_FILENO) == -1)
 	{
 		handle_error();
 		exit(errno);
 	}
 	if (fd_out != 1)
-		close(fd_out);
+		ft_close(fd_out);
 }
 
 int set_file_io(t_tree *content)

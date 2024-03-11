@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/09 10:22:13 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:29:55 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int manage_fds(int fd, t_fd_action action)
 		{
       if (fds[i] != 1 && fds[i] != 0)
       {
-        if (close(fds[i]))
+        if (ft_close(fds[i]))
         {
           perror("Error :");
           return (1);
@@ -47,7 +47,7 @@ int manage_fds(int fd, t_fd_action action)
     {
       if (fds[i] == fd)
       {
-        if (close(fds[i]) == -1)
+        if (ft_close(fds[i]) == -1)
           return (perror("close"), 1);
         fds[i] = 0;
         return (0);
@@ -81,4 +81,21 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 		pid_index = 0;
 	}
 	return (0);
+}
+
+int ft_open(char *file, int mode, int perms)
+{
+  int fd;
+
+  fd = open(file, mode, perms);
+  manage_fds(fd, CAPTURE);
+  return (fd);
+}
+
+int ft_close(int fd)
+{
+  if (manage_fds(fd, CLOSE))
+    return (-1);
+  else
+    return (0);
 }
