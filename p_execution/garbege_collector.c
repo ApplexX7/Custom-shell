@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 17:58:42 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:13:40 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int manage_fds(int fd, t_fd_action action)
 		{
       if (fds[i] != 1 && fds[i] != 0)
       {
-        if (ft_close(fds[i]))
+        if (close(fds[i]))
         {
           perror("Error :");
           return (1);
@@ -47,13 +47,14 @@ int manage_fds(int fd, t_fd_action action)
     {
       if (fds[i] == fd)
       {
-        if (ft_close(fds[i]) == -1)
+        if (close(fds[i]) == -1)
           return (perror("close"), 1);
         fds[i] = 0;
         return (0);
       }
       i++;
     }
+    printf("couldn't close %d, not found\n", fd);
   }
 	return (0);
 }

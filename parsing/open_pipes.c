@@ -79,6 +79,8 @@ int open_pipes(t_tree *root)
       return (write(2, "failed to copy tree input\n", 25), 1);
     if (tree_copy_output(root->output_file, root->out_fd, root->right))
       return (write(2, "failed to copy tree input\n", 25), 1);
+    manage_fds(pip[0], CAPTURE);
+    manage_fds(pip[1], CAPTURE);
   }
   if (open_pipes(root->left))
     return (1);

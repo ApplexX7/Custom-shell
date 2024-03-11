@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 17:59:01 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:12:56 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void dup_iofile(int fd_in, int fd_out)
 		handle_error();
 		exit(errno);
 	}
-	if (fd_out != 1)
-		ft_close(fd_out);
+  manage_fds(0, CLOSE_ALL);
 }
 
 int set_file_io(t_tree *content)
