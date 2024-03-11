@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:13:40 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:50:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int manage_fds(int fd, t_fd_action action)
       }
       i++;
     }
-    printf("couldn't close %d, not found\n", fd);
   }
 	return (0);
 }

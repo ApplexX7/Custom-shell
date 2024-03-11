@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:00:59 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:27:07 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_dup_parent(t_tree *root)
 		if (root->out_fd == -1)
 			return (-1);
 		if (root->open_mod == O_APPEND)
-			fd_out = open_files(root->output_file, 3);
+			fd_out = open_files(root->output_file, 2);
 		else
 			fd_out = open_files(root->output_file, 2);
 		if (fd_out == -1)

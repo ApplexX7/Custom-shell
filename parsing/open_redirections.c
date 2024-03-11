@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 17:30:35 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:34:04 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int create_heredocchild(char *limite)
 	if (pid == -1)
 		return (-1);
 	else if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
 		create_herdoc(limite, fdpipe);
+	}
 	waitpid(pid, NULL, 0);
 	ft_close(fdpipe[1]);
 	manage_fds(fdpipe[0], CAPTURE);
