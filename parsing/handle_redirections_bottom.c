@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_redirections_bottom.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
+/*   Updated: 2024/03/08 16:53:41 by mohilali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -6,26 +16,37 @@ int set_single_io(t_tree *node, t_list *pos)
 {
 	if (is_input_redirect(pos))
 	{
-		free(node->input_file);
+    if (node->fd)
+      close(node->fd);
+    free(node->input_file);
+    node->input_file = NULL;
 		if (is_herdoc(pos))
-		{
-			node->input_file = NULL;
 			node->fd = pos->fd;
-		}
 		else
 		{
-			node->input_file = ft_strdup(pos->next->content);
-			if (node->input_file == NULL)
-				return (write(2, "Malloc Failure\n", 15), 1);
-			node->fd = 0;
+			node->fd = open(pos->next->content, O_RDONLY, 0644);
+			if (node->fd == -1)
+				return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
 		}
 	}
 	else if (is_output_redirect(pos))
 	{
-			node->output_file = ft_strdup(pos->next->content);
-			if (node->output_file == NULL)
-				return (write(2, "Malloc Failure\n", 15), 1);
-			node->out_fd = 1;
+    if (node->out_fd != 1)
+      close(node->out_fd);
+		free(node->output_file);
+    node->output_file = NULL;
+		if (is_herdoc(pos))
+		{
+			node->out_fd = open(pos->next->content, O_WRONLY | O_APPEND | O_CREAT, 0644);
+      if (node->fd == -1)
+        return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+		}
+		else
+		{
+			node->out_fd = open(pos->next->content, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+			if (node->out_fd == -1)
+				return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+		}
 	}
 	return (0);
 }

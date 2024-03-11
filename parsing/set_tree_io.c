@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 15:04:51 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:04:23 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,11 @@ int is_output_redirect(t_list *lst)
   if (!ft_strncmp(lst->content, ">" ,2) && !lst->is_op)
     return (1);
   else if (!ft_strncmp(lst->content, ">>" ,3) && !lst->is_op)
-    return (printf("test\n"), 1);
-  else
-    return (0);
-}
-
-int is_herdoc(t_list *lst)
-{
-  if (!ft_strncmp(lst->content, "<<", 3))
     return (1);
   else
     return (0);
 }
+
 
 int set_io(t_tree *node, t_list *start)
 {
@@ -95,6 +88,8 @@ int set_io(t_tree *node, t_list *start)
   {
     if (is_input_redirect(start))
     {
+      if (node->fd)
+        close(node->fd); // TODO: maybe protect ???
       free(node->input_file);
       if (is_herdoc(start))
       {
@@ -111,11 +106,25 @@ int set_io(t_tree *node, t_list *start)
     }
     else if (is_output_redirect(start))
     {
-
+      if (node->out_fd != 1)
+        close(node->fd);
+      free(node->output_file);
+      if (is_herdoc(start))
+      {
         node->output_file = ft_strdup(start->next->content);
         if (node->output_file == NULL)
           return (write(2, "Malloc Failure\n", 15), 1);
-        node->fd = 0;
+        node->out_fd = 1;
+        node->open_mod = O_APPEND;
+      }
+      else
+      {
+        node->output_file = ft_strdup(start->next->content);
+        if (node->output_file == NULL)
+          return (write(2, "Malloc Failure\n", 15), 1);
+        node->out_fd = 1;
+        node->open_mod = O_TRUNC;
+      }
     }
     start = start->next->next;
   }

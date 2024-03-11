@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/09 09:31:42 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:58:42 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 #define MINISHELL_H
 
 #define BUFFER_SIZE 42
+#include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <limits.h>
 #include <string.h>
 #include <stdio.h> // TODO: remove this
-#include <readline/history.h>
-#include <readline/readline.h>
+#include "readline/history.h"
+#include "readline/readline.h"
 #include "../Libft-42/libft.h"
 #include <dirent.h>
 #include <errno.h>
+#include <termios.h>
 
 
 #define EXIT_CODEPARSING 258
@@ -32,14 +34,14 @@
 
 typedef struct s_tree
 {
-	t_list *node;
-	struct s_tree *left;
-	struct s_tree *right;
-	int fd;
-	int out_fd;
-	char *input_file;
-	char *output_file;
-
+    t_list *node;
+    struct s_tree *left;
+    struct s_tree *right;
+    int fd;
+    int out_fd;
+    char *input_file;
+    char *output_file;
+    int open_mod;
 } t_tree;
 
 typedef enum fd_action {
@@ -156,7 +158,7 @@ int	open_files(char *file_name, int level);
 void dup_iofile(int fd_in, int fd_out);
 int set_file_io(t_tree *content);
 int	ft_dup_parent(t_tree *root);
-void set_back_io(int save_state);
+void set_back_io(int input, int output);
 void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
