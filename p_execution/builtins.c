@@ -75,6 +75,26 @@ void print_export(t_list *lst, int fd)
   }
 }
 
+char *get_exported_arg_value(char *arg, t_list **local_lst)
+{
+  static t_list **lst = NULL;
+  t_list *tmp;
+
+  if (local_lst)
+    lst = local_lst;
+  else if (lst)
+  {
+    tmp = *lst;
+    while (tmp)
+    {
+      if (!ft_strncmp(arg, tmp->content, ft_strlen(arg)))
+        return ((char *) tmp->content + ft_strlen(arg) + 1);
+      tmp = tmp->next;
+    }
+  }
+  return (NULL);
+}
+
 // allocs: local_env
 int ft_export(t_tree *root)
 {
@@ -82,6 +102,7 @@ int ft_export(t_tree *root)
   t_list *tmp;
   int fd;
 
+  get_exported_arg_value(NULL, &local_env);
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
@@ -105,6 +126,7 @@ int ft_export(t_tree *root)
   return (0);
 }
 
+/*
 int main(void)
 {
   t_list *node;
@@ -124,6 +146,7 @@ int main(void)
   t.node = node;
   ft_export(&t);
 }
+*/
 
 /*
 int main(void)

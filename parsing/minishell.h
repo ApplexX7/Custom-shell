@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 14:38:01 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:46:49 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,17 @@ int check_operators(t_tree *root ,char **env);
 // split_env_arg
 int split_env_arg(t_list **lst);
 int split_arg_node(t_list *node, t_list **dest);
+
+// builtins
+char *get_exported_arg_value(char *arg, t_list **local_lst);
+int set_fd(int *set, t_tree *root);
+int ft_echo(t_tree *root);
+int check_export_syntax(char *content);
+void print_export(t_list *lst, int fd);
+char *get_exported_arg_value(char *arg, t_list **local_lst);
+int ft_export(t_tree *root);
+
+// debug
+void test_export();
 
 #endif
