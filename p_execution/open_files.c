@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:12:56 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:58:30 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,12 @@ void dup_iofile(int fd_in, int fd_out)
 		handle_error();
 		exit(errno);
 	}
-	if (fd_in != 0)
-		ft_close(fd_in);
 	if (dup2(fd_out, STDOUT_FILENO) == -1)
 	{
 		handle_error();
 		exit(errno);
 	}
-  manage_fds(0, CLOSE_ALL);
+  	manage_fds(0, CLOSE_ALL);
 }
 
 int set_file_io(t_tree *content)

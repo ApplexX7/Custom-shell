@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 19:34:04 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:59:48 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int create_heredocchild(char *limite)
 		create_herdoc(limite, fdpipe);
 	}
 	waitpid(pid, NULL, 0);
+	manage_fds(fdpipe[1], CAPTURE);
 	ft_close(fdpipe[1]);
 	manage_fds(fdpipe[0], CAPTURE);
 	return (fdpipe[0]);
