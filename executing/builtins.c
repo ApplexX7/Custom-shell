@@ -101,7 +101,7 @@ int get_key_value(char *content, char **key, char **value, int *join)
   if (key)
     key_ = ft_substr(content, 0, eq - content);
   if (value)
-    value_ = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq));
+    value_ = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 1);
   if (key_ && key)
   {
     if (key_[ft_strlen(key_) - 1] == '+')
@@ -147,6 +147,36 @@ int concat_and_add(char *key, char *value, t_list **local_env)
   return (0);
 }
 
+
+int search_and_add(t_list **local_env, char *key, char *value)
+{
+  t_list *lst;
+
+  lst = *local_env;
+  while (lst)
+  {
+    if (!ft_strncmp(lst->content, key, min(ft_strlen(key), ft_strlen(lst->content))))
+    {
+      free(lst->content);
+      key = ft_strjoin(key, "=");
+      if (!key)
+        return (perror("search_and_add"), 1);
+      value = ft_strjoin(key, value);
+      if (!value)
+        return (perror("search_and_add"), 1);
+      lst->content = ft_strdup(value);
+      if (lst->content == NULL)
+        return (perror("search_and_add"), 1);
+      return (0);
+    }
+    lst = lst->next;
+  }
+  lst = *local_env;
+  if (new_and_add(local_env, lst->content, lst->is_op))
+    return (ft_putstr_fd("export: error adding new entry\n", 2), 1);
+  return (0);
+}
+
 // allocs: key, value
 int add_export_node(t_list *lst, t_list **local_env)
 {
@@ -159,23 +189,45 @@ int add_export_node(t_list *lst, t_list **local_env)
   if (join)
   {
     if (concat_and_add(key, value, local_env))
-      return (1);
+      return (free(key), free(value), 1);
   }
   else
   {
-    if (new_and_add(local_env, lst->content, lst->is_op))
-      return (ft_putstr_fd("export: error adding new entry\n", 2), 1);
+    if (search_and_add(local_env, key, value))
+      return (free(key), free(value), ft_putstr_fd("export: error adding new entry\n", 2), 1);
   }
   return (0);
 }
 
+int init_local_env(t_list **local_env, char **env)
+{
+  t_list *new;
+  int i;
+
+  new = NULL;
+  i = 0;
+  while (env[i])
+  {
+    if (new_and_add(&new, env[i], '\''))
+      return (ft_lstclear(&new, &free), 1);
+    i++;
+  }
+  *local_env = new;
+  return (0);
+}
+
 // allocs: local_env
-int ft_export(t_tree *root)
+int ft_export(t_tree *root, char **env)
 {
   static t_list *local_env = NULL;
   t_list *tmp;
   int fd;
 
+  if (!local_env && env[0])
+  {
+    if (init_local_env(&local_env, env))
+      return (perror("init_local_env: malloc"), 1);
+  }
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
@@ -199,7 +251,7 @@ int ft_export(t_tree *root)
   return (0);
 }
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
   t_list *node;
   node = NULL;
@@ -215,13 +267,14 @@ int main(void)
   ft_lstadd_back(&node, ft_lstnew("aaaa+=hello"));
   ft_lstadd_back(&node, ft_lstnew("aaaa+=hello"));
   ft_lstadd_back(&node, ft_lstnew("testest+=hello"));
+  ft_lstadd_back(&node, ft_lstnew("aaaa=hello"));
   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL};
-  ft_export(&t);
+  ft_export(&t, env);
   //ft_lstclear(&node, &free);
   node = NULL;
   ft_lstadd_back(&node, ft_lstnew("export"));
   t.node = node;
-  ft_export(&t);
+  ft_export(&t, env);
 }
 
 /*
