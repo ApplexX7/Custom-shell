@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 22:32:42 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:03:39 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int is_open_parenth(t_list *node);
 int is_close_parenth(t_list *node);
 void swap(t_list *a, t_list *b);
 void bubbleSort(t_list *start);
+int min(int a, int b);
+int max(int a, int b);
 
 //labling priority
 t_list *find_roottree(t_list **list);
