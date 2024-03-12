@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:50:44 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:14:31 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int manage_fds(int fd, t_fd_action action)
       if (fds[i] != 1 && fds[i] != 0)
       {
         if (close(fds[i]))
-        {
-          perror("Error :");
           return (1);
-        }
         fds[i] = 0;
       }
 			i++;
@@ -48,7 +45,7 @@ int manage_fds(int fd, t_fd_action action)
       if (fds[i] == fd)
       {
         if (close(fds[i]) == -1)
-          return (perror("close"), 1);
+          return (1);
         fds[i] = 0;
         return (0);
       }

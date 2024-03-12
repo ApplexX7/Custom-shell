@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/12 14:03:40 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:35:19 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void sigquit(int signo)
 	(void) signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		// printf("\n");
 		write(1, "QUIT: 3\n", 8);
+		return ;
 	}
 	rl_redisplay();
 	return ;
@@ -100,6 +100,7 @@ void sigquit(int signo)
 
 int recept_signals(void)
 {
+	rl_catch_signals = 0;
 	signal(SIGINT, &sigint);
 	signal(SIGQUIT, &sigquit);
 	return (0);
@@ -109,20 +110,11 @@ int main(int argc, char **argv, char **env)
 {
 	char *promt;
 	static int status_code;
-	// struct termios term, old;
 	t_tree *root;
 
 	(void) argc;
 	(void) argv;
 	status_code = 0;
-/*
-	TODO : STILL SOME WORK ON IT
-	tcgetattr(STDIN_FILENO, &old);
-	term = old;
-	term.c_cflag &= ~(ICANON | ECHO);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// tcsetattr(STDIN_FILENO,TCSANOW,&old);
-*/
 	recept_signals();
 	while (1)
 	{

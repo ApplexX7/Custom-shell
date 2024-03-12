@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:47 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:33:20 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void executing_command(t_tree *content, char **env)
 		exit(errno);
 	}
 }
-
 void create_chdilren(t_tree *content, char **env)
 {
 	int pid;
@@ -48,6 +47,7 @@ void create_chdilren(t_tree *content, char **env)
 		handle_error();
 	else if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		executing_command(content, env);
 	}
 	if (content->fd != 0)
