@@ -133,19 +133,21 @@ int elem_is_single_quoted(int index, t_list *lst)
 }
 */
 
-char *get_env_value(char *arg, char **env)
+char *get_env_value(char *arg)
 {
   int i;
   char *value;
 
   arg++;
   i = 0;
+  /*
   while (env[i])
   {
     if (!ft_strncmp(arg, env[i], ft_strlen(arg)))
       return (env[i] + ft_strlen(arg) + 1);
     i++;
   }
+  */
   value = get_exported_arg_value(arg, NULL, 0);
   if (value)
     return (value);
@@ -230,7 +232,7 @@ static int handle_single_dolor(t_list *node, t_list **dest)
 // lst should be labled before passing
 // it frees lst on success
 // allocs: new
-int expand_args(t_list **lst, char **env)
+int expand_args(t_list **lst)
 {
   t_list *tmp;
   t_list *new;
@@ -241,9 +243,9 @@ int expand_args(t_list **lst, char **env)
   {
     if (ft_strchr(tmp->content, '$'))
     {
-      if (tmp->is_op != '\'' && get_env_value(tmp->content, env) && ft_strncmp(tmp->content, "$", 2))
+      if (tmp->is_op != '\'' && get_env_value(tmp->content) && ft_strncmp(tmp->content, "$", 2))
       {
-        if (lst_add_env_arg(get_env_value(tmp->content, env), &new))
+        if (lst_add_env_arg(get_env_value(tmp->content), &new))
           return (ft_lstclear(&new, &free), 1);
       }
       else if (tmp->is_op == '\'')

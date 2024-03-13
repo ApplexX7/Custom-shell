@@ -177,27 +177,29 @@ int print_export(t_list *lst, int fd)
 int get_key_value(char *content, char **key, char **value, int *join)
 {
   char *eq;
-  char *key_;
-  char *value_;
+  char *k;
+  char *v;
 
   eq = ft_strchr(content, '=');
   if (key)
-    key_ = ft_substr(content, 0, eq - content);
-  if (value)
-    value_ = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 1);
-  if (key && key_)
+    k = ft_substr(content, 0, eq - content);
+  if (value && eq)
+    v = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 1);
+  if (key && k)
   {
-    if (key_[ft_strlen(key_) - 1] == '+')
+    if (k[ft_strlen(k) - 1] == '+')
     {
       if (join)
         *join = 1;
-      key_[ft_strlen(key_) - 1] = '\0';
+      k[ft_strlen(k) - 1] = '\0';
     }
   }
   if (key)
-    *key = key_;
-  if (value)
-    *value = value_;
+    *key = k;
+  if (!eq)
+    *value = NULL;
+  else if (value)
+    *value = v;
   return (0);
 }
 
@@ -234,14 +236,22 @@ int export_add_key_value(t_list **dest, char *key, char *value)
   char *new;
   char *tmp;
 
-  tmp = ft_strjoin(key, "=");
-  free(key);
+  tmp = key;
+  if (value)
+  {
+    tmp = ft_strjoin(key, "=");
+    free(key);
+  }
   if (!tmp)
     return (perror("export_add_key_value"), 1);
-  new = ft_strjoin(tmp, value);
-  free(value);
-  if (!new)
-    return (perror("export_add_key_value"), 1);
+  new = tmp;
+  if (value)
+  {
+    new = ft_strjoin(tmp, value);
+    free(value);
+    if (!new)
+      return (perror("export_add_key_value"), 1);
+  }
   if (new_and_add(dest, new, '\''))
     return (free(new), ft_putstr_fd("export: error adding new entry\n", 2), 1);
   free(new);
