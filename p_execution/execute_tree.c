@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 18:08:47 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:37:35 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int check_operators(t_tree *root ,char **env)
 
 int its_builtins(t_tree *root)
 {
-	if (!root)
+	if (!root || !root->node)
 		return (0);
 	if (!ft_strncmp(root->node->content, "echo", 4))
 		return (1);

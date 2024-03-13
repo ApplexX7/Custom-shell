@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_redirections.c                                :+:      :+:    :+:   */
+/*   open_herdocs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/12 15:08:50 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:03:47 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,44 @@ int create_heredocchild(char *limite)
 	return (fdpipe[0]);
 }
 
+t_list *combine_herdoc(t_list *lst)
+{
+	t_list *copy;
+
+	copy = copy_lst(lst);
+	if (combine_list(&copy))
+		return (ft_lstclear(&copy, &free),NULL);
+	del_spaces(&copy);
+	return (copy);
+}
+
 int ft_open_herdocs(t_list *list)
 {
 	t_list *current;
+	t_list *copy;
+	t_list *tmp;
 	int fd;
 
 	current = list;
+	copy = combine_herdoc(list);
+	tmp = copy;
 	fd = 0;
 	while (current)
 	{
 		if (!ft_strncmp(current->content, "<<", 3) && !current->is_op)
 		{
-			fd = create_heredocchild(current->next->content);
-			if (fd == -1)
-				return (1);
-			current->fd = fd;			
+			while (tmp)
+			{
+				if (!ft_strncmp(tmp->content, "<<", 3) && !tmp->is_op)
+				{
+					printf("%s\n", tmp->next->content);
+					fd = create_heredocchild(tmp->next->content);
+					if (fd == -1)
+						return (1);
+				}
+				tmp = tmp->next;
+			}
+			current->fd = fd;
 		}
 		else
 			current->fd = 0;
@@ -80,20 +103,20 @@ int ft_open_herdocs(t_list *list)
 	return (0);
 }
 
-int open_file(char *str, int red)
-{
-	int fd = -1;
+// int open_file(char *str, int red)
+// {
+// 	int fd = -1;
 
-	if (red == 0)
-		fd = ft_open(str, O_RDONLY, 0644);
-	else if (red == 1)
-		fd = ft_open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	else if (red == 2)
-		fd = ft_open(str, O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		perror("Error ");
-		return (-1);
-	}
-	return (fd);
-}
+// 	if (red == 0)
+// 		fd = ft_open(str, O_RDONLY, 0644);
+// 	else if (red == 1)
+// 		fd = ft_open(str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+// 	else if (red == 2)
+// 		fd = ft_open(str, O_CREAT | O_RDWR | O_APPEND, 0644);
+// 	if (fd == -1)
+// 	{
+// 		perror("Error ");
+// 		return (-1);
+// 	}
+// 	return (fd);
+// }

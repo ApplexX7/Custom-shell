@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 18:16:34 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 22:04:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 
 	if (!promt)
 		return (NULL);
+	(void)env;
 	lst = split_tokens(promt);
 	if (!lst)
 		return (NULL);
