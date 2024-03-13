@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/12 17:31:26 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:31:51 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ char *join_list(t_list *lst);
 t_list *copy_lst(t_list *lst);
 int is_open_parenth(t_list *node);
 int is_close_parenth(t_list *node);
+void swap(t_list *a, t_list *b);
+void bubbleSort(t_list *start);
+int min(int a, int b);
+int max(int a, int b);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -170,5 +174,32 @@ int check_operators(t_tree *root ,char **env);
 // split_env_arg
 int split_env_arg(t_list **lst);
 int split_arg_node(t_list *node, t_list **dest);
+
+// builtins
+
+// echo
+int ft_echo(t_tree *root);
+
+// export
+int ft_export(t_tree *root, char **env);
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
+int init_local_env(t_list **local_env, char **env);
+int add_export_node(t_list *lst, t_list **local_env);
+int search_and_add(t_list **local_env, char *key, char *value);
+int is_valid_arg_name(char *start, char *end);
+int check_export_syntax(char *content);
+int print_export(t_list *lst, int fd);
+int get_key_value(char *content, char **key, char **value, int *join);
+int concat_and_add(char *key, char *value, t_list **local_env);
+int export_add_key_value(t_list **dest, char *key, char *value);
+
+// env
+int ft_env(t_tree *node, t_list **local_lst);
+
+// builtins_helpers
+int set_fd(int *set, t_tree *root);
+
+// debug
+void test_export(char **env);
 
 #endif

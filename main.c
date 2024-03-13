@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 13:47:53 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:29:24 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
+  //test_export(env);
 	while (1)
 	{
 		promt = readline("minishell %% ");
@@ -133,4 +134,5 @@ int main(int argc, char **argv, char **env)
 		add_history(promt);
 		free(promt);
 	}
+  get_exported_arg_value(NULL, NULL, 1); // free the export list
 }

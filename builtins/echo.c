@@ -1,24 +1,5 @@
 
-
-
 #include "../parsing/minishell.h"
-
-int set_fd(int *set, t_tree *root)
-{
-  int fd;
-
-  if (root->output_file)
-  {
-    //printf("%s\n", root->output_file);
-    fd = open(root->output_file, O_WRONLY | O_CREAT, 0644);
-    if (fd == -1)
-      return (perror("open"), 1);
-    //manage_fds(fd, CAPTURE)   
-    return (*set = fd, 0);
-  }
-  else
-    return (*set = root->out_fd, 0);
-}
 
 int ft_echo(t_tree *root)
 {
@@ -44,9 +25,13 @@ int ft_echo(t_tree *root)
   }
   if (!nflag)
     ft_putstr_fd("\n", fd);
+  if (fd != 1)
+    close(fd);
   return (0);
 }
 
+
+/*
 int main(void)
 {
   t_list *node;
@@ -60,3 +45,4 @@ int main(void)
   t_tree t = {node, NULL, NULL, 0, 1, NULL, "test"};
   ft_echo (&t);
 }
+*/

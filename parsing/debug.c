@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/07 10:06:03 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:32:45 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,25 @@ void print_ouput_op(t_list *node)
 		node = node->next;
 	}
 	printf("\n");
+}
+
+void test_export(char **env)
+{
+  t_list *node;
+  node = NULL;
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+  t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
+  ft_export(&t, env);
+  //ft_lstclear(&node, &free);
+  //node = NULL;
+  // ft_lstadd_back(&node, ft_lstnew("export"));
+  //t.node = node;
+  //ft_export(&t);
 }

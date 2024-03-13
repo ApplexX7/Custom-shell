@@ -136,6 +136,7 @@ int elem_is_single_quoted(int index, t_list *lst)
 char *get_env_value(char *arg, char **env)
 {
   int i;
+  char *value;
 
   arg++;
   i = 0;
@@ -145,7 +146,11 @@ char *get_env_value(char *arg, char **env)
       return (env[i] + ft_strlen(arg) + 1);
     i++;
   }
-  return (NULL);
+  value = get_exported_arg_value(arg, NULL, 0);
+  if (value)
+    return (value);
+  else
+    return (NULL);
 }
 
 t_list *get_right_node(t_list *head ,t_list *node)
