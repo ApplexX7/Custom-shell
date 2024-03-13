@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 19:17:44 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:59:02 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,31 @@ int check_operators(t_tree *root ,char **env)
 	return (0);
 }
 
+
+int its_builtins(t_tree *root)
+{
+	if (!root)
+		return (0);
+	if (!ft_strncmp(root->node->content, "echo", 4))
+		return (1);
+	if (!ft_strncmp(root->node->content, "export", 6))
+		return (1);
+	if (!ft_strncmp(root->node->content, "env", 3))
+		return (1);
+	return (0);
+}
+
+int execute_builtins(t_tree *root, char **env)
+{
+	if (!ft_strncmp(root->node->content, "echo", 4))
+		ft_echo(root);
+	if (!ft_strncmp(root->node->content, "export", 6))
+		ft_export(root, env);
+	if (!ft_strncmp(root->node->content, "env", 3))
+		ft_env(root, NULL);
+	return (0);
+}
+
 int	executing_tree(t_tree *root, char **env)
 {
 	int status_code = 0;
@@ -112,6 +137,9 @@ int	executing_tree(t_tree *root, char **env)
 	if (root->left == NULL && root->right == NULL)
 	{
 		inheritance_bottom(root);
+		if (its_builtins(root))
+			execute_builtins(root, env);
+		else
 		create_chdilren(root, env);
 	}
 	else if (is_andor(root))

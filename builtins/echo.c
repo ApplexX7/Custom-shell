@@ -12,7 +12,7 @@ int ft_echo(t_tree *root)
     return (1);
   lst = lst->next;
   nflag = 0;
-  if (!ft_strncmp(lst->content, "-n", 3))
+  if (lst && !ft_strncmp(lst->content, "-n", 3))
   {
     nflag = 1;
     lst = lst->next;
