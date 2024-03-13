@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 00:52:18 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 01:27:07 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,9 @@ char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
 int set_fd(int *set, t_tree *root);
 int ft_echo(t_tree *root);
 int check_export_syntax(char *content);
-void print_export(t_list *lst, int fd);
+int print_export(t_list *lst, int fd);
 int ft_export(t_tree *root, char **env);
+int ft_env(t_tree *node, t_list **local_lst);
 
 // debug
 void test_export(char **env);

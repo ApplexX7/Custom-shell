@@ -78,7 +78,8 @@ int check_export_syntax(char *content)
   return (1);
 }
 
-void print_export(t_list *lst, int fd)
+// closes fd at end
+int print_export(t_list *lst, int fd)
 {
   bubbleSort(lst);
   while (lst)
@@ -88,6 +89,9 @@ void print_export(t_list *lst, int fd)
     ft_putstr_fd("\n", fd);
     lst = lst->next;
   }
+  if (fd != 1 && close(fd) == -1)
+      return (perror("close"), 1);
+  return (0);
 }
 
 // allocs: key, value
@@ -253,6 +257,7 @@ int ft_export(t_tree *root, char **env)
       return (perror("init_local_env: malloc"), 1);
   }
   get_exported_arg_value(NULL, &local_env, 0);
+  ft_env(NULL, &local_env);
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
@@ -271,13 +276,13 @@ int ft_export(t_tree *root, char **env)
   {
     if (set_fd(&fd, root))
       return (ft_putstr_fd("export: error opening file\n", fd), 1);
-    (print_export(local_env, fd), close(fd));
+    if (print_export(local_env, fd))
+      return (1);
   }
   return (0);
 }
 
-/*
-int main(void)
+int main(int argc, char **argv, char **env)
 {
   t_list *node;
   node = NULL;
@@ -294,6 +299,7 @@ int main(void)
   ft_lstadd_back(&node, ft_lstnew("aaaa+=hello"));
   ft_lstadd_back(&node, ft_lstnew("testest+=hello"));
   ft_lstadd_back(&node, ft_lstnew("aaaa=hello"));
+  ft_lstadd_back(&node, ft_lstnew("arg"));
   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL};
   ft_export(&t, env);
   //ft_lstclear(&node, &free);
@@ -301,8 +307,9 @@ int main(void)
   ft_lstadd_back(&node, ft_lstnew("export"));
   t.node = node;
   ft_export(&t, env);
+  printf("====================\n");
+  ft_env(&t, NULL);
 }
-*/
 
 /*
 int main(void)
