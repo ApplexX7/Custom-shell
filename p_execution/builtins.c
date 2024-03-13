@@ -134,6 +134,7 @@ int concat_and_add(char *key, char *value, t_list **local_env)
     if (!ft_strncmp(tmp->content, key, min(ft_strlen(tmp->content), ft_strlen(key))))
     {
       new = ft_strjoin(tmp->content, value);
+      (free(key), free(value));
       if (!new)
         return (perror("concat_and_add: malloc"), 1);
       free(tmp->content);
@@ -142,14 +143,29 @@ int concat_and_add(char *key, char *value, t_list **local_env)
     }
     tmp = tmp->next;
   }
-  key = ft_strjoin(key, "=");
-  if (!key)
+  if (export_add_key_value(local_env, key, value))
     return (perror("concat_and_add: malloc"), 1);
-  new = ft_strjoin(key, value);
+  return (0);
+}
+
+// allocs: new
+// frees key and value
+int export_add_key_value(t_list **dest, char *key, char *value)
+{
+  char *new;
+  char *tmp;
+
+  tmp = ft_strjoin(key, "=");
+  free(key);
+  if (!tmp)
+    return (perror("export_add_key_value"), 1);
+  new = ft_strjoin(tmp, value);
+  free(value);
   if (!new)
-    return (perror("concat_and_add: malloc"), 1);
-  if (new_and_add(local_env, new, '\''))
-    return (perror("concat_and_add: malloc"), 1);
+    return (perror("export_add_key_value"), 1);
+  if (new_and_add(dest, new, '\''))
+    return (free(new), ft_putstr_fd("export: error adding new entry\n", 2), 1);
+  free(new);
   return (0);
 }
 
@@ -177,8 +193,7 @@ int search_and_add(t_list **local_env, char *key, char *value)
     }
     lst = lst->next;
   }
-  lst = *local_env;
-  if (new_and_add(local_env, lst->content, lst->is_op))
+  if (export_add_key_value(local_env, key, value))
     return (ft_putstr_fd("export: error adding new entry\n", 2), 1);
   return (0);
 }
@@ -195,7 +210,7 @@ int add_export_node(t_list *lst, t_list **local_env)
   if (join)
   {
     if (concat_and_add(key, value, local_env))
-      return (free(key), free(value), 1);
+      return (1);
   }
   else
   {
@@ -251,13 +266,13 @@ int ft_export(t_tree *root, char **env)
   t_list *tmp;
   int fd;
 
+  get_exported_arg_value(NULL, &local_env, 0);
+  ft_env(NULL, &local_env);
   if (!local_env && env[0])
   {
     if (init_local_env(&local_env, env))
       return (perror("init_local_env: malloc"), 1);
   }
-  get_exported_arg_value(NULL, &local_env, 0);
-  ft_env(NULL, &local_env);
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
@@ -271,6 +286,7 @@ int ft_export(t_tree *root, char **env)
       }
       tmp = tmp->next;
     }
+    print_ouput(local_env);
   }
   else
   {
@@ -282,6 +298,7 @@ int ft_export(t_tree *root, char **env)
   return (0);
 }
 
+/*
 int main(int argc, char **argv, char **env)
 {
   t_list *node;
@@ -310,6 +327,7 @@ int main(int argc, char **argv, char **env)
   printf("====================\n");
   ft_env(&t, NULL);
 }
+*/
 
 /*
 int main(void)

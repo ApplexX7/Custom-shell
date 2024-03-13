@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 00:52:05 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:09:18 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void test_export(char **env)
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL};
   ft_export(&t, env);
   //ft_lstclear(&node, &free);
