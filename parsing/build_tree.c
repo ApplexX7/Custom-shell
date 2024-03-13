@@ -6,25 +6,11 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/04 19:26:33 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:24:57 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void inherente_reidirections(t_tree *root, char *output, char *input, int fd)
-{
-	if (root == NULL)
-		return ;
-	if(root->input_file  == NULL)
-		root->input_file = ft_strdup(input);
-	if (root->output_file == NULL)
-		root->output_file = ft_strdup(output);
-	if (root->fd == 0)
-		root->fd = fd;
-	inherente_reidirections(root->left, root->output_file, root->input_file, root->fd);
-	inherente_reidirections(root->right, root->output_file, root->input_file, root->fd);
-}
 
 t_tree *insert_tree(t_list *list, t_tree **root)
 {
@@ -70,7 +56,6 @@ t_tree *build_tree(t_list *list)
 	root = insert_tree(list, &root);
 	if (!root)
 		return (NULL);
-	inherente_reidirections(root, root->output_file, root->input_file, root->fd);
 	return (root);
 }
 

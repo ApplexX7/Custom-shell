@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/12 15:03:39 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:52:18 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,30 @@
 #include <dirent.h>
 #include <errno.h>
 
+
+#define EXIT_CODEPARSING 258
+#define EXIT_CODECOMAND 127
+
 typedef struct s_tree
 {
-    t_list *node;
-    struct s_tree *left;
-    struct s_tree *right;
-    int fd;
-    int out_fd;
-    char *input_file;
-    char *output_file;
+	t_list *node;
+	struct s_tree *left;
+	struct s_tree *right;
+	int fd;
+	int out_fd;
+	char *input_file;
+	char *output_file;
 
 } t_tree;
 
 typedef enum fd_action {
-        CAPTURE,
-        CLOSE,
+	CAPTURE,
+	CLOSE,
 } t_fd_action;
 
 typedef enum pid_action {
-        CAPTURED,
-        WAIT,
+	CAPTURED,
+	WAIT,
 } t_pid_action;
 
 // expand args
@@ -75,7 +79,7 @@ void print_ouput_op(t_list *node);
 int combine_list(t_list **lst);
 
 //check syntax error
-int check_syn(t_list *list);
+int check_syntax(t_list *lst);
 
 // helpers
 void lst_remove_node(t_list **lst, t_list *node);
@@ -141,8 +145,40 @@ int tree_copy_input(char *input_file, int fd, t_tree *to);
 int open_pipes(t_tree *root);
 void inheritance_bottom(t_tree *root);
 
+//manage pids and fds and executing 
+int	executing_tree(t_tree *root, char **env);
+int	manage_fds(int fd, t_fd_action action);
+int	manage_pid(int pid, t_pid_action action, int *last_status);
+
+//executing part
+
+void executing_command(t_tree *content, char **env);
+void create_chdilren(t_tree *content, char **env);
+char **find_pathenv(void);
+char *valid_path(char *cmd);
+int	open_files(char *file_name, int level);
+void dup_iofile(int fd_in, int fd_out);
+int set_file_io(t_tree *content);
+int	ft_dup_parent(t_tree *root);
+void set_back_io(int save_state);
+void handle_error();
+char **setup_command(t_tree *content);
+int is_andor(t_tree *root);
+int check_operators(t_tree *root ,char **env);
+
 // split_env_arg
 int split_env_arg(t_list **lst);
 int split_arg_node(t_list *node, t_list **dest);
+
+// builtins
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
+int set_fd(int *set, t_tree *root);
+int ft_echo(t_tree *root);
+int check_export_syntax(char *content);
+void print_export(t_list *lst, int fd);
+int ft_export(t_tree *root, char **env);
+
+// debug
+void test_export(char **env);
 
 #endif

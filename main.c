@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/06 11:07:56 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:52:27 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
 int main(int argc, char **argv, char **env)
 {
 	char *promt;
+	int code;
+	static int status_code;
 	t_list *lst;
-	// t_list *copy;
 	t_tree *root;
 
 	(void) argc;
 	(void) argv;
+	(void) env;
+	status_code = 0;
+  test_export(env);
 	while (1)
 	{
 		promt = readline("minishell %% ");
@@ -32,15 +36,17 @@ int main(int argc, char **argv, char **env)
 			if (split_env_arg(&lst))
 				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
 			if (expand_args(&lst, env))
-				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-			if (check_syn(lst))
+				return (ft_lstclear(&lst, &free), 1);
+			status_code =  check_syntax(lst); // TODO: handle error
+			if (status_code)
 			{
+				printf("status == %d\n", status_code);
+				ft_lstclear(&lst, &free);
 				free(promt);
 				continue ;
 			}
 			if (combine_list(&lst))
 				return (ft_lstclear(&lst, &free), 1); // TODO: handle error
-													  //print_ouput(lst);
 			if (expand_wildcard(&lst))
 				return (ft_lstclear(&lst, &free), 1);
 			labling_prio(lst);
@@ -55,12 +61,16 @@ int main(int argc, char **argv, char **env)
 				return 0;
       		if (open_pipes(root))
 	  			return (0);
-			inheritance_bottom(root);
+			// treeprint(root, 0);
+			status_code = executing_tree(root, env);
+			code = manage_pid(0 , WAIT, &status_code);
+			manage_fds(0, CLOSE);
 			add_history(promt);
-			treeprint(root, 0);
-			// freetree(&root);
-			// free(promt);
-			// ft_lstclear(&copy, &free);
+			freetree(&root);
+			// ft_lstclear(&lst, &free);
+			//free(promt);
 		}
+		free(promt);
 	}
+  get_exported_arg_value(NULL, NULL, 1); // free the export list
 }

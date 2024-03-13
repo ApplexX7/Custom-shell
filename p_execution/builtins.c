@@ -102,7 +102,7 @@ int get_key_value(char *content, char **key, char **value, int *join)
     key_ = ft_substr(content, 0, eq - content);
   if (value)
     value_ = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 1);
-  if (key_ && key)
+  if (key && key_)
   {
     if (key_[ft_strlen(key_) - 1] == '+')
     {
@@ -111,8 +111,10 @@ int get_key_value(char *content, char **key, char **value, int *join)
       key_[ft_strlen(key_) - 1] = '\0';
     }
   }
-  *key = key_;
-  *value = value_;
+  if (key)
+    *key = key_;
+  if (value)
+    *value = value_;
   return (0);
 }
 
@@ -216,6 +218,28 @@ int init_local_env(t_list **local_env, char **env)
   return (0);
 }
 
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit)
+{
+  static t_list **lst = NULL;
+  t_list *tmp;
+
+  if (free_bit)
+    (ft_lstclear(lst, &free), *lst = NULL);
+  else if (local_lst)
+    lst = local_lst;
+  else if (lst)
+  {
+    tmp = *lst;
+    while (tmp)
+    {
+      if (!ft_strncmp(arg, tmp->content, ft_strlen(arg)))
+        return ((char *) tmp->content + ft_strlen(arg) + 1);
+      tmp = tmp->next;
+    }
+  }
+  return (NULL);
+}
+
 // allocs: local_env
 int ft_export(t_tree *root, char **env)
 {
@@ -228,6 +252,7 @@ int ft_export(t_tree *root, char **env)
     if (init_local_env(&local_env, env))
       return (perror("init_local_env: malloc"), 1);
   }
+  get_exported_arg_value(NULL, &local_env, 0);
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
@@ -251,7 +276,8 @@ int ft_export(t_tree *root, char **env)
   return (0);
 }
 
-int main(int argc, char **argv, char **env)
+/*
+int main(void)
 {
   t_list *node;
   node = NULL;
@@ -276,6 +302,7 @@ int main(int argc, char **argv, char **env)
   t.node = node;
   ft_export(&t, env);
 }
+*/
 
 /*
 int main(void)
