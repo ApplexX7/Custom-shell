@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 14:31:51 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:00:57 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
 t_list *convert_arr_to_list(char **arr);
 void append_list(t_list *source, t_list **dest, char op);
-char *get_env_value(char *arg, char **env);
+char *get_env_value(char *arg);
 t_list *get_right_node(t_list *head ,t_list *node);
 void lst_delete_node(t_list **lst, t_list *node);
 int arr_len(char **arr);
 int lst_add_env_arg(char *arg, t_list **dest);
 int add_node(t_list **dest, t_list *node);
-int expand_args(t_list **lst, char **env);
+int expand_args(t_list **lst);
 
 
 // split tokens
