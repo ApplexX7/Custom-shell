@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 14:29:24 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:16:34 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 	if (!lst)
 		return (NULL);
 	lable_list(lst);
-	if (split_env_arg(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
-	if (expand_args(&lst, env))
-		return (ft_lstclear(&lst, &free), NULL);
+	// if (split_env_arg(&lst))
+	// 	return (ft_lstclear(&lst, &free), NULL);
+	// if (expand_args(&lst, env))
+	// 	return (ft_lstclear(&lst, &free), NULL);
 	*status_code = check_syntax(lst);
 	if (*status_code != 0)
 		return (ft_lstclear(&lst, &free), NULL);
-	if (combine_list(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
-	if (expand_wildcard(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
+	// if (combine_list(&lst))
+	// 	return (ft_lstclear(&lst, &free), NULL);
+	// if (expand_wildcard(&lst))
+	// 	return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
-	del_spaces(&lst);
+	// del_spaces(&lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
