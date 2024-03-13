@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 00:52:27 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:11:54 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	(void) env;
 	status_code = 0;
-  test_export(env);
+  //test_export(env);
 	while (1)
 	{
 		promt = readline("minishell %% ");

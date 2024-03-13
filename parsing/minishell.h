@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 14:08:50 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:22:53 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,14 +171,28 @@ int split_env_arg(t_list **lst);
 int split_arg_node(t_list *node, t_list **dest);
 
 // builtins
-char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
-int set_fd(int *set, t_tree *root);
+
+// echo
 int ft_echo(t_tree *root);
+
+// export
+int ft_export(t_tree *root, char **env);
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
+int init_local_env(t_list **local_env, char **env);
+int add_export_node(t_list *lst, t_list **local_env);
+int search_and_add(t_list **local_env, char *key, char *value);
+int is_valid_arg_name(char *start, char *end);
 int check_export_syntax(char *content);
 int print_export(t_list *lst, int fd);
-int ft_export(t_tree *root, char **env);
-int ft_env(t_tree *node, t_list **local_lst);
+int get_key_value(char *content, char **key, char **value, int *join);
+int concat_and_add(char *key, char *value, t_list **local_env);
 int export_add_key_value(t_list **dest, char *key, char *value);
+
+// env
+int ft_env(t_tree *node, t_list **local_lst);
+
+// builtins_helpers
+int set_fd(int *set, t_tree *root);
 
 // debug
 void test_export(char **env);
