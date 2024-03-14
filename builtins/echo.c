@@ -26,7 +26,7 @@ int ft_echo(t_tree *root)
   if (!nflag)
     ft_putstr_fd("\n", fd);
   if (fd != 1)
-    close(fd);
+    ft_close(fd);
   return (0);
 }
 

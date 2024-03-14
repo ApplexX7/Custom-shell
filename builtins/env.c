@@ -26,7 +26,7 @@ int ft_env(t_tree *node, t_list **local_lst)
       }
       tmp = tmp->next;
     }
-    if (fd != 1 && close(fd) == -1)
+    if (fd != 1 && ft_close(fd) == -1)
       return (perror("close"), 1);
   }
   return (0);

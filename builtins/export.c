@@ -181,7 +181,7 @@ int print_export(t_list *lst, int fd)
     }
     lst = lst->next;
   }
-  if (fd != 1 && close(fd) == -1)
+  if (fd != 1 && ft_close(fd) == -1)
       return (perror("close"), 1);
   return (0);
 }
