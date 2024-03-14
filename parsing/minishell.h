@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/13 16:00:57 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/14 00:34:10 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ int ft_env(t_tree *node, t_list **local_lst);
 
 // builtins_helpers
 int set_fd(int *set, t_tree *root);
+int ft_putnstr_fd(char *str, int fd, int size);
 
 // debug
 void test_export(char **env);

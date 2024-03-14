@@ -17,3 +17,17 @@ int set_fd(int *set, t_tree *root)
   else
     return (*set = root->out_fd, 0);
 }
+
+int ft_putnstr_fd(char *str, int fd, int size)
+{
+  int i;
+
+  i = 0;
+  while (str[i] && i < size)
+  {
+    if (write(fd, &str[i], 1) == -1)
+      return (perror("write"), 1);
+    i++;
+  }
+  return (0);
+}

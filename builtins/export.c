@@ -160,12 +160,25 @@ int check_export_syntax(char *content)
 // closes fd at end
 int print_export(t_list *lst, int fd)
 {
+  char *eq;
+
   bubbleSort(lst);
   while (lst)
   {
     ft_putstr_fd("declare -x ", fd);
-    ft_putstr_fd(lst->content, fd);
-    ft_putstr_fd("\n", fd);
+    eq = ft_strchr(lst->content, '=');
+    if (!eq)
+    {
+      ft_putstr_fd(lst->content, fd);
+      ft_putstr_fd("\n", fd);
+    }
+    else
+    {
+      ft_putnstr_fd(lst->content, fd, eq - (char *) lst->content + 1);
+      ft_putstr_fd("\"", fd);
+      ft_putstr_fd(eq + 1, fd);
+      ft_putstr_fd("\"\n", fd);
+    }
     lst = lst->next;
   }
   if (fd != 1 && close(fd) == -1)
