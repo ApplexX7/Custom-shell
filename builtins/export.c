@@ -150,8 +150,8 @@ int check_export_syntax(char *content)
     eq--;
   else if (content == eq)
     return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
-  else if (&content[ft_strlen(content) - 1] == eq)
-    return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
+  //else if (&content[ft_strlen(content) - 1] == eq)
+    //return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   else if (!is_valid_arg_name(content, eq))
     return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   return (1);
