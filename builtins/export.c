@@ -184,7 +184,7 @@ int get_key_value(char *content, char **key, char **value, int *join)
   if (key)
     k = ft_substr(content, 0, eq - content);
   if (value && eq)
-    v = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 1);
+    v = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 2);
   if (key && k)
   {
     if (k[ft_strlen(k) - 1] == '+')
