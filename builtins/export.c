@@ -130,6 +130,8 @@ int search_and_add(t_list **local_env, char *key, char *value)
 
 int is_valid_arg_name(char *start, char *end)
 {
+  if (ft_isdigit(*start))
+    return (0);
   while (start < end)
   {
     if (!ft_isalpha(*start) && !ft_isdigit(*start) && *start != '_')
@@ -197,7 +199,7 @@ int get_key_value(char *content, char **key, char **value, int *join)
   if (key)
     k = ft_substr(content, 0, eq - content);
   if (value && eq)
-    v = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 2);
+    v = ft_substr(eq, 1, ft_strlen(eq) - 1);
   if (key && k)
   {
     if (k[ft_strlen(k) - 1] == '+')
