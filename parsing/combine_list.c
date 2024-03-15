@@ -47,7 +47,7 @@ int skip_nonliterals(t_list *start, t_list **head, t_list **tmp)
 {
   while (start && !start->is_op)
   {
-    if (add_node(head, start) || masking(start, start, ft_lstlast(*head)))
+    if (add_node(head, start) || masking(start, start->next, ft_lstlast(*head)))
       return (1);
     start = start->next;
   }
