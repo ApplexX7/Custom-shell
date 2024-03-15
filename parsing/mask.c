@@ -44,7 +44,7 @@ int there_is_expand(t_list *start, t_list *end)
 	t_list * current_start;
 
 	current_start = start;
-	while (current_start && current_start <= end)
+	while (current_start && current_start != end)
 	{
 		if (ft_strchr(current_start->content, '$'))
 			return (0);
@@ -64,7 +64,7 @@ int masking(t_list *start, t_list *end, t_list *dest)
 		dest->mask = NULL;
 		return (0);
 	}
-	while (start && start <= end)
+	while (start && start != end)
 	{
 		tmp = ft_strdup(start->content);
 		if (!tmp)
@@ -84,7 +84,7 @@ int masking(t_list *start, t_list *end, t_list *dest)
 			return (1);
 		start = start->next;
 	}
-	printf("%s\n", new);
+	//printf("%s\n", new);
 	dest->mask = new;
 	return (0);
 }
