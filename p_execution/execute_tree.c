@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 00:09:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:21:17 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int its_builtins(t_tree *root)
 
 int execute_builtins(t_tree *root, char **env)
 {
+	if (!root || )
 	if (!ft_strncmp(root->node->content, "echo", 4))
 		ft_echo(root);
 	if (!ft_strncmp(root->node->content, "export", 6))
@@ -138,9 +139,16 @@ int	executing_tree(t_tree *root, char **env)
 	{
 		inheritance_bottom(root);
 		if (its_builtins(root))
+		{
+			
 			execute_builtins(root, env);
+		}
 		else
+		{
+			
+			printf("hello\n");
 			create_chdilren(root, env);
+		}
 	}
 	else if (is_andor(root))
 		status_code  = check_operators(root, env);

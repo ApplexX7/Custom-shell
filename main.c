@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 00:08:15 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:13:32 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 {
 	t_list *lst;
 	t_tree *root;
-
-	if (!promt)
-		return (NULL);
+	
+	(void)env;
 	lst = split_tokens(promt);
 	if (!lst)
 		return (NULL);
@@ -98,7 +97,7 @@ void sigquit(int signo)
 
 int recept_signals(void)
 {
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	signal(SIGINT, &sigint);
 	signal(SIGQUIT, &sigquit);
 	return (0);
