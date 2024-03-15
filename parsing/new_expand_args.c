@@ -22,11 +22,9 @@ char *get_masked_portion(char *str, char *mask)
 
 char *get_env_value(char *arg)
 {
-  int i;
   char *value;
 
   arg++;
-  i = 0;
   /*
   while (env[i])
   {

@@ -55,7 +55,7 @@ int there_is_expand(t_list *start, t_list *end)
 
 int masking(t_list *start, t_list *end, t_list *dest)
 {
-	char *new;
+	char *new = NULL;
 	char *tmp2 = NULL;
 	char *tmp;
 
@@ -76,15 +76,15 @@ int masking(t_list *start, t_list *end, t_list *dest)
 		}
 		else
 			full_withzero(&tmp);
-		free(tmp2);
 		tmp2 = new;
 		new = ft_strjoin(new, tmp);
 		free(tmp);
+		free(tmp2);
 		if (!new)
 			return (1);
-		printf("%s\n", new);
 		start = start->next;
 	}
+	printf("%s\n", new);
 	dest->mask = new;
 	return (0);
 }
