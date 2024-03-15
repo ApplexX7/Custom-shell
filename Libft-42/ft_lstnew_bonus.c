@@ -6,7 +6,7 @@
 /*   By: mohilali <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 16:25:15 by mohilali          #+#    #+#             */
-/*   Updated: 2023/11/06 12:56:14 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:24:17 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_list	*ft_lstnew(void *content)
 		return (NULL);
 	node->content = content;
 	node->next = NULL;
+  node->mask = NULL;
 	return (node);
 }

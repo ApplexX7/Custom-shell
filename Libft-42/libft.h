@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:27:36 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/01 11:15:39 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:21:35 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 typedef struct s_list
 {
 	void			*content;
+  char *mask;
 	struct s_list	*next;
-  	char			is_op;
+  char			is_op;
 	int 			prio;
 	int				fd;
 }	t_list;
