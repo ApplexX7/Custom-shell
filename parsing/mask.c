@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 02:29:04 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/15 03:53:33 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int masking(t_list *start, t_list *end, t_list *dest)
 
 	if (there_is_expand(start, end))
 	{
-		dest->mask = NULL;
+		//dest->mask = NULL;
 		return (0);
 	}
 	while (start && start <= end)
