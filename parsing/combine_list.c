@@ -47,7 +47,7 @@ int skip_nonliterals(t_list *start, t_list **head, t_list **tmp)
 {
   while (start && !start->is_op)
   {
-    if (add_node(head, start))
+    if (add_node(head, start) || masking(start, start, ft_lstlast(*head)))
       return (1);
     start = start->next;
   }
@@ -103,7 +103,7 @@ int combine_lits_with_nonlists(t_list **lst)
       start = tmp;
       while (tmp && !is_breaking_token(tmp))
         tmp = tmp->next;
-      if (join_and_add(&new, start, tmp))
+      if (join_and_add(&new, start, tmp) || masking(start, tmp, ft_lstlast(new)))
         return (ft_lstclear(&new, &free), 1);
     }
     else
@@ -136,7 +136,7 @@ int combine_list(t_list **lst)
   while (tmp)
   {
     tmp = skip_literals(tmp);
-    if (join_and_add(&new, start, tmp))
+    if (join_and_add(&new, start, tmp) || masking(start, tmp, ft_lstlast(new)))
       return (ft_lstclear(&new, &free), 1);
     if (skip_nonliterals(tmp, &new, &tmp))
       return (ft_lstclear(&new, &free), 1);

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 01:21:08 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/15 02:16:30 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,9 @@ int ft_env(t_tree *node, t_list **local_lst);
 
 // builtins_helpers
 int set_fd(int *set, t_tree *root);
+
+// masking
+int masking(t_list *start, t_list *end, t_list *dest);
 
 // debug
 void test_export(char **env);

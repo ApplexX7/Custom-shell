@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 01:56:56 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/15 02:29:04 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,15 @@ int there_is_expand(t_list *start, t_list *end)
 	return (1);
 }
 
-int masking(t_list *start, t_list *end, char **dest)
+int masking(t_list *start, t_list *end, t_list *dest)
 {
 	char *new;
-	char *tmp2;
+	char *tmp2 = NULL;
 	char *tmp;
-
-	new = *dest;
 
 	if (there_is_expand(start, end))
 	{
-		*dest = NULL;
+		dest->mask = NULL;
 		return (0);
 	}
 	while (start && start <= end)
@@ -78,15 +76,15 @@ int masking(t_list *start, t_list *end, char **dest)
 		}
 		else
 			full_withzero(&tmp);
+		free(tmp2);
 		tmp2 = new;
 		new = ft_strjoin(new, tmp);
-		free(tmp2);
 		free(tmp);
 		if (!new)
 			return (1);
 		printf("%s\n", new);
 		start = start->next;
 	}
-	*dest = new;
+	dest->mask = new;
 	return (0);
 }
