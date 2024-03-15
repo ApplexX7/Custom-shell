@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 00:39:04 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:09:28 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ int	executing_tree(t_tree *root, char **env)
 		{
 			create_chdilren(root, env);
 		}
-		printf("hello\n");
 	}
 	else if (is_andor(root))
 		status_code  = check_operators(root, env);
