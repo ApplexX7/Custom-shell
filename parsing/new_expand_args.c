@@ -2,23 +2,117 @@
 
 #include "minishell.h"
 
-// allocs: arg
-char *get_masked_portion(char *str, char *mask)
+void append_list(t_list *source, t_list **dest, char op)
 {
-  char *start;
-  char *end;
-  char *arg;
+  t_list *tmp;
 
-
-  start = ft_strchr(mask, '1');
-  end = ft_strchr(start, '0');
-  start = &str[start - mask];
-  end = &str[end - mask];
-  arg = ft_substr(start, 0, end - start);
-  if (!arg)
-    return (perror("malloc"), NULL);
-  return (arg);
+  while (source)
+  {
+    tmp = source;
+    source = source->next;
+    tmp->next = NULL;
+    tmp->is_op = op;
+    ft_lstadd_back(dest, tmp);
+  }
 }
+
+// malloc: tmp, zeros
+int set_ones_arr(char *str, char *mask, char ***ones)
+{
+  char *tmp;
+  int i;
+
+  tmp = ft_strdup(mask);
+  if (!tmp)
+    return (perror("malloc"), 1);
+  i = 0;
+  while (tmp[i])
+  {
+    if (tmp[i] == '1')
+      tmp[i] = str[i];
+    i++;
+  }
+  *ones = ft_split(tmp, '0');
+  free(tmp);
+  if (!(*ones))
+    return (perror("malloc"), 1);
+  return (0);
+}
+
+// malloc: tmp, zeros
+int set_zeros_arr(char *str, char *mask, char ***zeros)
+{
+  char *tmp;
+  int i;
+
+  tmp = ft_strdup(mask);
+  if (!tmp)
+    return (perror("malloc"), 1);
+  i = 0;
+  while (tmp[i])
+  {
+    if (tmp[i] == '0')
+      tmp[i] = str[i];
+    i++;
+  }
+  *zeros = ft_split(tmp, '1');
+  free(tmp);
+  if (!(*zeros))
+    return (perror("malloc"), 1);
+  return (0);
+}
+
+// arr should be null terminated
+int arr_size(char **arr)
+{
+  int i;
+
+  i = 0;
+  while (arr[i])
+    i++;
+  return (i);
+}
+
+int fil_split_arr(t_list **splited, char **zeros, char **ones, char *mask)
+{
+  int i;
+  int j;
+  char current;
+
+  i = 0;
+  j = 0;
+  while (zeros[i] || ones[j])
+  {
+    current = *mask;
+    if (current == '0' && new_and_add(splited, zeros[i++], '\''))
+      return (1);
+    else if (current == '1' && new_and_add(splited, ones[j++], 0))
+      return (1);
+    while (*mask == current)
+      mask++;
+  }
+  return (0);
+}
+
+// allocs: zeros, ones
+t_list *get_splited_list(char *str, char *mask)
+{
+  char **zeros;
+  char **ones;
+  t_list *splited;
+  
+  if (set_zeros_arr(str, mask, &zeros))
+    return (NULL);
+  if (set_ones_arr(str, mask, &ones))
+    return (free_2d_arr((void **) zeros), NULL);
+  splited = NULL;
+  if (fil_split_arr(&splited, zeros, ones, mask))
+    return (ft_lstclear(&splited, &free), free_2d_arr((void **) zeros), free_2d_arr((void **) ones), NULL);
+  (free_2d_arr((void **) zeros), free_2d_arr((void **) ones));
+  return (splited);
+}
+
+//000001111000111100000111110000111
 
 char *get_env_value(char *arg)
 {
@@ -82,20 +176,25 @@ void do_nothing(void *arg)
   (void) arg;
 }
 
-void append_list(t_list *source, t_list **dest, char op)
+int lst_add_env_arg(char *arg, t_list **dest)
 {
-  t_list *tmp;
+  char **arr;
+  t_list *new_lst;
 
-  while (source)
-  {
-    tmp = source;
-    source = source->next;
-    tmp->next = NULL;
-    tmp->is_op = op;
-    ft_lstadd_back(dest, tmp);
-  }
+  if (!arg)
+    return (0);
+  arr = ft_split(arg, ' ');
+  if (!arr)
+    return (1);
+  new_lst = convert_arr_to_list(arr);
+  if (!new_lst)
+    return (free_2d_arr((void **)arr), 1);
+  append_list(new_lst, dest, 0);
+  free(arr);
+  return (0);
 }
 
+/*
 int lst_add_env_arg(t_list **dest, t_list *node, char *value)
 {
   char **arr;
@@ -128,30 +227,95 @@ int lst_add_env_arg(t_list **dest, t_list *node, char *value)
   free(arr);
   return (0);
 }
+*/
+
+// allocs: new
+int combine_expand_list(t_list **lst)
+{
+  t_list *new;
+  t_list *tmp;
+
+  new = NULL;
+  tmp = *lst;
+  while (tmp)
+  {
+    if ((!tmp->is_op && tmp->next && tmp->next->is_op) || (tmp->next && !tmp->next->is_op && tmp->is_op))
+    {
+      if (join_and_add(&new, tmp, tmp->next->next))
+        return (ft_lstclear(&new, &free), 1);
+      tmp = tmp->next;
+    }
+    else
+    {
+      if (add_node(&new, tmp))
+        return (ft_lstclear(&new, &free), perror("malloc"), 1);
+    }
+    tmp = tmp->next;
+  }
+  ft_lstclear(lst, &free);
+  *lst = new;
+  return (0);
+}
+
+// allocs: new
+int expand(t_list **lst)
+{
+  t_list *new;
+  t_list *tmp;
+
+  new = NULL;
+  tmp = *lst;
+  while (tmp)
+  {
+    if (!tmp->is_op)
+    {
+      if (lst_add_env_arg(get_env_value(tmp->content), &new))
+        return (ft_lstclear(&new, &free), 1);
+    }
+    else
+    {
+      if (add_node(&new, tmp))
+        return (ft_lstclear(&new, &free), perror("malloc"), 1);
+    }
+    tmp = tmp->next;
+  }
+  ft_lstclear(lst, &free);
+  *lst = new;
+  return (0);
+}
+
+// allocs: splited
+int expand_and_add(t_list *node, t_list **dest)
+{
+  t_list *splited;
+
+  splited = get_splited_list(node->content, node->mask);
+  if (!splited)
+    return (1);
+  if (expand(&splited))
+    return (ft_lstclear(&splited, &free), 1);
+  if (combine_expand_list(&splited))
+    return (ft_lstclear(&splited, &free), 1);
+  //print_ouput(splited);
+  append_list(splited, dest, '\'');
+  return (0);
+}
 
 // allocs: new
 // frees lst on success
 int expand_args(t_list **lst)
 {
   t_list *tmp;
-  char *arg;
-  char *value;
   t_list *new;
 
   tmp = *lst;
+  new = NULL;
   while (tmp)
   {
     if (tmp->mask)
     {
-      arg = get_masked_portion(tmp->content, tmp->mask);
-      if (!arg)
+      if (expand_and_add(tmp, &new))
         return (ft_lstclear(&new, &free), 1);
-      value = get_env_value(arg);
-      if (value)
-      {
-        if (lst_add_env_arg(&new, tmp, value))
-          return (ft_lstclear(&new, &free), 1);
-      }
     }
     else
     {

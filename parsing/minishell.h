@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 02:16:30 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:49:41 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ char *get_env_value(char *arg);
 t_list *get_right_node(t_list *head ,t_list *node);
 void lst_delete_node(t_list **lst, t_list *node);
 int arr_len(char **arr);
-//int lst_add_env_arg(char *arg, t_list **dest);
-int lst_add_env_arg(t_list **dest, t_list *node, char *value);
+int lst_add_env_arg(char *arg, t_list **dest);
+//int lst_add_env_arg(t_list **dest, t_list *node, char *value);
 int add_node(t_list **dest, t_list *node);
 int expand_args(t_list **lst);
 
