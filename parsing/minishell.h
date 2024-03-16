@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 17:49:41 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:59:21 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ int set_fd(int *set, t_tree *root);
 
 // masking
 int masking(t_list *start, t_list *end, t_list *dest);
+void full_withzero(char **s);
+void full_withone(char **s);
+int there_is_expand(t_list *start, t_list *end);
 
 // debug
 void test_export(char **env);
