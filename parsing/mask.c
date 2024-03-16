@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 03:53:33 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:10:20 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int there_is_expand(t_list *start, t_list *end)
 	current_start = start;
 	while (current_start && current_start != end)
 	{
-		if (ft_strchr(current_start->content, '$'))
+		if (ft_strchr(current_start->content, '$') && (!current_start->is_op || current_start->is_op == '\"'))
 			return (0);
 		current_start = current_start->next;
 	}

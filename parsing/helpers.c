@@ -152,6 +152,56 @@ char *join_list(t_list *lst)
   return (new);
 }
 
+int should_join_mask(t_list *start, t_list *end)
+{
+  int join;
+
+  join = 0;
+  while (start != end)
+  {
+    if (start->mask)
+      join = 1;
+    start = start->next;
+  }
+  return (join);
+}
+
+//allocs: tmp, tmp3
+int join_mask(t_list *start, t_list *end, t_list *dest)
+{
+  char *tmp;
+  char *tmp2;
+  char *tmp3;
+
+  tmp = NULL;
+  if (should_join_mask(start, end))
+  {
+    while (start)
+    {
+      if (!start->mask)
+      {
+        tmp2 = ft_strdup(start->content);
+        full_withzero(&tmp2);
+      }
+      else
+      {
+        tmp2 = start->mask;
+        start->mask = NULL;
+      }
+      if (!tmp2)
+        return (free(tmp), perror("join_mask"), 1);
+      tmp3 = tmp;
+      tmp = ft_strjoin(tmp, tmp2);
+      free(tmp2);
+      free(tmp3);
+      if (!tmp)
+        return (perror("join_mask"), 1);
+      start = start->next;
+    }
+  }
+  return (dest->mask = tmp, 0);
+}
+
 // allocs: str, new
 // TODO: change this to have is_op passed as an arg
 int join_and_add(t_list **dest, t_list *start, t_list *end)
@@ -172,6 +222,8 @@ int join_and_add(t_list **dest, t_list *start, t_list *end)
   if (!new)
     return (free(str), 1);
   new->is_op = 1;
+  if (join_mask(start, end, new))
+    return (ft_lstdelone(new, &free), 1);
   ft_lstadd_back(dest, new);
   return (0);
 }
