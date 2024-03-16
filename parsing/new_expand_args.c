@@ -229,20 +229,76 @@ int lst_add_env_arg(t_list **dest, t_list *node, char *value)
 }
 */
 
-// allocs: new
+// allocs: new;
+int combine_expand_list(t_list **lst)
+{
+  t_list *tmp;
+  t_list *before;
+  t_list *after;
+  char *new;
+
+  tmp = *lst;
+  before = NULL;
+  while (tmp)
+  {
+    after = tmp->next;
+    if (!tmp->is_op)
+    {
+      if (before && before->is_op)
+      {
+        new = ft_strjoin(before->content, tmp->content);
+        if (!new)
+          return (1);
+        free(before->content);
+        before->content = new;
+        before->is_op = '\'';
+        lst_remove_node(lst, tmp);
+        tmp = before;
+      }
+      if (after && after->is_op)
+      {
+        new = ft_strjoin(tmp->content, after->content);
+        if (!new)
+          return (1);
+        free(tmp->content);
+        tmp->content = new;
+        tmp->is_op = '\'';
+        lst_remove_node(lst, after);
+      }
+    }
+    before = tmp;
+    tmp = tmp->next;
+  }
+  return (0);
+}
+
+// allocs: new, hold
+/*
 int combine_expand_list(t_list **lst)
 {
   t_list *new;
   t_list *tmp;
+  t_list *last;
+  char *hold;
 
   new = NULL;
   tmp = *lst;
   while (tmp)
   {
-    if ((!tmp->is_op && tmp->next && tmp->next->is_op) || (tmp->next && !tmp->next->is_op && tmp->is_op))
+    if ((!tmp->is_op && tmp->next && tmp->next->is_op))
     {
       if (join_and_add(&new, tmp, tmp->next->next))
         return (ft_lstclear(&new, &free), 1);
+      //tmp = tmp->next;
+    }
+    else if (tmp->next && !tmp->next->is_op && tmp->is_op)
+    {
+      last = ft_lstlast(new);
+      hold = ft_strjoin(last->content, tmp->next->content);
+      if (!hold)
+        return (ft_lstclear(&new, &free), 1);
+      free(last->content);
+      last->content = hold;
       tmp = tmp->next;
     }
     else
@@ -256,6 +312,7 @@ int combine_expand_list(t_list **lst)
   *lst = new;
   return (0);
 }
+*/
 
 // allocs: new
 int expand(t_list **lst)
@@ -324,6 +381,8 @@ int expand_args(t_list **lst)
     }
     tmp = tmp->next;
   }
+	if (combine_list(&new))
+		return (ft_lstclear(&new, &free), 1);
   *lst = new;
   return (0);
 }
