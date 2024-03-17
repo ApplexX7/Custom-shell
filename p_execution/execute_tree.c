@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 01:29:58 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:43:34 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int its_builtins(t_tree *root)
 		return (1);
 	if (!ft_strncmp(root->node->content, "env", 3))
 		return (1);
+	if (!ft_strncmp(root->node->content, "cd", 2))
+		return (1);
 	return (0);
 }
 
@@ -127,6 +129,8 @@ int execute_builtins(t_tree *root, char **env)
 		ft_export(root, env);
 	if (!ft_strncmp(root->node->content, "env", 3))
 		ft_env(root, NULL);
+	if (!ft_strncmp(root->node->content, "cd", 2))
+		ft_cd(root);
 	return (0);
 }
 

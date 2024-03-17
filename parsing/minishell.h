@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/16 21:59:21 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:39:41 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@
 #include "../Libft-42/libft.h"
 #include <dirent.h>
 #include <errno.h>
+#include <sys/stat.h>
 #include <termios.h>
 
 
 #define EXIT_CODEPARSING 258
 #define EXIT_CODECOMAND 127
+#define EXIT_CODEFILE 1
 
 typedef struct s_tree
 {
@@ -193,6 +195,9 @@ int print_export(t_list *lst, int fd);
 int get_key_value(char *content, char **key, char **value, int *join);
 int concat_and_add(char *key, char *value, t_list **local_env);
 int export_add_key_value(t_list **dest, char *key, char *value);
+
+//cd
+int ft_cd(t_tree *root);
 
 // env
 int ft_env(t_tree *node, t_list **local_lst);

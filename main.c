@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/16 22:20:59 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:56:34 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 		return (ft_lstclear(&lst, &free), NULL);
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
-  if (expand_args(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
+//   if (expand_args(&lst))
+// 		return (ft_lstclear(&lst, &free), NULL);
 	if (expand_wildcard(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
