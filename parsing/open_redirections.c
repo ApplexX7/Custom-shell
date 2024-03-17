@@ -6,11 +6,30 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 00:17:26 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:05:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int expand_in_herdoc(char *str, int fd)
+{
+	t_list *lst;
+
+	lst = split_tokens(str);
+	if (!lst)
+		return (1);
+	// if (expand_args(&lst))
+	// 	return (1);
+	while (lst)
+	{
+		ft_putstr_fd(lst->content, fd);
+		lst = lst->next;
+	}
+	ft_putchar_fd('\n', fd);
+	ft_lstclear(&lst, &free);
+	return (0);
+}
 
 void create_herdoc(char *limite, int *fd)
 {
@@ -35,7 +54,7 @@ void create_herdoc(char *limite, int *fd)
 			ft_close(fd[1]);
 			exit(0);
 		}
-		ft_putstr_fd(str, fd[1]);
+		expand_in_herdoc(str, fd[1]);
 		free(str);
 	}
 }
