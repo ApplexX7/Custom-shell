@@ -118,7 +118,7 @@ char *get_env_value(char *arg)
 {
   char *value;
 
-  arg++;
+  //arg++;
   /*
   while (env[i])
   {
@@ -314,6 +314,25 @@ int combine_expand_list(t_list **lst)
 }
 */
 
+int get_arg_values_and_expand(char *content, t_list **dest)
+{
+  char **arr;
+  int i;
+
+  arr = ft_split(content, '$');
+  if (!arr)
+    return (perror("get_arg_values_and_expand"), 1);
+  i = 0;
+  while (arr[i])
+  {
+    if (lst_add_env_arg(get_env_value(arr[i]), dest))
+      return (free_2d_arr((void **) arr), 1);
+    i++;
+  }
+  free_2d_arr((void **) arr);
+  return (0);
+}
+
 // allocs: new
 int expand(t_list **lst)
 {
@@ -326,7 +345,7 @@ int expand(t_list **lst)
   {
     if (!tmp->is_op)
     {
-      if (lst_add_env_arg(get_env_value(tmp->content), &new))
+      if (get_arg_values_and_expand(tmp->content, &new))
         return (ft_lstclear(&new, &free), 1);
     }
     else
