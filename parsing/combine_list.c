@@ -103,7 +103,7 @@ int combine_lits_with_nonlists(t_list **lst)
       start = tmp;
       while (tmp && !is_breaking_token(tmp))
         tmp = tmp->next;
-      if (join_and_add(&new, start, tmp) || masking(start, tmp, ft_lstlast(new)))
+      if (join_and_add(&new, start, tmp))// || masking(start, tmp, ft_lstlast(new)))
         return (ft_lstclear(&new, &free), 1);
     }
     else
