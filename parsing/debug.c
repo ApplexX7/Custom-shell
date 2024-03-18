@@ -68,6 +68,7 @@ void test_export(char **env)
 {
   t_list *node;
   node = NULL;
+  ft_export(NULL, env, 1);
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
@@ -76,11 +77,12 @@ void test_export(char **env)
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+  ft_lstadd_back(&node, ft_lstnew(ft_strdup("ping=ping google.com")));
   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
-  ft_export(&t, env);
-  //ft_lstclear(&node, &free);
-  //node = NULL;
-  // ft_lstadd_back(&node, ft_lstnew("export"));
-  //t.node = node;
-  //ft_export(&t);
+  ft_export(&t, NULL, 0);
+  ft_lstclear(&node, &free);
+  node = NULL;
+   ft_lstadd_back(&node, ft_lstnew("export"));
+  t.node = node;
+  ft_export(&t, NULL, 0);
 }

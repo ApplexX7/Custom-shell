@@ -1,20 +1,24 @@
 
 #include "../parsing/minishell.h"
 
+int init_envs(t_list **local_env, char **env)
+{
+  get_exported_arg_value(NULL, local_env, 0);
+  ft_env(NULL, local_env);
+  if (init_local_env(local_env, env))
+    return (perror("init_local_env: malloc"), 1);
+  return (0);
+}
+
 // allocs: local_env
-int ft_export(t_tree *root, char **env)
+int ft_export(t_tree *root, char **env, int init)
 {
   static t_list *local_env = NULL;
   t_list *tmp;
   int fd;
 
-  get_exported_arg_value(NULL, &local_env, 0);
-  ft_env(NULL, &local_env);
-  if (!local_env && env[0])
-  {
-    if (init_local_env(&local_env, env))
-      return (perror("init_local_env: malloc"), 1);
-  }
+  if (init)
+    return (init_envs(&local_env, env));
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)

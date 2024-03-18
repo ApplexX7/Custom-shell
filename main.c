@@ -117,7 +117,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
-  //test_export(env);
+  test_export(env);
 	while (1)
 	{
 		promt = readline("minishell %% ");

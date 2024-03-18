@@ -181,7 +181,7 @@ int split_arg_node(t_list *node, t_list **dest);
 int ft_echo(t_tree *root);
 
 // export
-int ft_export(t_tree *root, char **env);
+int ft_export(t_tree *root, char **env, int init);
 char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
 int init_local_env(t_list **local_env, char **env);
 int add_export_node(t_list *lst, t_list **local_env);
