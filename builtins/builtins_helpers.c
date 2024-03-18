@@ -8,7 +8,7 @@ int set_fd(int *set, t_tree *root)
   if (root->output_file)
   {
     //printf("%s\n", root->output_file);
-    fd = open(root->output_file, O_WRONLY | O_CREAT, 0644);
+    fd = ft_open(root->output_file, O_WRONLY | O_CREAT, 0644);
     if (fd == -1)
       return (perror("open"), 1);
     //manage_fds(fd, CAPTURE)   
@@ -16,4 +16,18 @@ int set_fd(int *set, t_tree *root)
   }
   else
     return (*set = root->out_fd, 0);
+}
+
+int ft_putnstr_fd(char *str, int fd, int size)
+{
+  int i;
+
+  i = 0;
+  while (str[i] && i < size)
+  {
+    if (write(fd, &str[i], 1) == -1)
+      return (perror("write"), 1);
+    i++;
+  }
+  return (0);
 }

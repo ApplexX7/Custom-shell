@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 15:59:40 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:19:17 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int split_arg_node(t_list *node, t_list **dest);
 int ft_echo(t_tree *root);
 
 // export
-int ft_export(t_tree *root, char **env);
+int ft_export(t_tree *root, char **env, int init);
 char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
 int init_local_env(t_list **local_env, char **env);
 int add_export_node(t_list *lst, t_list **local_env);
@@ -209,6 +209,7 @@ int ft_env(t_tree *node, t_list **local_lst);
 
 // builtins_helpers
 int set_fd(int *set, t_tree *root);
+int ft_putnstr_fd(char *str, int fd, int size);
 
 // masking
 int masking(t_list *start, t_list *end, t_list *dest);

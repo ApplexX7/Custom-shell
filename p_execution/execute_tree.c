@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 17:08:25 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:18:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,25 @@ int execute_builtins(t_tree *root, char **env)
 	if (!ft_strncmp(root->node->content, "echo", 4))
 		ft_echo(root);
 	if (!ft_strncmp(root->node->content, "export", 6))
-		ft_export(root, env);
+		ft_export(root, env, 0);
 	if (!ft_strncmp(root->node->content, "env", 3))
 		ft_env(root, NULL);
 	if (!ft_strncmp(root->node->content, "cd", 2))
 		ft_cd(root);
+	return (0);
+}
+
+int ft_expand_combine(t_tree *root)
+{
+	if (split_env_arg(&root->node))
+		return (1);
+	if (expand_args(&root->node))
+		return (1);
+	if (combine_list(&root->node))
+		return (1);
+	if (expand_wildcard(&root->node))
+		return (1);
+	del_spaces(&root->node);
 	return (0);
 }
 
@@ -140,6 +154,7 @@ int	executing_tree(t_tree *root, char **env)
 
 	if (root->left == NULL && root->right == NULL)
 	{
+		ft_expand_combine(root);
 		inheritance_bottom(root);
 		if (!root->fbuiltins && its_builtins(root))
 			return (execute_builtins(root, env));

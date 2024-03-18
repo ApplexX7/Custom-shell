@@ -217,6 +217,7 @@ int add_node(t_list **dest, t_list *node)
     return (free(content), 1);
   new_node->is_op = node->is_op;
   new_node->mask = node->mask;
+  new_node->fd = node->fd;
   ft_lstadd_back(dest, new_node);
   return (0);
 }

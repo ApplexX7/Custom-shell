@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 16:46:59 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:20:06 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void print_ouput_op(t_list *node)
 // {
 //   t_list *node;
 //   node = NULL;
+//   ft_export(NULL, env, 1);
 //   ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
 //   ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
 //   ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
@@ -78,11 +79,12 @@ void print_ouput_op(t_list *node)
 //   ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
 //   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
 //   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("ping=ping google.com")));
 //   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
-//   ft_export(&t, env);
-//   //ft_lstclear(&node, &free);
-//   //node = NULL;
-//   // ft_lstadd_back(&node, ft_lstnew("export"));
-//   //t.node = node;
-//   //ft_export(&t);
+//   ft_export(&t, NULL, 0);
+//   ft_lstclear(&node, &free);
+//   node = NULL;
+//    ft_lstadd_back(&node, ft_lstnew("export"));
+//   t.node = node;
+//   ft_export(&t, NULL, 0);
 // }

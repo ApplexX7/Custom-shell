@@ -176,7 +176,7 @@ int join_mask(t_list *start, t_list *end, t_list *dest)
   tmp = NULL;
   if (should_join_mask(start, end))
   {
-    while (start)
+    while (start != end)
     {
       if (!start->mask)
       {
