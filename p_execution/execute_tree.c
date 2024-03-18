@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/17 17:43:34 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:08:25 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void handle_error()
 {
-	perror("Handle:");
+	perror("minishell:");
 }
 
 int transfer_todoublearr(t_list *list)
@@ -81,7 +81,7 @@ int check_operators(t_tree *root ,char **env)
 		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
-		executing_tree(root->left, env);
+		status = executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
 		if (status >> 8 ==  0)
 			executing_tree(root->right, env);
@@ -95,7 +95,7 @@ int check_operators(t_tree *root ,char **env)
 		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
-		executing_tree(root->left, env);
+		status = executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
 		if (status >> 8 !=  0)
 			executing_tree(root->right, env);
@@ -141,15 +141,10 @@ int	executing_tree(t_tree *root, char **env)
 	if (root->left == NULL && root->right == NULL)
 	{
 		inheritance_bottom(root);
-		if (its_builtins(root))
-		{
-			
-			execute_builtins(root, env);
-		}
+		if (!root->fbuiltins && its_builtins(root))
+			return (execute_builtins(root, env));
 		else
-		{
 			create_chdilren(root, env);
-		}
 	}
 	else if (is_andor(root))
 		status_code  = check_operators(root, env);

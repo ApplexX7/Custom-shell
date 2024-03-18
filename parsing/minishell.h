@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/17 17:39:41 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:59:40 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_tree
     t_list *node;
     struct s_tree *left;
     struct s_tree *right;
+    int fbuiltins;
     int fd;
     int out_fd;
     char *input_file;
@@ -112,9 +113,11 @@ void del_parentis(t_list **lst);
 void labling_prio(t_list *list);
 
 /*build tree*/
+void inheritance_builting(t_tree *root, int fbuiltins);
 t_tree *build_tree(t_list *list);
 void treeprint(t_tree *root, int level);
 void freetree(t_tree **root);
+int is_pipe(t_list *lst);
 
 /*handle redirections*/
 int ft_open_herdocs(t_list *list);
@@ -173,6 +176,8 @@ void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
 int check_operators(t_tree *root ,char **env);
+int its_builtins(t_tree *root);
+int execute_builtins(t_tree *root, char **env);
 
 // split_env_arg
 int split_env_arg(t_list **lst);

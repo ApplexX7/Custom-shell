@@ -6,15 +6,13 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/17 17:56:34 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:50:38 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "parsing/minishell.h"
 #include <termios.h>
-
-int signal_handler = 0;
 
 t_tree *spown_tree(t_list *lst)
 {
@@ -76,7 +74,7 @@ void sigint(int signo)
 	(void) signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		write(1, "\n", 1);
+		// write(1, "\n", 1);
 		return ;
 	}
 	write(1, "\n", 1);
@@ -99,7 +97,7 @@ void sigquit(int signo)
 
 int recept_signals(void)
 {
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	signal(SIGINT, &sigint);
 	signal(SIGQUIT, &sigquit);
 	return (0);
@@ -115,13 +113,15 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
-  //test_export(env);
+//   test_export(env);
 	while (1)
 	{
-		promt = readline("minishell %% ");
+		promt = readline("minishell$ ");
 		if (!promt)
 		{
-			printf("exiting from shell....\n");
+			if (promt == NULL)
+				printf("exit\n");
+			// printf("exiting from shell....\n");
 			exit(0);
 		}
 		root = parsing_check(promt, env, &status_code);

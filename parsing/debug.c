@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 02:02:36 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:46:59 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void treeprint(t_tree *root1, int level)
              return;
 	for (int i = 0; i < level; i++)
         printf(i == 0 ? "|-" : "   ");
-	printf("%s / %s / %d / %d ", root->input_file, root->output_file, root->fd, root->out_fd);
+	// printf("%s / %s / %d / %d ", root->input_file, root->output_file, root->fd, root->out_fd);
 	if (root->node != NULL)
 	{
 		t_list *tmp;
 
 		tmp = root->node;
+ 		printf("%d\t", root->fbuiltins);
 		while (tmp)
 		{
  			printf("%s\t", (char *)tmp->content);
- 			// printf("%c\t", (char )tmp->is_op);
+ 			// printf("%c\t", (char )tmp->content);
 			tmp = tmp->next;
 		}
 		printf("\n");
@@ -65,23 +66,23 @@ void print_ouput_op(t_list *node)
 	printf("\n");
 }
 
-void test_export(char **env)
-{
-  t_list *node;
-  node = NULL;
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
-  t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
-  ft_export(&t, env);
-  //ft_lstclear(&node, &free);
-  //node = NULL;
-  // ft_lstadd_back(&node, ft_lstnew("export"));
-  //t.node = node;
-  //ft_export(&t);
-}
+// void test_export(char **env)
+// {
+//   t_list *node;
+//   node = NULL;
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+//   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
+//   ft_export(&t, env);
+//   //ft_lstclear(&node, &free);
+//   //node = NULL;
+//   // ft_lstadd_back(&node, ft_lstnew("export"));
+//   //t.node = node;
+//   //ft_export(&t);
+// }
