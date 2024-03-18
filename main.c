@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/16 17:54:07 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:02:37 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 	if (expand_wildcard(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
-	del_spaces(&lst);
+	// del_spaces(&lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
@@ -116,7 +116,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
-  //test_export(env);
+  ft_export(NULL, env, 1);
 	while (1)
 	{
 		promt = readline("minishell %% ");

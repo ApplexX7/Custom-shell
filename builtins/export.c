@@ -1,20 +1,24 @@
 
 #include "../parsing/minishell.h"
 
+int init_envs(t_list **local_env, char **env)
+{
+  get_exported_arg_value(NULL, local_env, 0);
+  ft_env(NULL, local_env);
+  if (init_local_env(local_env, env))
+    return (perror("init_local_env: malloc"), 1);
+  return (0);
+}
+
 // allocs: local_env
-int ft_export(t_tree *root, char **env)
+int ft_export(t_tree *root, char **env, int init)
 {
   static t_list *local_env = NULL;
   t_list *tmp;
   int fd;
 
-  get_exported_arg_value(NULL, &local_env, 0);
-  ft_env(NULL, &local_env);
-  if (!local_env && env[0])
-  {
-    if (init_local_env(&local_env, env))
-      return (perror("init_local_env: malloc"), 1);
-  }
+  if (init)
+    return (init_envs(&local_env, env));
   tmp = root->node;
   tmp = tmp->next;
   if (tmp)
@@ -130,6 +134,8 @@ int search_and_add(t_list **local_env, char *key, char *value)
 
 int is_valid_arg_name(char *start, char *end)
 {
+  if (ft_isdigit(*start))
+    return (0);
   while (start < end)
   {
     if (!ft_isalpha(*start) && !ft_isdigit(*start) && *start != '_')
@@ -150,8 +156,8 @@ int check_export_syntax(char *content)
     eq--;
   else if (content == eq)
     return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
-  else if (&content[ft_strlen(content) - 1] == eq)
-    return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
+  //else if (&content[ft_strlen(content) - 1] == eq)
+    //return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   else if (!is_valid_arg_name(content, eq))
     return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   return (1);
@@ -160,15 +166,28 @@ int check_export_syntax(char *content)
 // closes fd at end
 int print_export(t_list *lst, int fd)
 {
+  char *eq;
+
   bubbleSort(lst);
   while (lst)
   {
     ft_putstr_fd("declare -x ", fd);
-    ft_putstr_fd(lst->content, fd);
-    ft_putstr_fd("\n", fd);
+    eq = ft_strchr(lst->content, '=');
+    if (!eq)
+    {
+      ft_putstr_fd(lst->content, fd);
+      ft_putstr_fd("\n", fd);
+    }
+    else
+    {
+      ft_putnstr_fd(lst->content, fd, eq - (char *) lst->content + 1);
+      ft_putstr_fd("\"", fd);
+      ft_putstr_fd(eq + 1, fd);
+      ft_putstr_fd("\"\n", fd);
+    }
     lst = lst->next;
   }
-  if (fd != 1 && close(fd) == -1)
+  if (fd != 1 && ft_close(fd) == -1)
       return (perror("close"), 1);
   return (0);
 }
@@ -184,7 +203,7 @@ int get_key_value(char *content, char **key, char **value, int *join)
   if (key)
     k = ft_substr(content, 0, eq - content);
   if (value && eq)
-    v = ft_substr(eq, 1, ft_strlen(content) - ft_strlen(eq) + 1);
+    v = ft_substr(eq, 1, ft_strlen(eq) - 1);
   if (key && k)
   {
     if (k[ft_strlen(k) - 1] == '+')
