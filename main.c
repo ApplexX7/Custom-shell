@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 18:23:52 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:19:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,10 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 		return (ft_lstclear(&lst, &free), NULL);
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
-  if (expand_args(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
-	if (expand_wildcard(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
+	// if (expand_wildcard(&lst))
+	// 	return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
-	// del_spaces(&lst);
+	del_spaces(&lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
@@ -61,8 +59,12 @@ int executing_part(t_tree *root, int *status_code, char **env)
 {
 	int code;
 
+	(void)status_code;
+	(void)env;
+	treeprint(root, 0);
     if (open_pipes(root))
 		return (0);
+	treeprint(root, 0);
 	*status_code = executing_tree(root, env);
 	code = manage_pid(0, WAIT, status_code);
 	manage_fds(0, CLOSE_ALL);
