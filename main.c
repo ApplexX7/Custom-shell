@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 22:19:05 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:38:38 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 	// 	return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
 	del_spaces(&lst);
+	// print_ouput(lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
@@ -61,13 +62,13 @@ int executing_part(t_tree *root, int *status_code, char **env)
 
 	(void)status_code;
 	(void)env;
-	treeprint(root, 0);
+	// treeprint(root, 0);
     if (open_pipes(root))
 		return (0);
-	treeprint(root, 0);
+	// treeprint(root, 0);
 	*status_code = executing_tree(root, env);
-	code = manage_pid(0, WAIT, status_code);
 	manage_fds(0, CLOSE_ALL);
+	code = manage_pid(0, WAIT, status_code);
 	return (0);
 }
 
@@ -115,7 +116,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
-  ft_export(NULL, env, 1);
+  	ft_export(NULL, env, 1);
 	while (1)
 	{
 		promt = readline("minishell$ ");
@@ -123,7 +124,6 @@ int main(int argc, char **argv, char **env)
 		{
 			if (promt == NULL)
 				printf("exit\n");
-			// printf("exiting from shell....\n");
 			exit(0);
 		}
 		root = parsing_check(promt, env, &status_code);

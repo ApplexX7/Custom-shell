@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_herdocs.c                                     :+:      :+:    :+:   */
+/*   open_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 18:19:41 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:21:43 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,43 +82,20 @@ int create_heredocchild(char *limite)
 	return (fdpipe[0]);
 }
 
-t_list *combine_herdoc(t_list *lst)
-{
-	t_list *copy;
-
-	copy = copy_lst(lst);
-	if (combine_list(&copy))
-		return (ft_lstclear(&copy, &free),NULL);
-	del_spaces(&copy);
-	return (copy);
-}
-
 int ft_open_herdocs(t_list *list)
 {
 	t_list *current;
-	t_list *copy;
-	t_list *tmp;
 	int fd;
 
 	current = list;
-	copy = combine_herdoc(list);
-	tmp = copy;
 	fd = 0;
 	while (current)
 	{
 		if (!ft_strncmp(current->content, "<<", 3) && !current->is_op)
 		{
-			while (tmp)
-			{
-				if (!ft_strncmp(tmp->content, "<<", 3) && !tmp->is_op)
-				{
-					printf("%s\n", tmp->next->content);
-					fd = create_heredocchild(tmp->next->content);
-					if (fd == -1)
-						return (1);
-				}
-				tmp = tmp->next;
-			}
+			fd = create_heredocchild(current->next->content);
+			if (fd == -1)
+				return (1);
 			current->fd = fd;
 		}
 		else

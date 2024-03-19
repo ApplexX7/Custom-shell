@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 22:06:50 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:16:41 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void print_ouput(t_list *node)
 	while (node != NULL)
 	{
 		printf("%s ", (char *)node->content);
-		printf("%s ", node->mask);
-		if ((!ft_strncmp(node->content, "<<", 3) || !ft_strncmp(node->content, ">", 2) || !ft_strncmp(node->content, "<", 2) || !ft_strncmp(node->content, ">>", 3))&& !node->is_op)
-			printf(" %d", node->fd);
+		printf(" %d", node->fd);
+		// printf("%s ", node->mask);
+		// if ((!ft_strncmp(node->content, "<<", 3) || !ft_strncmp(node->content, ">", 2) || !ft_strncmp(node->content, "<", 2) || !ft_strncmp(node->content, ">>", 3))&& !node->is_op)
 		printf("\n");
 		node = node->next;
 	}

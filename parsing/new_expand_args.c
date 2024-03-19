@@ -400,8 +400,8 @@ int expand_args(t_list **lst)
     }
     tmp = tmp->next;
   }
-	if (combine_list(&new))
-		return (ft_lstclear(&new, &free), 1);
+	//if (combine_list(&new))
+		//return (ft_lstclear(&new, &free), 1);
   *lst = new;
   return (0);
 }

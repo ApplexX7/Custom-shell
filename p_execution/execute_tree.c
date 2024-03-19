@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 22:08:43 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:22:11 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,10 @@ int execute_builtins(t_tree *root, char **env)
 int ft_expand_combine(t_tree *root)
 {
 	(void)root;
-	if (expand_wildcard(&root->node))
-		return (1);
 	if (expand_args(&root->node))
 		return (1);
+	// if (expand_wildcard(&root->node))
+	// 	return (1);
 	return (0);
 }
 
@@ -150,8 +150,8 @@ int	executing_tree(t_tree *root, char **env)
 
 	if (root->left == NULL && root->right == NULL)
 	{
-		// ft_expand_combine(root);
-		// inheritance_bottom(root);
+		ft_expand_combine(root);
+		inheritance_bottom(root);
 		if (!root->fbuiltins && its_builtins(root))
 			return (execute_builtins(root, env));
 		else
