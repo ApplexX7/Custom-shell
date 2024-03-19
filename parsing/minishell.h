@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/19 18:13:12 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:24:18 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,20 @@
 #include "../Libft-42/libft.h"
 #include <dirent.h>
 #include <errno.h>
+#include <sys/stat.h>
 #include <termios.h>
 
 
 #define EXIT_CODEPARSING 258
 #define EXIT_CODECOMAND 127
+#define EXIT_CODEFILE 1
 
 typedef struct s_tree
 {
     t_list *node;
     struct s_tree *left;
     struct s_tree *right;
+    int fbuiltins;
     int fd;
     int out_fd;
     char *input_file;
@@ -112,9 +115,11 @@ void del_parentis(t_list **lst);
 void labling_prio(t_list *list);
 
 /*build tree*/
+void inheritance_builting(t_tree *root, int fbuiltins);
 t_tree *build_tree(t_list *list);
 void treeprint(t_tree *root, int level);
 void freetree(t_tree **root);
+int is_pipe(t_list *lst);
 
 /*handle redirections*/
 int ft_open_herdocs(t_list *list);
@@ -173,6 +178,8 @@ void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
 int check_operators(t_tree *root ,char **env);
+int its_builtins(t_tree *root);
+int execute_builtins(t_tree *root, char **env);
 
 // split_env_arg
 int split_env_arg(t_list **lst);
@@ -198,6 +205,9 @@ int print_export(t_list *lst, int fd);
 int get_key_value(char *content, char **key, char **value, int *join);
 int concat_and_add(char *key, char *value, t_list **local_env);
 int export_add_key_value(t_list **dest, char *key, char *value);
+
+//cd
+int ft_cd(t_tree *root);
 
 // env
 int ft_env(t_tree *node, t_list **local_lst);

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:24:05 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 11:10:12 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:16:53 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ char **find_pathenv(void)
 	env = getenv("PATH");
 	if (!env)
 	{
-		handle_error();
-		exit(errno);
+		env = ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+		if (!env)
+			exit(0);
 	}
 	path_arr = ft_split(env , ':');
 	if (!path_arr)

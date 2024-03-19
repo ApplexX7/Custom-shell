@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:27:07 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:06:14 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_dup_parent(t_tree *root)
 	int fd_out = 1;
 	int fd_int = 0;
 
+		printf("========%s\n", root->output_file);
 	if (root->input_file != NULL)
 	{
 		root->fd = dup(STDIN_FILENO);

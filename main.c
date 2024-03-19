@@ -6,15 +6,13 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/19 21:34:20 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/19 23:23:35 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "parsing/minishell.h"
 #include <termios.h>
-
-int signal_handler = 0;
 
 t_tree *spown_tree(t_list *lst)
 {
@@ -48,12 +46,11 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
   lable_env_args(lst);
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
-  if (expand_args(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
-	if (expand_wildcard(&lst))
-		return (ft_lstclear(&lst, &free), NULL);
+	// if (expand_wildcard(&lst))
+	// 	return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
-	// del_spaces(&lst);
+	del_spaces(&lst);
+	// print_ouput(lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
@@ -64,11 +61,15 @@ int executing_part(t_tree *root, int *status_code, char **env)
 {
 	int code;
 
+	(void)status_code;
+	(void)env;
+	// treeprint(root, 0);
     if (open_pipes(root))
 		return (0);
+	// treeprint(root, 0);
 	*status_code = executing_tree(root, env);
-	code = manage_pid(0, WAIT, status_code);
 	manage_fds(0, CLOSE_ALL);
+	code = manage_pid(0, WAIT, status_code);
 	return (0);
 }
 
@@ -77,7 +78,7 @@ void sigint(int signo)
 	(void) signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		write(1, "\n", 1);
+		// write(1, "\n", 1);
 		return ;
 	}
 	write(1, "\n", 1);
@@ -100,7 +101,7 @@ void sigquit(int signo)
 
 int recept_signals(void)
 {
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	signal(SIGINT, &sigint);
 	signal(SIGQUIT, &sigquit);
 	return (0);
@@ -116,13 +117,14 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
-  ft_export(NULL, env, 1);
+  	ft_export(NULL, env, 1);
 	while (1)
 	{
-		promt = readline("minishell %% ");
+		promt = readline("minishell$ ");
 		if (!promt)
 		{
-			printf("exiting from shell....\n");
+			if (promt == NULL)
+				printf("exit\n");
 			exit(0);
 		}
 		root = parsing_check(promt, env, &status_code);

@@ -144,6 +144,7 @@ int combine_list(t_list **lst)
   }
   if (combine_lits_with_nonlists(&new))
     return (ft_lstclear(&new, &free), 1);
+  // print_ouput(new);
   ft_lstclear(lst, &free);
   *lst = new;
   return (0);

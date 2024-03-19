@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/12 17:33:20 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:35:46 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,22 @@ void executing_command(t_tree *content, char **env)
 void create_chdilren(t_tree *content, char **env)
 {
 	int pid;
+	int status;
 	
+	status = 0;
 	pid = fork();
 	if (pid == -1)
 		handle_error();
 	else if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
-		executing_command(content, env);
+		if (its_builtins(content))
+		{
+			status = execute_builtins(content, env);
+			exit(status);
+		}
+		else
+			executing_command(content, env);
 	}
 	if (content->fd != 0)
 		ft_close(content->fd);

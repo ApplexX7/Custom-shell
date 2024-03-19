@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/12 13:58:30 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:46:29 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,21 @@ void dup_iofile(int fd_in, int fd_out)
 
 int set_file_io(t_tree *content)
 {
-	// int fd_in;
-	// int fd_out;
+	int fd_in;
+	int fd_out;
 
-	// if (content->input_file != NULL)
-	// {
-	// 	fd_in = open_files(content->input_file, 1);
-	// 	content->fd =  fd_in;
-	// }
+	if (content->input_file != NULL)
+	{
+		fd_in = open_files(content->input_file, 1);
+		content->fd =  fd_in;
+	}
 	// else if (content->input_file == NULL)
 	// 	fd_in = content->fd;
-	// if (content->output_file != NULL)
-	// {
-	// 	fd_out = open_files(content->output_file, 2);
-	// 	content->out_fd = fd_out;
-	// }
+	if (content->output_file != NULL)
+	{
+		fd_out = open_files(content->output_file, 2);
+		content->out_fd = fd_out;
+	}
 	// else if (content->output_file == NULL)
 	// 	fd_out = content->out_fd;
 	if (content->node->content)

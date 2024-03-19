@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 18:00:16 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:22:11 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void handle_error()
 {
-	perror("Handle:");
+	perror("minishell:");
 }
 
 int transfer_todoublearr(t_list *list)
@@ -81,7 +81,7 @@ int check_operators(t_tree *root ,char **env)
 		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
-		executing_tree(root->left, env);
+		status = executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
 		if (status >> 8 ==  0)
 			executing_tree(root->right, env);
@@ -95,7 +95,7 @@ int check_operators(t_tree *root ,char **env)
 		output = root->out_fd;
 		if (save_state == -1)
 			return 0;
-		executing_tree(root->left, env);
+		status = executing_tree(root->left, env);
 		manage_pid(0, WAIT, &status);
 		if (status >> 8 !=  0)
 			executing_tree(root->right, env);
@@ -116,6 +116,8 @@ int its_builtins(t_tree *root)
 		return (1);
 	if (!ft_strncmp(root->node->content, "env", 3))
 		return (1);
+	if (!ft_strncmp(root->node->content, "cd", 2))
+		return (1);
 	return (0);
 }
 
@@ -127,20 +129,18 @@ int execute_builtins(t_tree *root, char **env)
 		ft_export(root, env, 0);
 	if (!ft_strncmp(root->node->content, "env", 3))
 		ft_env(root, NULL);
+	if (!ft_strncmp(root->node->content, "cd", 2))
+		ft_cd(root);
 	return (0);
 }
 
 int ft_expand_combine(t_tree *root)
 {
-	if (split_env_arg(&root->node))
-		return (1);
+	(void)root;
 	if (expand_args(&root->node))
 		return (1);
-	if (combine_list(&root->node))
-		return (1);
-	if (expand_wildcard(&root->node))
-		return (1);
-	del_spaces(&root->node);
+	// if (expand_wildcard(&root->node))
+	// 	return (1);
 	return (0);
 }
 
@@ -152,15 +152,10 @@ int	executing_tree(t_tree *root, char **env)
 	{
 		ft_expand_combine(root);
 		inheritance_bottom(root);
-		if (its_builtins(root))
-		{
-			
-			execute_builtins(root, env);
-		}
+		if (!root->fbuiltins && its_builtins(root))
+			return (execute_builtins(root, env));
 		else
-		{
 			create_chdilren(root, env);
-		}
 	}
 	else if (is_andor(root))
 		status_code  = check_operators(root, env);

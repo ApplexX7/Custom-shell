@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/19 18:13:49 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/19 23:22:56 by ayait-el         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC = main.c parsing/ft_split_tokens.c parsing/labling.c parsing/debug.c parsing
 	parsing/labling_priority.c parsing/build_tree.c parsing/open_redirections.c parsing/get_next_line.c parsing/helpers.c parsing/wildcard.c parsing/set_tree_io.c \
 	parsing/remove_parenthesis.c parsing/handle_redirections_bottom.c parsing/open_pipes.c p_execution/execute_tree.c p_execution/garbege_collector.c \
 	p_execution/change_state.c p_execution/create_chlidren.c p_execution/open_files.c p_execution/path.c parsing/split_env_args.c \
-	builtins/env.c builtins/echo.c builtins/export.c builtins/builtins_helpers.c parsing/mask.c parsing/lable_env_args.c
+	builtins/env.c builtins/echo.c builtins/export.c builtins/builtins_helpers.c parsing/mask.c builtins/cd.c parsing/inheritance.c parsing/lable_env_args.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc

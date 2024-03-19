@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:05:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/15 02:02:36 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:16:41 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void treeprint(t_tree *root1, int level)
 		t_list *tmp;
 
 		tmp = root->node;
+ 		// printf("%d\t", root->fbuiltins);
 		while (tmp)
 		{
  			printf("%s\t", (char *)tmp->content);
- 			// printf("%c\t", (char )tmp->is_op);
+ 			// printf("%c\t", (char )tmp->content);
 			tmp = tmp->next;
 		}
 		printf("\n");
@@ -46,9 +47,9 @@ void print_ouput(t_list *node)
 	while (node != NULL)
 	{
 		printf("%s ", (char *)node->content);
-		printf("%s ", node->mask);
-		if ((!ft_strncmp(node->content, "<<", 3) || !ft_strncmp(node->content, ">", 2) || !ft_strncmp(node->content, "<", 2) || !ft_strncmp(node->content, ">>", 3))&& !node->is_op)
-			printf(" %d", node->fd);
+		printf(" %d", node->fd);
+		// printf("%s ", node->mask);
+		// if ((!ft_strncmp(node->content, "<<", 3) || !ft_strncmp(node->content, ">", 2) || !ft_strncmp(node->content, "<", 2) || !ft_strncmp(node->content, ">>", 3))&& !node->is_op)
 		printf("\n");
 		node = node->next;
 	}
@@ -65,25 +66,25 @@ void print_ouput_op(t_list *node)
 	printf("\n");
 }
 
-void test_export(char **env)
-{
-  t_list *node;
-  node = NULL;
-  ft_export(NULL, env, 1);
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
-  ft_lstadd_back(&node, ft_lstnew(ft_strdup("ping=ping google.com")));
-  t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
-  ft_export(&t, NULL, 0);
-  ft_lstclear(&node, &free);
-  node = NULL;
-   ft_lstadd_back(&node, ft_lstnew("export"));
-  t.node = node;
-  ft_export(&t, NULL, 0);
-}
+// void test_export(char **env)
+// {
+//   t_list *node;
+//   node = NULL;
+//   ft_export(NULL, env, 1);
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("export")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("hello=ssss")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("world=")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("a=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("aaaa+=hello")));
+//   ft_lstadd_back(&node, ft_lstnew(ft_strdup("ping=ping google.com")));
+//   t_tree t = {node, NULL, NULL, 0, 1, NULL, NULL, 0};
+//   ft_export(&t, NULL, 0);
+//   ft_lstclear(&node, &free);
+//   node = NULL;
+//    ft_lstadd_back(&node, ft_lstnew("export"));
+//   t.node = node;
+//   ft_export(&t, NULL, 0);
+// }
