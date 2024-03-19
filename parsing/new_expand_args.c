@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   new_expand_args.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/19 22:36:25 by ayait-el          #+#    #+#             */
+/*   Updated: 2024/03/19 22:40:53 by ayait-el         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #include "minishell.h"
@@ -346,8 +358,9 @@ int get_arg_values_and_expand(char *content, t_list **dest)
     return (perror("get_arg_values_and_expand"), 1);
   if (join_values(arr, &value))
     return (perror("get_arg_values_and_expand"), 1);
-  if (lst_add_env_arg(value, dest))
-    return (free_2d_arr((void **) arr), 1);
+  if (new_and_add(dest, value, '"'))
+    return (free(value), free_2d_arr((void **) arr), 1);
+  free(value);
   free_2d_arr((void **) arr);
   return (0);
 }
@@ -379,20 +392,45 @@ int expand(t_list **lst)
   return (0);
 }
 
-// allocs: splited
+int ft_lstjoin(t_list *lst, char **dest)
+{
+  char *tmp;
+  char *result;
+
+  result = NULL;
+  while (lst)
+  {
+    tmp = result;
+    result = ft_strjoin(result, lst->content);
+    free(tmp);
+    if (!result && tmp)
+      return (perror("ft_lstjoin"), 1);
+    lst = lst->next;
+  }
+  *dest = result;
+  return (0);
+}
+
+// allocs: splited, value
 int expand_and_add(t_list *node, t_list **dest)
 {
   t_list *splited;
+  char *value;
 
   splited = get_splited_list(node->content, node->mask);
   if (!splited)
     return (1);
   if (expand(&splited))
     return (ft_lstclear(&splited, &free), 1);
-  if (combine_expand_list(&splited))
+  //if (combine_expand_list(&splited))
+    //return (ft_lstclear(&splited, &free), 1);
+  //append_list(splited, dest, '\'');
+  if (ft_lstjoin(splited, &value))
     return (ft_lstclear(&splited, &free), 1);
-  append_list(splited, dest, '\'');
-  return (0);
+  ft_lstclear(&splited, &free);
+  if (lst_add_env_arg(value, dest))
+    return (free(value), 1);
+  return (free(value), 0);
 }
 
 // allocs: new
