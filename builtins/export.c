@@ -57,7 +57,7 @@ char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit)
     tmp = *lst;
     while (tmp)
     {
-      if (!ft_strncmp(arg, tmp->content, ft_strlen(arg)))
+      if (!ft_strncmp(arg, tmp->content, ft_strlen(arg)) && ((char *) tmp->content)[ft_strlen(arg)] == '=')
         return ((char *) tmp->content + ft_strlen(arg) + 1);
       tmp = tmp->next;
     }
