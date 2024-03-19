@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:36:25 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/19 22:40:53 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/19 22:50:15 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,7 @@ int get_arg_values_and_expand(char *content, t_list **dest)
     return (perror("get_arg_values_and_expand"), 1);
   if (join_values(arr, &value))
     return (perror("get_arg_values_and_expand"), 1);
-  if (new_and_add(dest, value, '"'))
+  if (value && new_and_add(dest, value, '"'))
     return (free(value), free_2d_arr((void **) arr), 1);
   free(value);
   free_2d_arr((void **) arr);
