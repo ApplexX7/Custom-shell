@@ -314,21 +314,40 @@ int combine_expand_list(t_list **lst)
 }
 */
 
+// accept array of env args, get their value and update arr
+// allocs: str
+int join_values(char **arr, char **dest)
+{
+  char *tmp;
+  char *str;
+  int i;
+
+  i = 0;
+  str = NULL;
+  while (arr[i])
+  {
+    tmp = str;
+    str = ft_strjoin(str, get_env_value(arr[i]));
+    free(tmp);
+    if (!str && tmp)
+      return (perror("join_values"), 1);
+    i++;
+  }
+  return (*dest = str, 0);
+}
+
 int get_arg_values_and_expand(char *content, t_list **dest)
 {
   char **arr;
-  int i;
+  char *value;
 
   arr = ft_split(content, '$');
   if (!arr)
     return (perror("get_arg_values_and_expand"), 1);
-  i = 0;
-  while (arr[i])
-  {
-    if (lst_add_env_arg(get_env_value(arr[i]), dest))
-      return (free_2d_arr((void **) arr), 1);
-    i++;
-  }
+  if (join_values(arr, &value))
+    return (perror("get_arg_values_and_expand"), 1);
+  if (lst_add_env_arg(value, dest))
+    return (free_2d_arr((void **) arr), 1);
   free_2d_arr((void **) arr);
   return (0);
 }
@@ -372,7 +391,6 @@ int expand_and_add(t_list *node, t_list **dest)
     return (ft_lstclear(&splited, &free), 1);
   if (combine_expand_list(&splited))
     return (ft_lstclear(&splited, &free), 1);
-  //print_ouput(splited);
   append_list(splited, dest, '\'');
   return (0);
 }
@@ -400,8 +418,11 @@ int expand_args(t_list **lst)
     }
     tmp = tmp->next;
   }
-	if (combine_list(&new))
-		return (ft_lstclear(&new, &free), 1);
+	//if (combine_list(&new))
+		//return (ft_lstclear(&new, &free), 1);
+  printf("----------------------------------------\n");
+  print_ouput(new);
+  printf("----------------------------------------\n");
   *lst = new;
   return (0);
 }

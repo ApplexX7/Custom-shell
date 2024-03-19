@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 18:01:22 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:13:12 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int lst_add_env_arg(char *arg, t_list **dest);
 //int lst_add_env_arg(t_list **dest, t_list *node, char *value);
 int add_node(t_list **dest, t_list *node);
 int expand_args(t_list **lst);
+int join_values(char **arr, char **dest);
 
 
 // split tokens
@@ -103,6 +104,7 @@ void swap(t_list *a, t_list *b);
 void bubbleSort(t_list *start);
 int min(int a, int b);
 int max(int a, int b);
+int arr_len(char **arr);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -175,6 +177,9 @@ int check_operators(t_tree *root ,char **env);
 // split_env_arg
 int split_env_arg(t_list **lst);
 int split_arg_node(t_list *node, t_list **dest);
+
+// lable_env_args
+void lable_env_args(t_list *lst);
 
 // builtins
 

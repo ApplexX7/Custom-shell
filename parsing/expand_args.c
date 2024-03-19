@@ -176,16 +176,6 @@ void lst_delete_node(t_list **lst, t_list *node)
   ft_lstdelone(node, &free);
 }
 
-int arr_len(char **arr)
-{
-  int i;
-
-  i = 0;
-  while (arr[i])
-    i++;
-  return (i);
-}
-
 // allocs: list, new_lst
 int lst_add_env_arg(char *arg, t_list **dest)
 {

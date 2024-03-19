@@ -305,3 +305,13 @@ void bubbleSort(t_list *start)
     lptr = ptr1;
   }
 }
+
+int arr_len(char **arr)
+{
+  int i;
+
+  i = 0;
+  while (arr[i])
+    i++;
+  return (i);
+}
