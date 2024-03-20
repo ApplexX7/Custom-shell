@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/19 23:24:18 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:44:37 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@
 #include <termios.h>
 
 
+//colors
+# define GREEN        "\x1b[1;32m"
+# define YELLOW_    "\x1b[0;33m"
+# define YELLOW        "\x1b[1;33m"
+# define RED        "\x1b[1;31m"
+# define BLUE        "\x1b[1;34m"
+# define MAGENTA    "\x1b[1;35m"
+# define CYAN        "\x1b[1;36m"
+# define WHT        "\e[1;37m"
+# define RESET        "\x1b[0m"
+
+//exit status
 #define EXIT_CODEPARSING 258
 #define EXIT_CODECOMAND 127
 #define EXIT_CODEFILE 1

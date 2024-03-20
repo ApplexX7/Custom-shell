@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/19 23:23:35 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:46:52 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int main(int argc, char **argv, char **env)
   	ft_export(NULL, env, 1);
 	while (1)
 	{
-		promt = readline("minishell$ ");
+		promt = readline(CYAN"minishell2.5>$ ");
 		if (!promt)
 		{
 			if (promt == NULL)
