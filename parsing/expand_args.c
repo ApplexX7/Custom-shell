@@ -208,6 +208,21 @@ int add_node(t_list **dest, t_list *node)
   new_node->is_op = node->is_op;
   new_node->mask = node->mask;
   new_node->fd = node->fd;
+  new_node->out_fd = node->out_fd;
+  new_node->input_file = NULL;
+  new_node->ouput_file = NULL;
+  if (input_file)
+  {
+    new_node->input_file = ft_strdup(node->input_file);
+    if (!new_node->input_file)
+      return (ft_lstdelone(new_node &free), perror("add_node"), 1);
+  }
+  if (output_file)
+  {
+    new_node->input_file = ft_strdup(node->input_file);
+    if (!new_node->output_file)
+      return (ft_lstdelone(new_node &free), perror("add_node"), 1);
+  }
   ft_lstadd_back(dest, new_node);
   return (0);
 }
