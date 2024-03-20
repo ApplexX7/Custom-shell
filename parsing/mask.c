@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/16 22:20:30 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:42:20 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,9 @@ int masking(t_list *start, t_list *end, t_list *dest)
 		tmp = ft_strdup(start->content);
 		if (!tmp)
 			return(1);
-		printf("%s\n", start->content);
 		if (ft_strchr(start->content, '$') && (!start->is_op || start->is_op == '\"'))
-		{
-			printf("----%s\n", start->content);
+		
 			full_withone(&tmp);
-		}
 		else
 			full_withzero(&tmp);
 		tmp2 = new;
@@ -86,7 +83,5 @@ int masking(t_list *start, t_list *end, t_list *dest)
 		start = start->next;
 	}
 	dest->mask = new;
-	printf("%s\n", dest->mask);
-	printf("------------\n");
 	return (0);
 }
