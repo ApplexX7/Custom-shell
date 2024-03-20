@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 14:46:52 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:15:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,38 @@ int recept_signals(void)
 	return (0);
 }
 
+char **create_env(void)
+{
+	char **env;
+	char *buffer;
+	size_t size = PATH_MAX;
+
+	env = malloc(sizeof(char *) * 5);
+	if (!env)
+		return (NULL);
+	env[0] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	if (!env[0])
+		return (NULL);
+	printf("%s\n", env[0]);
+	buffer = malloc(sizeof(char) * size);
+	if (!buffer)
+		return (NULL);
+	if (!getcwd(buffer, size))
+		return (NULL);
+	env[1] = ft_strjoin("PWD=", buffer);
+	if (!env[1])
+		return (NULL);
+	free(buffer);
+	env[2] = ft_strdup("SHLVL=1");
+	if (!env[2])
+		return (NULL);
+	env[3] = ft_strdup("_=/usr/bin/env");
+	if (!env[3])
+		return (NULL);
+	env[4] = 0;
+	return (env);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char *promt;
@@ -117,7 +149,16 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	status_code = 0;
 	recept_signals();
-  	ft_export(NULL, env, 1);
+	if (!env || !env[0])
+	{
+		env = create_env();
+		if (!env)
+			return (0);
+		ft_export(NULL, env, 1);
+		free_2d_arr((void**)env);
+	}
+	else
+	  	ft_export(NULL, env, 1);
 	while (1)
 	{
 		promt = readline(CYAN"minishell2.5>$ ");
