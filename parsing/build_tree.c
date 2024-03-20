@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 16:51:32 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:39:04 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int is_pipe(t_list *lst)
 {
-	if (!ft_strncmp(lst->content, "|", 1) && !lst->is_op)
+	if (!ft_strncmp(lst->content, "|", 2) && !lst->is_op)
 		return (1);
 	return (0);
 }
