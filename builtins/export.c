@@ -149,6 +149,8 @@ int check_export_syntax(char *content)
 {
   char *eq;
 
+  if (!content[0])
+    return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   eq = ft_strchr(content, '=');
   if (eq == NULL)
     return (1);
