@@ -221,7 +221,7 @@ int join_and_add(t_list **dest, t_list *start, t_list *end)
   new = ft_lstnew(str);
   if (!new)
     return (free(str), 1);
-  new->is_op = 1;
+  new->is_op = start->is_op;
   if (join_mask(start, end, new))
     return (ft_lstdelone(new, &free), 1);
   ft_lstadd_back(dest, new);
