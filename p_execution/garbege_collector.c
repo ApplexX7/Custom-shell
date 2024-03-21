@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 13:57:31 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:18:50 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 	int			i;
 
 	i = 0;
-	if (action == CAPTURED)
+	if (action == CAPTURED && pid_index < CHILD_MAX)
 	{
 		pids[pid_index] = pid;
 		pid_index++;
@@ -75,6 +75,8 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 				return (1);
 			i++;
 		}
+		while (waitpid(-1, NULL, 0) != -1)
+		;
 		pid_index = 0;
 	}
 	return (0);

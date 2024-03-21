@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 14:44:37 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:14:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int ft_close(int fd);
 //executing part
 
 void executing_command(t_tree *content, char **env);
-void create_chdilren(t_tree *content, char **env);
+int create_chdilren(t_tree *content, char **env);
 char **find_pathenv(void);
 char *valid_path(char *cmd);
 int	open_files(char *file_name, int level);
