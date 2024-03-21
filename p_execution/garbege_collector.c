@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 13:57:31 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:42:22 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int manage_fds(int fd, t_fd_action action)
   }
 	return (0);
 }
+
 
 int manage_pid(int pid, t_pid_action action, int *last_status)
 {

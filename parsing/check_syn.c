@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 18:57:31 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:48:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int ft_redirectionop(t_list *current)
 
 int ft_special_operators(t_list *current)
 {
+	if (!current)
+		return (1);
 	if (!ft_strncmp(current->content, "&&", 3) && !current->is_op)
 		return (1);
 	else if (!ft_strncmp(current->content, "||", 3) && !current->is_op)
