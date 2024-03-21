@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/21 15:51:55 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:00:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
   lable_env_args(lst);
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
-	// if (expand_wildcard(&lst))
-	// 	return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
 	del_spaces(&lst);
-	// print_ouput(lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
@@ -63,10 +60,8 @@ int executing_part(t_tree *root, int *status_code, char **env)
 
 	(void)status_code;
 	(void)env;
-	// treeprint(root, 0);
     if (open_pipes(root))
 		return (0);
-	// treeprint(root, 0);
 	*status_code = executing_tree(root, env);
 	manage_fds(0, CLOSE_ALL);
 	code = manage_pid(0, WAIT, status_code);
@@ -161,7 +156,7 @@ int main(int argc, char **argv, char **env)
 	  	ft_export(NULL, env, 1);
 	while (1)
 	{
-		promt = readline(CYAN"minishell2.5>$ ");
+		promt = readline("minishell2.5>$ ");
 		if (!promt)
 		{
 			if (promt == NULL)
