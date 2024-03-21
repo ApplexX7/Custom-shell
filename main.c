@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 18:15:03 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:51:55 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	status_code = 0;
-	recept_signals();
+	// recept_signals();
 	if (!env || !env[0])
 	{
 		env = create_env();
