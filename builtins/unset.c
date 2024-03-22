@@ -3,24 +3,31 @@
 #include "../parsing/minishell.h"
 
 
-void ft_unset(char *arg, t_list **local_env)
+int ft_unset(t_tree *tree, t_list **local_env)
 {
   static t_list **env = NULL;
   t_list *tmp;
+  t_list *arg;
 
   if (local_env)
     env = local_env;
   else
   {
+    arg = tree->node->next;
     tmp = *env;
-    while (tmp)
+    while (arg)
     {
-      if (!ft_strncmp(arg, tmp->content, ft_strlen(arg)) && (((char *) tmp->content)[ft_strlen(arg)] == '=' || ((char *) tmp->content)[ft_strlen(arg)] == '\0'))
+      while (tmp)
       {
-        lst_remove_node(env, tmp);
-        return ;
+        if (!ft_strncmp(arg->content, tmp->content, ft_strlen(arg->content)) && (((char *) tmp->content)[ft_strlen(arg->content)] == '=' || ((char *) tmp->content)[ft_strlen(arg->content)] == '\0'))
+        {
+          lst_remove_node(env, tmp);
+          break;
+        }
+        tmp = tmp->next;
       }
-      tmp = tmp->next;
+      arg = arg->next;
     }
   }
+  return (0);
 }
