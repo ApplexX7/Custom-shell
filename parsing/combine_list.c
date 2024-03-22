@@ -86,6 +86,14 @@ int is_breaking_token(t_list *node)
   return (0);
 }
 
+int is_literal(t_list *node)
+{
+  if (node && (node->is_op || ((char *) node->content)[0] == '$'))
+    return (1);
+  else
+    return (0);
+}
+
 // allocs: new
 // frees lst on success
 int combine_lits_with_nonlists(t_list **lst)
@@ -98,7 +106,7 @@ int combine_lits_with_nonlists(t_list **lst)
   tmp = *lst;
   while (tmp)
   {
-    if ((!is_breaking_token(tmp) && tmp->is_op == 0 && tmp->next && tmp->next->is_op != 0) || tmp->is_op)
+    if ((!is_breaking_token(tmp) && !is_literal(tmp) && is_literal(tmp->next)) || is_literal(tmp))
     {
       start = tmp;
       while (tmp && !is_breaking_token(tmp))
