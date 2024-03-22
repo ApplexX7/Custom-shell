@@ -5,6 +5,7 @@ int init_envs(t_list **local_env, char **env)
 {
   get_exported_arg_value(NULL, local_env, 0);
   ft_env(NULL, local_env);
+  ft_unset(NULL, local_env);
   if (init_local_env(local_env, env))
     return (perror("init_local_env: malloc"), 1);
   return (0);
