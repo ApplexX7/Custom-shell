@@ -30,9 +30,12 @@ int tree_copy_output(char *output_file, int out_fd, t_tree *to)
   }
   else
   {
-    free(to->output_file);
-    to->output_file = NULL;
-    to->out_fd = out_fd;
+    //free(to->output_file);
+    //to->output_file = NULL;
+    if (to->output_file)
+      ft_close(out_fd);
+    else
+      to->out_fd = out_fd;
   }
   return (0);
 }
@@ -54,9 +57,12 @@ int tree_copy_input(char *input_file, int fd, t_tree *to)
   }
   else
   {
-    free(to->input_file);
-    to->input_file = NULL;
-    to->fd = fd;
+    //free(to->input_file);
+    //to->input_file = NULL;
+    if (to->input_file || to->fd != 0)
+      ft_close(fd);
+    else
+      to->fd = fd;
   }
   return (0);
 }
@@ -71,6 +77,8 @@ int open_pipes(t_tree *root)
   {
     if (pipe(pip))
       return (write(2, "failed to create pipe\n", 22), 1);
+    manage_fds(pip[0], CAPTURE);
+    manage_fds(pip[1], CAPTURE);
     //if (tree_copy_input(root->input_file, root->fd, root->left))
       //return (write(2, "failed to copy tree input\n", 25), 1);
     if (tree_copy_output(NULL, pip[1], root->left))
@@ -79,8 +87,6 @@ int open_pipes(t_tree *root)
       return (write(2, "failed to copy tree input\n", 25), 1);
     if (tree_copy_output(root->output_file, root->out_fd, root->right))
       return (write(2, "failed to copy tree input\n", 25), 1);
-    manage_fds(pip[0], CAPTURE);
-    manage_fds(pip[1], CAPTURE);
   }
   if (open_pipes(root->left))
     return (1);

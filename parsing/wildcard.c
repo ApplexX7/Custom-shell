@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/08 18:52:26 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:56:38 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,7 +315,7 @@ int add_matched_list(t_list **dest, t_list *lst)
     new = NULL;
     while (lst != start)
     {
-      if (new_and_add(dest, lst->content, lst->is_op))
+      if (add_node(dest, lst))
         return (1);
       lst = lst->next;
     }
@@ -327,7 +327,7 @@ int add_matched_list(t_list **dest, t_list *lst)
   }
   while (lst)
   {
-    if (new_and_add(dest, lst->content, lst->is_op))
+    if (add_node(dest, lst))
       return (1);
     lst = lst->next;
   }

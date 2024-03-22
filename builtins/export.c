@@ -5,6 +5,7 @@ int init_envs(t_list **local_env, char **env)
 {
   get_exported_arg_value(NULL, local_env, 0);
   ft_env(NULL, local_env);
+  ft_unset(NULL, local_env);
   if (init_local_env(local_env, env))
     return (perror("init_local_env: malloc"), 1);
   return (0);
@@ -136,7 +137,7 @@ int is_valid_arg_name(char *start, char *end)
 {
   if (ft_isdigit(*start))
     return (0);
-  while (start < end)
+  while (start < end || (!end && *start))
   {
     if (!ft_isalpha(*start) && !ft_isdigit(*start) && *start != '_')
       return (0);
@@ -149,12 +150,14 @@ int check_export_syntax(char *content)
 {
   char *eq;
 
+  if (!content[0])
+    return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   eq = ft_strchr(content, '=');
-  if (eq == NULL)
-    return (1);
-  else if (eq != content && *(eq - 1) == '+')
+  //if (eq == NULL)
+    //return (1);
+  if (eq && eq != content && *(eq - 1) == '+')
     eq--;
-  else if (content == eq)
+  if (content == eq)
     return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
   //else if (&content[ft_strlen(content) - 1] == eq)
     //return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);

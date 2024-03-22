@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:36:25 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/19 23:08:02 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:55:25 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,20 @@ void do_nothing(void *arg)
   (void) arg;
 }
 
+int get_empty_str_arr(char ***dest)
+{
+  char **arr;
+
+  arr = malloc(sizeof(char *) * 2);
+  if (!arr)
+    return (perror("get_empty_str_arr"), 1);
+  arr[1] = NULL;
+  arr[0] = malloc(1);
+  if (!arr[0])
+    return (perror("get_empty_str_arr"), free(arr), 1);
+  return (*dest = arr, 0);
+}
+
 int lst_add_env_arg(char *arg, t_list **dest)
 {
   char **arr;
@@ -195,7 +209,10 @@ int lst_add_env_arg(char *arg, t_list **dest)
 
   if (!arg)
     return (0);
-  arr = ft_split(arg, ' ');
+  if (arg[0])
+    arr = ft_split(arg, ' ');
+  else if (get_empty_str_arr(&arr))
+    return (1);
   if (!arr)
     return (1);
   new_lst = convert_arr_to_list(arr);
@@ -411,6 +428,21 @@ int ft_lstjoin(t_list *lst, char **dest)
   return (0);
 }
 
+int handle_empty_string_case(char **value, t_list *node)
+{
+  char *new_value;
+
+  if (!(*value) && node->is_op == '"')
+  {
+    new_value = malloc(1);
+    if (!new_value)
+      return (perror("handle_empty_string_case"), 1);
+    new_value[0] = '\0';
+    *value = new_value;
+  }
+  return (0);
+}
+
 // allocs: splited, value
 int expand_and_add(t_list *node, t_list **dest)
 {
@@ -422,12 +454,11 @@ int expand_and_add(t_list *node, t_list **dest)
     return (1);
   if (expand(&splited))
     return (ft_lstclear(&splited, &free), 1);
-  //if (combine_expand_list(&splited))
-    //return (ft_lstclear(&splited, &free), 1);
-  //append_list(splited, dest, '\'');
   if (ft_lstjoin(splited, &value))
     return (ft_lstclear(&splited, &free), 1);
   ft_lstclear(&splited, &free);
+  if (handle_empty_string_case(&value, node))
+    return (free(value), 1);
   if (lst_add_env_arg(value, dest))
     return (free(value), 1);
   return (free(value), 0);
@@ -458,6 +489,7 @@ int expand_args(t_list **lst)
   }
 	//if (combine_list(&new))
 		//return (ft_lstclear(&new, &free), 1);
+  ft_lstclear(lst, &free);
   *lst = new;
   return (0);
 }

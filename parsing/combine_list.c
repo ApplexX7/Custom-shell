@@ -45,7 +45,7 @@ void del_useless_tokens(t_list **lst)
 
 int skip_nonliterals(t_list *start, t_list **head, t_list **tmp)
 {
-  while (start && !start->is_op)
+  while (start && !start->is_op && ((char *) start->content)[0] != '$')
   {
     if (add_node(head, start) || masking(start, start->next, ft_lstlast(*head)))
       return (1);
@@ -58,7 +58,7 @@ int skip_nonliterals(t_list *start, t_list **head, t_list **tmp)
 
 t_list *skip_literals(t_list *start)
 {
-  while (start && start->is_op)
+  while (start && (start->is_op || ((char *)start->content)[0] == '$'))
     start = start->next;
   return (start);
 }
