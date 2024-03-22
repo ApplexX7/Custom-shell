@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:36:25 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/21 22:02:48 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:55:25 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -489,6 +489,7 @@ int expand_args(t_list **lst)
   }
 	//if (combine_list(&new))
 		//return (ft_lstclear(&new, &free), 1);
+  ft_lstclear(lst, &free);
   *lst = new;
   return (0);
 }
