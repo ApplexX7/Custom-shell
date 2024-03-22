@@ -6,47 +6,61 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:01:18 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/22 22:43:03 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int handle_input_redirection(t_tree *node, t_list *pos)
+{
+  if (node->fd)
+    ft_close(node->fd);
+  free(node->input_file);
+  node->input_file = NULL;
+  if (is_herdoc(pos))
+    node->fd = pos->fd;
+  else
+  {
+    node->fd = ft_open(pos->next->content, O_RDONLY, 0644);
+    if (node->fd == -1)
+      return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+  }
+  return (0);
+}
+
+int handle_ouput_redirection(t_tree *node, t_list *pos)
+{
+  if (node->out_fd != 1)
+    ft_close(node->out_fd);
+  free(node->output_file);
+  node->output_file = NULL;
+  if (is_herdoc(pos))
+  {
+    node->out_fd = ft_open(pos->next->content, O_WRONLY | O_APPEND | O_CREAT, 0644);
+    if (node->fd == -1)
+      return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+  }
+  else
+  {
+    node->out_fd = ft_open(pos->next->content, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+    if (node->out_fd == -1)
+      return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+  }
+  return (0);
+}
+
 int set_single_io(t_tree *node, t_list *pos)
 {
 	if (is_input_redirect(pos))
 	{
-    if (node->fd)
-      ft_close(node->fd);
-    free(node->input_file);
-    node->input_file = NULL;
-		if (is_herdoc(pos))
-			node->fd = pos->fd;
-		else
-		{
-			node->fd = ft_open(pos->next->content, O_RDONLY, 0644);
-			if (node->fd == -1)
-				return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
-		}
+    if (handle_input_redirection(node, pos))
+      return (1);
 	}
 	else if (is_output_redirect(pos))
 	{
-    if (node->out_fd != 1)
-      ft_close(node->out_fd);
-		free(node->output_file);
-    node->output_file = NULL;
-		if (is_herdoc(pos))
-		{
-			node->out_fd = ft_open(pos->next->content, O_WRONLY | O_APPEND | O_CREAT, 0644);
-      if (node->fd == -1)
-        return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
-		}
-		else
-		{
-			node->out_fd = ft_open(pos->next->content, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-			if (node->out_fd == -1)
-				return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
-		}
+    if (handle_ouput_redirection(node, pos))
+      return (1);
 	}
 	return (0);
 }
