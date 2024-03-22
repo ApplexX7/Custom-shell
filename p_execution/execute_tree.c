@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/22 13:52:07 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:47:37 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,27 +110,31 @@ int its_builtins(t_tree *root)
 {
 	if (!root || !root->node)
 		return (0);
-	if (!ft_strncmp(root->node->content, "echo", 4))
+	if (!ft_strncmp(root->node->content, "echo", 5))
 		return (1);
-	if (!ft_strncmp(root->node->content, "export", 6))
+	if (!ft_strncmp(root->node->content, "export", 7))
 		return (1);
-	if (!ft_strncmp(root->node->content, "env", 3))
+	if (!ft_strncmp(root->node->content, "env", 4))
 		return (1);
-	if (!ft_strncmp(root->node->content, "cd", 2))
+	if (!ft_strncmp(root->node->content, "cd", 3))
 		return (1);
+	if (!ft_strncmp(root->node->content, "unset", 6))
+		return(1);
 	return (0);
 }
 
 int execute_builtins(t_tree *root, char **env)
 {
-	if (!ft_strncmp(root->node->content, "echo", 4))
+	if (!ft_strncmp(root->node->content, "echo", 5))
 		return (ft_echo(root));
-	if (!ft_strncmp(root->node->content, "export", 6))
+	if (!ft_strncmp(root->node->content, "export", 7))
 		return (ft_export(root, env, 0));
-	if (!ft_strncmp(root->node->content, "env", 3))
+	if (!ft_strncmp(root->node->content, "env", 4))
 		return (ft_env(root, NULL));
-	if (!ft_strncmp(root->node->content, "cd", 2))
+	if (!ft_strncmp(root->node->content, "cd", 3))
 		return(ft_cd(root));
+	if (!ft_strncmp(root->node->content, "unset", 6))
+		return(ft_unset(root, NULL));
 	return (0);
 }
 
@@ -139,8 +143,8 @@ int ft_expand_combine(t_tree *root)
 	(void)root;
 	if (expand_args(&root->node))
 		return (1);
-	// if (expand_wildcard(&root->node))
-	// 	return (1);
+	if (expand_wildcard(&root->node))
+		return (1);
 	return (0);
 }
 
