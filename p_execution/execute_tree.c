@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/21 21:55:59 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:52:07 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ int ft_expand_combine(t_tree *root)
 	(void)root;
 	if (expand_args(&root->node))
 		return (1);
-	if (expand_wildcard(&root->node))
-		return (1);
+	// if (expand_wildcard(&root->node))
+	// 	return (1);
 	return (0);
 }
 

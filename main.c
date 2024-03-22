@@ -6,13 +6,15 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/21 22:00:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:28:07 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "parsing/minishell.h"
 #include <termios.h>
+
+struct termios original_terminos;
 
 t_tree *spown_tree(t_list *lst)
 {
@@ -37,6 +39,7 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 	lst = split_tokens(promt);
 	if (!lst)
 		return (NULL);
+	add_history(promt);
 	lable_list(lst);
 	if (split_env_arg(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
@@ -87,6 +90,7 @@ void sigquit(int signo)
 	(void) signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
+		tcsetattr(STDIN_FILENO, TCSANOW, &original_terminos);
 		write(1, "QUIT: 3\n", 8);
 		return ;
 	}
@@ -143,7 +147,8 @@ int main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	status_code = 0;
-	// recept_signals();
+	tcgetattr(STDIN_FILENO, &original_terminos);
+	recept_signals();
 	if (!env || !env[0])
 	{
 		env = create_env();
@@ -169,7 +174,6 @@ int main(int argc, char **argv, char **env)
 			status_code = executing_part(root, &status_code, env);
 			freetree(&root);
 		}
-		add_history(promt);
 		free(promt);
 	}
   	get_exported_arg_value(NULL, NULL, 1); // free the export list
