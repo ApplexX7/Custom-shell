@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/22 17:13:12 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/23 17:13:54 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC = main.c parsing/ft_split_tokens.c parsing/labling.c parsing/debug.c parsing
 OBJCT = ${SRC:.c=.o}
 CC = cc
 #TODO: remove -g
-CFALGS = -Wall -Wextra -Werror -g
+CFALGS =  -g
 RM = rm -rf
 NAME = mini
 READLINEDIR  =  $(shell brew --prefix readline)

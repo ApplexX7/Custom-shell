@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 14:39:04 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:05:23 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,20 @@ t_tree *build_tree(t_list *list)
 	return (root);
 }
 
-void inheritance_bottom(t_tree *root)
+int inheritance_bottom(t_tree *root)
 {
 	if (root->left == NULL && root->right == NULL)
-		handle_redirections_bottom(root);
+	{
+		if (handle_redirections_bottom(root))
+			return (1);
+		return (0);	
+	}
 	else
 	{
-		inheritance_bottom(root->left);
-		inheritance_bottom(root->right);
+		if (inheritance_bottom(root->left))
+			return (1);
+		if (inheritance_bottom(root->right))
+			return (1);
 	}
+	return (0);
 }

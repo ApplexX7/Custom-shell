@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:24 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:01:04 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,21 @@ char **create_env(void)
 	return (env);
 }
 
+// void leaks()
+// {
+//     fclose(gfp);
+//     system("leaks mini");
+//     usleep(1000 * 100 * 10000);
+// }
+
 int main(int argc, char **argv, char **env)
 {
-	char *promt;
-	static int status_code;
-	t_tree *root;
+	char 		*promt;
+	static int 	status_code;
+	t_tree 		*root;
 
+	// gfp = fopen("leaks", "w");
+	// atexit(leaks);
 	(void) argc;
 	(void) argv;
 	status_code = 0;

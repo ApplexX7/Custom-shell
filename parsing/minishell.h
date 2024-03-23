@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/22 17:48:42 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:02:36 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,30 @@
 #include <sys/stat.h>
 #include <termios.h>
 
+
+
+// #include <libc.h>
+
+// FILE*gfp;
+
+// static void *_6malloc(size_t size, int line, const char *file)
+// {
+//     void *ptr = malloc(size);
+//     fprintf(gfp, "['malloc', '%p, %i, '%s']\n", ptr, line, file);
+//     fflush(stdout);
+//     return (ptr);
+
+// }
+
+// static void _6free(void*ptr , int line, const char *file)
+// {
+//     fprintf(gfp, "['free', '%p, %i, '%s']\n", ptr, line, file);
+//     fflush(stdout);
+//     free(ptr);
+// }
+
+// #define malloc(x) _6malloc(x, __LINE__, __FILE__)
+// #define free(x) _6free(x, __LINE__, __FILE__)
 
 //colors
 # define GREEN        "\x1b[1;32m"
@@ -166,7 +190,7 @@ int set_single_io(t_tree *node, t_list *pos);
 int tree_copy_output(char *output_file, int out_fd, t_tree *to);
 int tree_copy_input(char *input_file, int fd, t_tree *to);
 int open_pipes(t_tree *root);
-void inheritance_bottom(t_tree *root);
+int inheritance_bottom(t_tree *root);
 
 //manage pids and fds and executing 
 int	executing_tree(t_tree *root, char **env);
