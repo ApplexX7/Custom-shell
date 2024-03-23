@@ -111,6 +111,9 @@ t_list *copy_lst(t_list *lst)
     if (!node)
       return (ft_lstclear(&new, &free), free(content), NULL);
     node->is_op = lst->is_op;
+    node->mask = ft_strdup(lst->mask);
+    if (!node->mask && lst->mask)
+      return (ft_lstclear(&new, &free), NULL);
     ft_lstadd_back(&new, node);
     lst = lst->next;
   }

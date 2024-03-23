@@ -6,11 +6,34 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/22 22:43:03 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:34:42 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// allocs: new
+int handle_ambiguous_redirection(t_list *file)
+{
+  t_list *tmp;
+  t_list *new;
+
+  tmp = file->next;
+  file->next = NULL;
+  new = copy_lst(file);
+  file->next = tmp; // reset the state
+  if (!new)
+    return (perror("malloc"), 1);
+  if (expand_args(&new))
+    return (1);
+  if (ft_lstsize(new) != 1)
+    return (ft_lstclear(&new, &free), ft_putstr_fd("ambiguous redirection\n", 2), 1);
+  free(file->content);
+  file->content = new->content;
+  free(new->mask);
+  free(new);
+  return (0);
+}
 
 int handle_input_redirection(t_tree *node, t_list *pos)
 {
@@ -24,7 +47,7 @@ int handle_input_redirection(t_tree *node, t_list *pos)
   {
     node->fd = ft_open(pos->next->content, O_RDONLY, 0644);
     if (node->fd == -1)
-      return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+      return (perror("open"), 1);
   }
   return (0);
 }
@@ -39,19 +62,21 @@ int handle_ouput_redirection(t_tree *node, t_list *pos)
   {
     node->out_fd = ft_open(pos->next->content, O_WRONLY | O_APPEND | O_CREAT, 0644);
     if (node->fd == -1)
-      return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+      return (perror("open"), 1);
   }
   else
   {
     node->out_fd = ft_open(pos->next->content, O_WRONLY | O_TRUNC | O_CREAT, 0644);
     if (node->out_fd == -1)
-      return (ft_putstr_fd("set_single_io: open error\n", 2), 1);
+      return (perror("open"), 1);
   }
   return (0);
 }
 
 int set_single_io(t_tree *node, t_list *pos)
 {
+  if (handle_ambiguous_redirection(pos->next))
+      return (1);
 	if (is_input_redirect(pos))
 	{
     if (handle_input_redirection(node, pos))
