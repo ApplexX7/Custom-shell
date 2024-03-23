@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:01:38 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:21:03 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int set_io(t_tree *node, t_list *start)
 {
   while (start)
   {
+    if (handle_ambiguous_redirection(start->next))
+      return (1);
     if (is_input_redirect(start))
     {
       if (node->fd)

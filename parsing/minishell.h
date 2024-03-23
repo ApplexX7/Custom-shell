@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/23 18:02:36 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:19:57 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void bubbleSort(t_list *start);
 int min(int a, int b);
 int max(int a, int b);
 int arr_len(char **arr);
+int handle_ambiguous_redirection(t_list *file);
 
 //labling priority
 t_list *find_roottree(t_list **list);
