@@ -205,31 +205,31 @@ int add_node(t_list **dest, t_list *node)
   new_node = ft_lstnew(content);
   if (!new_node)
     return (free(content), 1);
-  new_node->is_op = node->is_op;
-  new_node->mask = node->mask;
-  new_node->fd = node->fd;
-  new_node->out_fd = node->out_fd;
-  new_node->input_file = NULL;
-  new_node->ouput_file = NULL;
-  if (input_file)
-  {
-    new_node->input_file = ft_strdup(node->input_file);
-    if (!new_node->input_file)
-      return (ft_lstdelone(new_node &free), perror("add_node"), 1);
-  }
-  if (output_file)
-  {
-    new_node->input_file = ft_strdup(node->input_file);
-    if (!new_node->output_file)
-      return (ft_lstdelone(new_node &free), perror("add_node"), 1);
-  }
+  // new_node->is_op = node->is_op;
+  // new_node->mask = node->mask;
+  // new_node->fd = node->fd;
+  // new_node->out_fd = node->out_fd;
+  // new_node->input_file = NULL;
+  // new_node->ouput_file = NULL;
+  // if (input_file)
+  // {
+  //   new_node->input_file = ft_strdup(node->input_file);
+  //   if (!new_node->input_file)
+  //     return (ft_lstdelone(new_node &free), perror("add_node"), 1);
+  // }
+  // if (output_file)
+  // {
+  //   new_node->input_file = ft_strdup(node->input_file);
+  //   if (!new_node->output_file)
+  //     return (ft_lstdelone(new_node &free), perror("add_node"), 1);
+  // }
   ft_lstadd_back(dest, new_node);
   return (0);
 }
 
 static int handle_single_dolor(t_list *node, t_list **dest)
 {
-  if (!ft_strncmp(node->content, "$", 2) && (node->is_op == '"' || node->is_op == 0))
+  if (!ft_strncmp(node->content, "$", 2) /*&& (node->is_op == '"' || node->is_op == 0)*/)
     return (add_node(dest, node));
   else
     return (0);
@@ -238,7 +238,7 @@ static int handle_single_dolor(t_list *node, t_list **dest)
 // lst should be labled before passing
 // it frees lst on success
 // allocs: new
-int expand_args(t_list **lst)
+int expand_herdoc(t_list **lst)
 {
   t_list *tmp;
   t_list *new;
@@ -249,17 +249,17 @@ int expand_args(t_list **lst)
   {
     if (ft_strchr(tmp->content, '$'))
     {
-      if (tmp->is_op != '\'' && get_env_value(tmp->content) && ft_strncmp(tmp->content, "$", 2))
+      if (/*tmp->is_op != '\''&&*/ get_env_value(tmp->content) && ft_strncmp(tmp->content, "$", 2))
       {
         if (lst_add_env_arg(get_env_value(tmp->content), &new))
           return (ft_lstclear(&new, &free), 1);
       }
-      else if (tmp->is_op == '\'')
-      {
-        // if element is single quoted just add it
-        if (add_node(&new, tmp))
-          return (ft_lstclear(&new, &free), 1);
-      }
+      // else if (tmp->is_op == '\'')
+      // {
+      //   // if element is single quoted just add it
+      //   if (add_node(&new, tmp))
+      //     return (ft_lstclear(&new, &free), 1);
+      // }
       else if (handle_single_dolor(tmp, &new))
         return (ft_lstclear(&new, &free), 1);
     }
