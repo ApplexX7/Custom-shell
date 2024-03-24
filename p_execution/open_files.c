@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/19 21:46:29 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/24 22:35:27 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	open_files(char *file_name, int level)
 		fd = ft_open(file_name, O_RDONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		handle_error();
+		perror("fd :");
 		return(-1);
 	}
 	return (fd);
@@ -34,12 +34,12 @@ void dup_iofile(int fd_in, int fd_out)
 {
 	if (dup2(fd_in, STDIN_FILENO) == -1)
 	{
-		handle_error();
+		perror("dup2--in :");
 		exit(errno);
 	}
 	if (dup2(fd_out, STDOUT_FILENO) == -1)
 	{
-		handle_error();
+		perror("dup2-- out:");
 		exit(errno);
 	}
   	manage_fds(0, CLOSE_ALL);
