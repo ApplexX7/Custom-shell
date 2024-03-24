@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/11 18:01:38 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:41:07 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ int is_output_redirect(t_list *lst)
 }
 
 
-int set_io(t_tree *node, t_list *start)
+int set_io(t_tree *node, t_list *start, t_list **files_list)
 {
   while (start)
   {
+    //if (handle_ambiguous_redirection(start->next))
+      //return (1);
     if (is_input_redirect(start))
     {
       if (node->fd)
@@ -98,9 +100,11 @@ int set_io(t_tree *node, t_list *start)
       }
       else
       {
-        node->input_file = ft_strdup(start->next->content);
-        if (node->input_file == NULL)
-          return (write(2, "Malloc Failure\n", 15), 1);
+        if (new_and_add(files_list, start->next->content, '\''))
+          return (perror("set_io: malloc"), 1);
+        //node->input_file = ft_strdup(start->next->content);
+        //if (node->input_file == NULL)
+          //return (write(2, "Malloc Failure\n", 15), 1);
         node->fd = 0;
       }
     }
@@ -111,17 +115,21 @@ int set_io(t_tree *node, t_list *start)
       free(node->output_file);
       if (is_herdoc(start))
       {
-        node->output_file = ft_strdup(start->next->content);
-        if (node->output_file == NULL)
-          return (write(2, "Malloc Failure\n", 15), 1);
+        if (new_and_add(files_list, start->next->content, '\''))
+          return (perror("set_io: malloc"), 1);
+        //node->output_file = ft_strdup(start->next->content);
+        //if (node->output_file == NULL)
+          //return (write(2, "Malloc Failure\n", 15), 1);
         node->out_fd = 1;
         node->open_mod = O_APPEND;
       }
       else
       {
-        node->output_file = ft_strdup(start->next->content);
-        if (node->output_file == NULL)
-          return (write(2, "Malloc Failure\n", 15), 1);
+        if (new_and_add(files_list, start->next->content, '\''))
+          return (perror("set_io: malloc"), 1);
+        //node->output_file = ft_strdup(start->next->content);
+        //if (node->output_file == NULL)
+          //return (write(2, "Malloc Failure\n", 15), 1);
         node->out_fd = 1;
         node->open_mod = O_TRUNC;
       }
@@ -146,13 +154,16 @@ void remove_redirections(t_tree *node, t_list *start)
   node->node = head;
 }
 
+// allocs: files_list
 int tree_set_io(t_tree *node)
 {
   t_list *tmp;
   t_list *tmp2;
+  t_list *files_list;
 
   if (!node)
     return (0);
+  files_list = NULL;
   node->fd = 0;
   node->out_fd = 1;
   node->input_file = NULL;
@@ -168,5 +179,6 @@ int tree_set_io(t_tree *node)
   if (set_io(node, tmp2))
     return (1);
   remove_redirections(node, tmp2);
+  node->files_list = files_list;
   return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 17:10:55 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:25:27 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,6 @@
 // #define malloc(x) _6malloc(x, __LINE__, __FILE__)
 // #define free(x) _6free(x, __LINE__, __FILE__)
 
-//colors
-# define GREEN        "\x1b[1;32m"
-# define YELLOW_    "\x1b[0;33m"
-# define YELLOW        "\x1b[1;33m"
-# define RED        "\x1b[1;31m"
-# define BLUE        "\x1b[1;34m"
-# define MAGENTA    "\x1b[1;35m"
-# define CYAN        "\x1b[1;36m"
-# define WHT        "\e[1;37m"
-# define RESET        "\x1b[0m"
-
 //exit status
 #define EXIT_CODEPARSING 258
 #define EXIT_CODECOMAND 127
@@ -81,6 +70,7 @@ typedef struct s_tree
     char *input_file;
     char *output_file;
     int open_mod;
+    t_list *files_list;
 } t_tree;
 
 typedef enum fd_action {
@@ -145,6 +135,7 @@ void bubbleSort(t_list *start);
 int min(int a, int b);
 int max(int a, int b);
 int arr_len(char **arr);
+int handle_ambiguous_redirection(t_list *file);
 
 //labling priority
 t_list *find_roottree(t_list **list);

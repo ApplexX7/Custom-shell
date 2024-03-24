@@ -318,3 +318,26 @@ int arr_len(char **arr)
     i++;
   return (i);
 }
+
+// allocs: new
+int handle_ambiguous_redirection(t_list *file)
+{
+  t_list *tmp;
+  t_list *new;
+
+  tmp = file->next;
+  file->next = NULL;
+  new = copy_lst(file);
+  file->next = tmp; // reset the state
+  if (!new)
+    return (perror("malloc"), 1);
+  if (expand_args(&new))
+    return (1);
+  if (ft_lstsize(new) != 1)
+    return (ft_lstclear(&new, &free), ft_putstr_fd("ambiguous redirection\n", 2), 1);
+  free(file->content);
+  file->content = new->content;
+  free(new->mask);
+  free(new);
+  return (0);
+}

@@ -6,36 +6,14 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/23 17:34:42 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:19:37 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// allocs: new
-int handle_ambiguous_redirection(t_list *file)
-{
-  t_list *tmp;
-  t_list *new;
 
-  tmp = file->next;
-  file->next = NULL;
-  new = copy_lst(file);
-  file->next = tmp; // reset the state
-  if (!new)
-    return (perror("malloc"), 1);
-  if (expand_args(&new))
-    return (1);
-  if (ft_lstsize(new) != 1)
-    return (ft_lstclear(&new, &free), ft_putstr_fd("ambiguous redirection\n", 2), 1);
-  free(file->content);
-  file->content = new->content;
-  free(new->mask);
-  free(new);
-  return (0);
-}
-
-int handle_input_redirection(t_tree *node, t_list *pos)
+static int handle_input_redirection(t_tree *node, t_list *pos)
 {
   if (node->fd)
     ft_close(node->fd);
@@ -52,7 +30,7 @@ int handle_input_redirection(t_tree *node, t_list *pos)
   return (0);
 }
 
-int handle_ouput_redirection(t_tree *node, t_list *pos)
+static int handle_ouput_redirection(t_tree *node, t_list *pos)
 {
   if (node->out_fd != 1)
     ft_close(node->out_fd);
