@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 15:32:06 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:11:12 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int expand_in_herdoc(char *str, int fd)
 	lst = split_tokens(str);
 	if (!lst)
 		return (1);
-	// if (expand_args(&lst))
-	// 	return (1);
+	if (expand_herdoc(&lst))
+		return (1);
 	while (lst)
 	{
 		ft_putstr_fd(lst->content, fd);
