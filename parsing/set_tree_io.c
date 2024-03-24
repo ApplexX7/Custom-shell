@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 16:41:07 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:43:48 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int is_output_redirect(t_list *lst)
 }
 
 
-int set_io(t_tree *node, t_list *start, t_list **files_list)
+int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_files)
 {
   while (start)
   {
@@ -100,7 +100,7 @@ int set_io(t_tree *node, t_list *start, t_list **files_list)
       }
       else
       {
-        if (new_and_add(files_list, start->next->content, '\''))
+        if (new_and_add(input_files, start->next->content, '\''))
           return (perror("set_io: malloc"), 1);
         //node->input_file = ft_strdup(start->next->content);
         //if (node->input_file == NULL)
@@ -115,7 +115,7 @@ int set_io(t_tree *node, t_list *start, t_list **files_list)
       free(node->output_file);
       if (is_herdoc(start))
       {
-        if (new_and_add(files_list, start->next->content, '\''))
+        if (new_and_add(output_files, start->next->content, '\''))
           return (perror("set_io: malloc"), 1);
         //node->output_file = ft_strdup(start->next->content);
         //if (node->output_file == NULL)
@@ -125,7 +125,7 @@ int set_io(t_tree *node, t_list *start, t_list **files_list)
       }
       else
       {
-        if (new_and_add(files_list, start->next->content, '\''))
+        if (new_and_add(output_files, start->next->content, '\''))
           return (perror("set_io: malloc"), 1);
         //node->output_file = ft_strdup(start->next->content);
         //if (node->output_file == NULL)
@@ -154,16 +154,18 @@ void remove_redirections(t_tree *node, t_list *start)
   node->node = head;
 }
 
-// allocs: files_list
+// allocs: files_list, output_files
 int tree_set_io(t_tree *node)
 {
   t_list *tmp;
   t_list *tmp2;
-  t_list *files_list;
+  t_list *input_files;
+  t_list *output_files;
 
   if (!node)
     return (0);
-  files_list = NULL;
+  input_files = NULL;
+  output_files = NULL;
   node->fd = 0;
   node->out_fd = 1;
   node->input_file = NULL;
@@ -176,9 +178,10 @@ int tree_set_io(t_tree *node)
     tmp = tmp->next->next;
   if (tmp != NULL)
     return (0);
-  if (set_io(node, tmp2))
-    return (1);
+  if (set_io(node, tmp2, &input_files, &output_files))
+    return (ft_lstclear(&input_files, &free), ft_lstclear(&output_files, &free), 1);
   remove_redirections(node, tmp2);
-  node->files_list = files_list;
+  node->input_files = input_files;
+  node->output_files = output_files;
   return (0);
 }

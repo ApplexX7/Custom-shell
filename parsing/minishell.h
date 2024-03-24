@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 16:40:56 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:43:25 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef struct s_tree
     char *input_file;
     char *output_file;
     int open_mod;
-    t_list *files_list;
+    t_list *input_files;
+    t_list *output_files;
 } t_tree;
 
 typedef enum fd_action {
@@ -172,7 +173,7 @@ t_list *check_combined_redirection(t_list *lst);
 int is_redirect_op(t_list *lst);
 int is_input_redirect(t_list *lst);
 int is_output_redirect(t_list *lst);
-int set_io(t_tree *node, t_list *start);
+int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_files);
 void remove_redirections(t_tree *node, t_list *start);
 int tree_set_io(t_tree *node);
 int is_herdoc(t_list *lst);
