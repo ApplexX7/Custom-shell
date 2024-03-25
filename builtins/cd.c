@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 14:40:52 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:13:35 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int ft_cd(t_tree *root)
 		if (!path_dir)
 		{
 			write(2, "minishell: cd: HOME not set\n", 28);
-			ft_memset(&status, EXIT_CODEFILE, 2);
+			ft_memset(&status, EXIT_FILENOTEXIST, 2);
 			return (status);
 		}
 	}
@@ -68,7 +68,7 @@ int ft_cd(t_tree *root)
 		path_dir = ft_strdup(current->next->content);
 	if (change_dir(path_dir))
 	{
-		ft_memset(&status, EXIT_CODEFILE, 2);
+		ft_memset(&status, EXIT_FILENOTEXIST, 2);
 		return (free(path_dir), status);
 	}
 	free(path_dir);

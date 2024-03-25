@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 16:05:03 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:46:24 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int output_files(t_tree *root)
 	root->out_fd = dup(STDOUT_FILENO);
 	if (root->out_fd == -1)
 		return (1);
-	printf("dfsfsf\n");
 	current = root->output_files;
 	// if (expand_args(&current))
 	// 		return (-1);
@@ -108,7 +107,6 @@ int output_files(t_tree *root)
 		fd_out = open_files(current->content, 3);
 	if (fd_out == -1)
 		return (-1);
-	printf("dgdgd\n");
 	if (dup_output(fd_out))
 		return (1);
 	return (0);
@@ -143,15 +141,5 @@ int	ft_dup_parent(t_tree *root)
 		if (dup_output(fd_out))
 			return (1);
 	}
-	// if (dup2(fd_in, STDIN_FILENO) == -1)
-	// {
-	// 	perror("dup");
-	// 	return (1);
-	// }
-	// if (dup2(fd_out, STDOUT_FILENO) == -1)
-	// {
-	// 	perror("dup");
-	// 	return (1);
-	// }
 	return (0);
 }

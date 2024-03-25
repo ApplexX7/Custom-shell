@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 14:03:50 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:07:37 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@
 
 //exit status
 #define EXIT_CODEPARSING 258
-#define EXIT_CODECOMAND 127
-#define EXIT_CODEFILE 1
+#define EXIT_NOTCOMMAND 127
+#define EXIT_NOTEXECUTABLE 126
+#define EXIT_FILENOTEXIST 1
 
 typedef struct s_tree
 {

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 14:16:02 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:29:29 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,40 +67,61 @@ int is_andor(t_tree *root)
 	return (0);
 }
 
+int execute_andoperator(t_tree *root, char **env)
+{
+	int input;
+	int output;
+	int status;
+
+	input = 0;
+	output = 1;
+	if (ft_dup_parent(root))
+		return (-1);
+	input = root->fd;
+	output = root->out_fd;
+	status = executing_tree(root->left, env);
+	manage_pid(0, WAIT, &status);
+	if (WEXITSTATUS(status) ==  0)
+		status = executing_tree(root->right, env);
+	set_back_io(input, output);
+	return (status);
+}
+
+int execute_or_operatore(t_tree *root , char **env)
+{
+	int input;
+	int output;
+	int status;
+
+	input = 0;
+	output = 1;
+	if (ft_dup_parent(root))
+		return (-1);
+	input = root->fd;
+	output = root->out_fd;
+	status = executing_tree(root->left, env);
+	manage_pid(0, WAIT, &status);
+	if (WEXITSTATUS(status))
+		status = executing_tree(root->right, env);
+	set_back_io(input, output);
+	return (status);
+}
+
 int check_operators(t_tree *root ,char **env)
 {
-	int input = 0;
-	int output = 1;
-	int save_state;
-	int status;
+	int status = 0;
 
 	if (!ft_strncmp(root->node->content, "&&", 3) && !root->node->is_op)
 	{
-		save_state = ft_dup_parent(root);
-		input = root->fd;
-		output = root->out_fd;
-		if (save_state == -1)
-			return 0;
-		status = executing_tree(root->left, env);
-		manage_pid(0, WAIT, &status);
-		if (status >> 8 ==  0)
-			executing_tree(root->right, env);
-		set_back_io(input, output);
-		return (status);
+		status = execute_andoperator(root, env);
+		if (status)
+			return (status);
 	}
 	else if (!ft_strncmp(root->node->content, "||", 3) && !root->node->is_op)
 	{
-		save_state = ft_dup_parent(root);
-		input = root->fd;
-		output = root->out_fd;
-		if (save_state == -1)
-			return 0;
-		status = executing_tree(root->left, env);
-		manage_pid(0, WAIT, &status);
-		if (status >> 8 !=  0)
-			executing_tree(root->right, env);
-		set_back_io(input, output);
-		return (status);
+		status = execute_or_operatore(root, env);
+		if (status)
+			return (status);
 	}
 	return (0);
 }

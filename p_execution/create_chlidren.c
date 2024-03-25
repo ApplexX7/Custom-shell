@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 16:50:43 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:13:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void executing_command(t_tree *content, char **env)
 	if (!path)
 	{
 		handle_error();
-		exit(EXIT_CODECOMAND);
+		exit(EXIT_NOTCOMMAND);
 	}
 	if (set_file_io(content))
 	{

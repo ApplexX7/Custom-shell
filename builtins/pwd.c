@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 13:56:50 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 14:10:59 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:13:49 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int ft_pwd(t_tree *root)
 	if (!buffer)
 		return (write(2, "Failed to allocated\n", 20), 1);
 	if (!getcwd(buffer, size))
-		return (EXIT_CODEFILE);
+		return (EXIT_FILENOTEXIST);
 	ft_putstr_fd(buffer, root->out_fd);
 	ft_putchar_fd('\n', root->out_fd);
 	return (0);
