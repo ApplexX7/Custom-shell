@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/23 19:58:48 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:52:20 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 int executing_part(t_tree *root, int *status_code, char **env)
 {
 	int code;
+	t_tree *head_of_root;
 
-	(void)status_code;
-	(void)env;
+	head_of_root = root;
     if (open_pipes(root))
 		return (0);
-	*status_code = executing_tree(root, env);
+	*status_code = executing_tree(root, env, head_of_root);
 	manage_fds(0, CLOSE_ALL);
 	code = manage_pid(0, WAIT, status_code);
 	return (0);

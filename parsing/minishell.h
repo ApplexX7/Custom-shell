@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 17:07:37 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:57:15 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@
 #define EXIT_NOTCOMMAND 127
 #define EXIT_NOTEXECUTABLE 126
 #define EXIT_FILENOTEXIST 1
+#define EXIT_ABOVETYPE 255
 
 typedef struct s_tree
 {
@@ -187,7 +188,7 @@ int open_pipes(t_tree *root);
 int inheritance_bottom(t_tree *root);
 
 //manage pids and fds and executing 
-int	executing_tree(t_tree *root, char **env);
+int	executing_tree(t_tree *root, char **env, t_tree *head_of_root);
 int	manage_fds(int fd, t_fd_action action);
 int	manage_pid(int pid, t_pid_action action, int *last_status);
 int ft_open(char *file, int mode, int perms);
@@ -196,7 +197,7 @@ int ft_close(int fd);
 //executing part
 
 void executing_command(t_tree *content, char **env);
-int create_chdilren(t_tree *content, char **env);
+int create_chdilren(t_tree *content, char **env, t_tree *head_of_root);
 char **find_pathenv(void);
 char *valid_path(char *cmd);
 int	open_files(char *file_name, int level);
@@ -207,9 +208,9 @@ void set_back_io(int input, int output);
 void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
-int check_operators(t_tree *root ,char **env);
+int check_operators(t_tree *root ,char **env, t_tree *head_of_root);
 int its_builtins(t_tree *root);
-int execute_builtins(t_tree *root, char **env);
+int execute_builtins(t_tree *root, char **env, t_tree *head_of_root);
 
 // split_env_arg
 int split_env_arg(t_list **lst);
@@ -238,6 +239,9 @@ int print_export(t_list *lst, int fd);
 int get_key_value(char *content, char **key, char **value, int *join);
 int concat_and_add(char *key, char *value, t_list **local_env);
 int export_add_key_value(t_list **dest, char *key, char *value);
+
+//exit
+int ft_exit(t_tree *node, t_tree *root_of_tree);
 
 //cd
 int ft_cd(t_tree *root);

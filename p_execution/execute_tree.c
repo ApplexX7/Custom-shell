@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 17:29:29 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:00:00 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int is_andor(t_tree *root)
 	return (0);
 }
 
-int execute_andoperator(t_tree *root, char **env)
+int execute_andoperator(t_tree *root, char **env, t_tree *head_of_root)
 {
 	int input;
 	int output;
@@ -79,15 +79,15 @@ int execute_andoperator(t_tree *root, char **env)
 		return (-1);
 	input = root->fd;
 	output = root->out_fd;
-	status = executing_tree(root->left, env);
+	status = executing_tree(root->left, env, head_of_root);
 	manage_pid(0, WAIT, &status);
 	if (WEXITSTATUS(status) ==  0)
-		status = executing_tree(root->right, env);
+		status = executing_tree(root->right, env, head_of_root);
 	set_back_io(input, output);
 	return (status);
 }
 
-int execute_or_operatore(t_tree *root , char **env)
+int execute_or_operatore(t_tree *root , char **env, t_tree *head_of_root)
 {
 	int input;
 	int output;
@@ -99,27 +99,27 @@ int execute_or_operatore(t_tree *root , char **env)
 		return (-1);
 	input = root->fd;
 	output = root->out_fd;
-	status = executing_tree(root->left, env);
+	status = executing_tree(root->left, env, head_of_root);
 	manage_pid(0, WAIT, &status);
 	if (WEXITSTATUS(status))
-		status = executing_tree(root->right, env);
+		status = executing_tree(root->right, env, head_of_root);
 	set_back_io(input, output);
 	return (status);
 }
 
-int check_operators(t_tree *root ,char **env)
+int check_operators(t_tree *root ,char **env, t_tree *head_of_root)
 {
 	int status = 0;
 
 	if (!ft_strncmp(root->node->content, "&&", 3) && !root->node->is_op)
 	{
-		status = execute_andoperator(root, env);
+		status = execute_andoperator(root, env, head_of_root);
 		if (status)
 			return (status);
 	}
 	else if (!ft_strncmp(root->node->content, "||", 3) && !root->node->is_op)
 	{
-		status = execute_or_operatore(root, env);
+		status = execute_or_operatore(root, env, head_of_root);
 		if (status)
 			return (status);
 	}
@@ -143,10 +143,12 @@ int its_builtins(t_tree *root)
 		return(1);
 	if (!ft_strncmp(root->node->content, "pwd", 4))
 		return(1);
+	if (!ft_strncmp(root->node->content, "exit", 5))
+		return(1);
 	return (0);
 }
 
-int execute_builtins(t_tree *root, char **env)
+int execute_builtins(t_tree *root, char **env, t_tree *head_of_tree)
 {
 	if (!ft_strncmp(root->node->content, "echo", 5))
 		return (ft_echo(root));
@@ -160,6 +162,8 @@ int execute_builtins(t_tree *root, char **env)
 		return(ft_unset(root, NULL));
 	if (!ft_strncmp(root->node->content, "pwd", 4))
 		return(ft_pwd(root));
+	if (!ft_strncmp(root->node->content, "exit", 5))
+		return(ft_exit(root, head_of_tree));
 	return (0);
 }
 
@@ -173,7 +177,7 @@ int ft_expand_combine(t_tree *root)
 	return (0);
 }
 
-int	executing_tree(t_tree *root, char **env)
+int	executing_tree(t_tree *root, char **env, t_tree *head_of_root)
 {
 	int status_code = 0;
 
@@ -184,18 +188,18 @@ int	executing_tree(t_tree *root, char **env)
 		if (ft_expand_combine(root))
 			return (1);
 		if (!root->fbuiltins && its_builtins(root))
-			return (execute_builtins(root, env));
+			return (execute_builtins(root, env, head_of_root));
 		else
-			if (create_chdilren(root, env))
+			if (create_chdilren(root, env, head_of_root))
 				return (1);
 	}
 	else if (is_andor(root))
-		status_code  = check_operators(root, env);
+		status_code  = check_operators(root, env, head_of_root);
 	else
 	{
-		if (executing_tree(root->left, env))
+		if (executing_tree(root->left, env, head_of_root))
 			return (1);
-		if (executing_tree(root->right, env))
+		if (executing_tree(root->right, env, head_of_root))
 			return (1);
 	}
 	return (status_code);
