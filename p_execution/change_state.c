@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 16:46:24 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:08:47 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int output_files(t_tree *root)
 	if (root->out_fd == -1)
 		return (1);
 	current = root->output_files;
-	// if (expand_args(&current))
-	// 		return (-1);
 	while (current->next)
 	{
+		if (handle_ambiguous_redirection(current))
+			return (-1);
 		if (root->open_mod == O_TRUNC)
 			fd_out = open_files(current->content, 2);
 		else if (root->open_mod == O_APPEND)
@@ -101,6 +101,8 @@ int output_files(t_tree *root)
 		close(fd_out);
 		current = current->next;
 	}
+	if (handle_ambiguous_redirection(current))
+		return (-1);
 	if (root->open_mod == O_TRUNC)
 		fd_out = open_files(current->content, 2);
 	else if (root->open_mod == O_APPEND)
