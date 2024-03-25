@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 15:55:51 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:59:15 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_fi
       }
       else
       {
-        if (new_and_add(input_files, start->next->content, '\''))
+        if (add_node(input_files, start->next))
           return (perror("set_io: malloc"), 1);
         //node->input_file = ft_strdup(start->next->content);
         //if (node->input_file == NULL)
@@ -115,7 +115,7 @@ int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_fi
       free(node->output_file);
       if (is_herdoc(start))
       {
-        if (new_and_add(output_files, start->next->content, '\''))
+        if (add_node(output_files, start->next))
           return (perror("set_io: malloc"), 1);
         //node->output_file = ft_strdup(start->next->content);
         //if (node->output_file == NULL)
@@ -125,7 +125,7 @@ int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_fi
       }
       else
       {
-        if (new_and_add(output_files, start->next->content, '\''))
+        if (add_node(output_files, start->next))
           return (perror("set_io: malloc"), 1);
         //node->output_file = ft_strdup(start->next->content);
         //if (node->output_file == NULL)

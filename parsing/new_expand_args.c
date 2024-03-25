@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:36:25 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/22 15:55:25 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:57:52 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,20 +146,30 @@ char *get_env_value(char *arg)
     return (NULL);
 }
 
+// allocs: content, mask, new_node
 int add_node(t_list **dest, t_list *node)
 {
   char *content;
   t_list *new_node;
+  char *mask;
 
   content = ft_strdup(node->content);
   if (!content)
     return (1);
+  if (node->mask)
+  {
+    mask = ft_strdup(node->mask);
+    if (!mask)
+      return (free(content), 1);
+  }
+  else
+    mask = NULL;
   new_node = ft_lstnew(content);
   if (!new_node)
     return (free(content), 1);
   new_node->is_op = node->is_op;
   new_node->fd = node->fd;
-  new_node->mask = node->mask;
+  new_node->mask = mask;
   ft_lstadd_back(dest, new_node);
   return (0);
 }
