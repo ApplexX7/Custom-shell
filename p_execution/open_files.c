@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 16:06:06 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:43:24 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ int set_file_io(t_tree *content)
 		fd_in = open_files(content->input_file, 1);
 		content->fd =  fd_in;
 	}
-	// else if (content->input_file == NULL)
-	// 	fd_in = content->fd;
+	else if (content->input_file == NULL)
+		fd_in = content->fd;
 	if (content->output_file != NULL)
 	{
 		fd_out = open_files(content->output_file, 2);
 		content->out_fd = fd_out;
 	}
-	// else if (content->output_file == NULL)
-	// 	fd_out = content->out_fd;
+	else if (content->output_file == NULL)
+		fd_out = content->out_fd;
 	if (content->node->content)
 	{
 		dup_iofile(content->fd, content->out_fd);
