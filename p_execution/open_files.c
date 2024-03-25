@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 22:35:27 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:06:06 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	open_files(char *file_name, int level)
 	else if (level == 2)
 		fd = ft_open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (level == 3)
-		fd = ft_open(file_name, O_RDONLY | O_CREAT | O_APPEND, 0644);
+		fd = ft_open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
 		perror("fd :");

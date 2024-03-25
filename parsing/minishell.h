@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 17:51:50 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:03:50 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,9 @@ int split_arg_node(t_list *node, t_list **dest);
 void lable_env_args(t_list *lst);
 
 // builtins
+
+//pwd
+int ft_pwd(t_tree *root);
 
 // echo
 int ft_echo(t_tree *root);

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 17:43:48 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:55:51 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,8 @@ int tree_set_io(t_tree *node)
   output_files = NULL;
   node->fd = 0;
   node->out_fd = 1;
+  node->input_files = NULL;
+  node->output_files = NULL;
   node->input_file = NULL;
   node->output_file = NULL;
   tmp = check_combined_redirection(node->node);

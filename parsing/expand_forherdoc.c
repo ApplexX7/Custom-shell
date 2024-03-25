@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:21:49 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 17:21:53 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:12:01 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_list *convert_to_list(char **arr)
 }
 
 // the is_op is set to 0 here
-void appendto_list(t_list *source, t_list **dest, char op)
+void appendto_list(t_list *source, t_list **dest)
 {
   t_list *tmp;
 
@@ -116,7 +116,7 @@ int add_env_args(char *arg, t_list **dest)
   new_lst = convert_to_list(arr);
   if (!new_lst)
     return (free_2d_arr((void **)arr), 1);
-  appendto_list(new_lst, dest, '\'');
+  appendto_list(new_lst, dest);
   free(arr);
   return (0);
 }
