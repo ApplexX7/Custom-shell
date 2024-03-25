@@ -6,21 +6,22 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/24 17:11:12 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:37:36 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int expand_in_herdoc(char *str, int fd)
+int expand_in_herdoc(t_list *current ,char *str, int fd)
 {
 	t_list *lst;
 
 	lst = split_tokens(str);
 	if (!lst)
 		return (1);
-	if (expand_herdoc(&lst))
-		return (1);
+	if (!current->is_op)
+		if (expand_herdoc(&lst))
+			return (1);
 	while (lst)
 	{
 		ft_putstr_fd(lst->content, fd);
@@ -31,13 +32,14 @@ int expand_in_herdoc(char *str, int fd)
 	return (0);
 }
 
-void create_herdoc(char *limite, int fd)
+void create_herdoc(t_list *current, int fd)
 {
 	char *str;
 	char *tmp;
-
-	tmp = limite;
-	limite = ft_strjoin(limite, "\n");
+	char *limite;
+	
+	tmp = ft_strdup(current->content);
+	limite = ft_strjoin(tmp, "\n");
 	free(tmp);
 	if (!limite)
 		exit(0);
@@ -53,12 +55,12 @@ void create_herdoc(char *limite, int fd)
 			ft_close(fd);
 			exit(0);
 		}
-		expand_in_herdoc(str, fd);
+		expand_in_herdoc(current ,str, fd);
 		free(str);
 	}
 }
 
-int create_heredocchild(char *limite)
+int create_heredocchild(t_list *current)
 {
 	int pid;
 	int fd;
@@ -73,7 +75,7 @@ int create_heredocchild(char *limite)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
-		create_herdoc(limite, fd);
+		create_herdoc(current, fd);
 	}
 	close(fd);
 	fd = open("/tmp/herdoc.txt", O_RDWR, 0644);
@@ -96,7 +98,7 @@ int ft_open_herdocs(t_list *list)
 	{
 		if (!ft_strncmp(current->content, "<<", 3) && !current->is_op)
 		{
-			fd = create_heredocchild(current->next->content);
+			fd = create_heredocchild(current->next);
 			if (fd == -1)
 				return (1);
 			current->fd = fd;

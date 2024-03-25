@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/23 17:51:40 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:39:37 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,9 @@ void freetree(t_tree **root)
 		return ;
 	freetree(&(*root)->right);
 	freetree(&(*root)->left);
-	// while ((*root)->node != NULL)
-	// {
-	// 	t_list *tmp = (*root)->node;
-	// 	(*root)->node = (*root)->node->next;
-	// 	free(tmp->content);
-	// 	free(tmp);
-	// }
 	ft_lstclear(&(*root)->node, &free);
+	ft_lstclear(&(*root)->input_files, &free);
+	ft_lstclear(&(*root)->output_files, &free);
 	free((*root)->input_file);
 	free((*root)->output_file);
 	free((*root));
