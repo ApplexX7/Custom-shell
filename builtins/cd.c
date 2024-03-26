@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 21:57:15 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:44:11 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ int ft_cd(t_tree *root)
 	t_list *current;
 	char *path_dir;
 	int status = 0;
+	char *buffer;
 
+	buffer = malloc(sizeof(char) * PATH_MAX);
+	if (!buffer)
+		return (1);
 	if (!root || !root->node)
 		return (1);
 	current = root->node;
@@ -73,7 +77,9 @@ int ft_cd(t_tree *root)
 		ft_memset(&status, EXIT_FILENOTEXIST, 2);
 		return (free(path_dir), status);
 	}
-	// ft_export
-	free(path_dir);
+	getcwd(buffer, PATH_MAX);
+	add_env_arg(ft_strdup("PWD"), buffer, NULL);
+	printf("%s\n", buffer);
+	// free(path_dir);
 	return (0);
 }
