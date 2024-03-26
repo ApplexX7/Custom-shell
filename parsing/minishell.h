@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 15:52:14 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:12:48 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ int print_export(t_list *lst, int fd);
 int get_key_value(char *content, char **key, char **value, int *join);
 int concat_and_add(char *key, char *value, t_list **local_env);
 int export_add_key_value(t_list **dest, char *key, char *value);
+int add_env_arg(char *key, char *value, t_list **env);
 
 //exit
 int ft_exit(t_tree *node, t_tree *root_of_tree);

@@ -6,8 +6,22 @@ int init_envs(t_list **local_env, char **env)
   get_exported_arg_value(NULL, local_env, 0, NULL);
   ft_env(NULL, local_env);
   ft_unset(NULL, local_env);
+  add_env_arg(NULL, NULL, local_env);
   if (init_local_env(local_env, env))
     return (perror("init_local_env: malloc"), 1);
+  return (0);
+}
+
+int add_env_arg(char *key, char *value, t_list **env)
+{
+  static t_list **local_env = NULL;
+
+  if (env)
+    local_env = env;
+  else
+  {
+    return (export_add_key_value(local_env, key, value));
+  }
   return (0);
 }
 
