@@ -2,7 +2,7 @@
 
 #include "minishell.h"
 
-// this function shouldn't fail fail
+// this function shouldn't fail
 static int handle_digit_arg(t_list *node)
 {
   if (ft_isdigit(((char *) node->content)[1]))
@@ -28,8 +28,13 @@ int split_arg_node(t_list *node, t_list **dest)
     return (add_node(dest, node));
   content = node->content;
   content++;
-  while (ft_isalpha(*content) || ft_isdigit(*content) || *content == '_')
+  if (*content == '?')
     content++;
+  else
+  {
+    while (ft_isalpha(*content) || ft_isdigit(*content) || *content == '_')
+      content++;
+  }
   if (*content == '\0')
   {
     if (new_and_add(dest, node->content, node->is_op))

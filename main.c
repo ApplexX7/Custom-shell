@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 19:52:20 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:59:07 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int main(int argc, char **argv, char **env)
 	// atexit(leaks);
 	(void) argc;
 	(void) argv;
+  get_exported_arg_value(NULL, NULL, 0, &status_code); // set_status_code
 	status_code = 0;
 	tcgetattr(STDIN_FILENO, &original_terminos);
 	recept_signals();
@@ -185,5 +186,5 @@ int main(int argc, char **argv, char **env)
 		}
 		free(promt);
 	}
-  	get_exported_arg_value(NULL, NULL, 1); // free the export list
+  	get_exported_arg_value(NULL, NULL, 1, NULL); // free the export list
 }

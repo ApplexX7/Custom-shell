@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:21:49 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 14:12:01 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/25 23:55:55 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char *get_envarg_value(char *arg)
 
   arg++;
   i = 0;
-  value = get_exported_arg_value(arg, NULL, 0);
+  value = get_exported_arg_value(arg, NULL, 0, NULL);
   if (value)
     return (value);
   else
