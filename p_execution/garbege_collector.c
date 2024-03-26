@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:41 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:16:29 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 				return (1);
 			i++;
 		}
-		while (waitpid(-1, NULL, 0) != -1)
-		;
+		// while (waitpid(-1, NULL, 0) != -1)
+		// ;
 		pid_index = 0;
 	}
 	return (0);

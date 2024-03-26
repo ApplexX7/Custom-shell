@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 21:42:48 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:33:38 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,25 +181,25 @@ int	executing_tree(t_tree *root, char **env, t_tree *head_of_root)
 	if (root->left == NULL && root->right == NULL)
 	{
 		if (expand_wildcard(&root->node))
-			return (1);
+			return (ft_memset(&status_code, EXIT_FILENOTEXIST, 2), status_code);
 		if (inheritance_bottom(root))
-			return (1);
+			return (ft_memset(&status_code, EXIT_FILENOTEXIST, 2), status_code);
 		if (ft_expand_combine(root))
 			return (1);
 		if (!root->fbuiltins && its_builtins(root))
 			return (execute_builtins(root, env, head_of_root));
 		else
 			if (create_chdilren(root, env, head_of_root))
-				return (1);
+				return (-1);
 	}
 	else if (is_andor(root))
 		status_code  = check_operators(root, env, head_of_root);
 	else
 	{
-		if (executing_tree(root->left, env, head_of_root))
-			return (1);
-		if (executing_tree(root->right, env, head_of_root))
-			return (1);
+		if (executing_tree(root->left, env, head_of_root) == -1)
+			return (-1);
+		if (executing_tree(root->right, env, head_of_root) == -1)
+			return (-1);
 	}
 	return (status_code);
 }

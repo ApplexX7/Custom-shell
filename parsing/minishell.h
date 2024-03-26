@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 23:53:03 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:52:14 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void print_ouput_op(t_list *node);
 int combine_list(t_list **lst);
 
 //check syntax error
-int check_syntax(t_list *lst);
+int check_syntax(t_list *lst, int *status_code);
 
 // helpers
 void lst_remove_node(t_list **lst, t_list *node);

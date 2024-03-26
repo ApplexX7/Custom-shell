@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 19:56:52 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:20:09 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void executing_command(t_tree *content, char **env)
 	path = valid_path(content->node->content);
 	if (!path)
 	{
-		handle_error();
+		write(2, "minishell: command not found\n", 29);
 		exit(EXIT_NOTCOMMAND);
 	}
 	if (set_file_io(content))
@@ -33,7 +33,6 @@ void executing_command(t_tree *content, char **env)
 		exit(errno);
 	if (execve(path, cmd, env) == -1)
 	{
-		write(2, "Hello\n", 6);
 		perror("Execve");
 		exit(errno);
 	}

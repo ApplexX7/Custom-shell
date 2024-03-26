@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 23:59:07 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:53:53 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 	lable_list(lst);
 	if (split_env_arg(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
-	*status_code = check_syntax(lst);
-	if (*status_code != 0)
+	if (check_syntax(lst, status_code))
 		return (ft_lstclear(&lst, &free), NULL);
-  lable_env_args(lst);
+  	lable_env_args(lst);
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
@@ -59,7 +58,6 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 
 int executing_part(t_tree *root, int *status_code, char **env)
 {
-	int code;
 	t_tree *head_of_root;
 
 	head_of_root = root;
@@ -67,7 +65,7 @@ int executing_part(t_tree *root, int *status_code, char **env)
 		return (0);
 	*status_code = executing_tree(root, env, head_of_root);
 	manage_fds(0, CLOSE_ALL);
-	code = manage_pid(0, WAIT, status_code);
+	manage_pid(0, WAIT, status_code);
 	return (0);
 }
 
@@ -138,24 +136,15 @@ char **create_env(void)
 	return (env);
 }
 
-// void leaks()
-// {
-//     fclose(gfp);
-//     system("leaks mini");
-//     usleep(1000 * 100 * 10000);
-// }
-
 int main(int argc, char **argv, char **env)
 {
 	char 		*promt;
 	static int 	status_code;
 	t_tree 		*root;
 
-	// gfp = fopen("leaks", "w");
-	// atexit(leaks);
 	(void) argc;
 	(void) argv;
-  get_exported_arg_value(NULL, NULL, 0, &status_code); // set_status_code
+  	get_exported_arg_value(NULL, NULL, 0, &status_code);
 	status_code = 0;
 	tcgetattr(STDIN_FILENO, &original_terminos);
 	recept_signals();
@@ -181,10 +170,12 @@ int main(int argc, char **argv, char **env)
 		root = parsing_check(promt, env, &status_code);
 		if (root)
 		{
-			status_code = executing_part(root, &status_code, env);
+			 executing_part(root, &status_code, env);
 			freetree(&root);
 		}
 		free(promt);
+		printf("%d\n", status_code >> 8);
+
 	}
   	get_exported_arg_value(NULL, NULL, 1, NULL); // free the export list
 }

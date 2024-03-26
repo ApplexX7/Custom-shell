@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/22 17:19:56 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:54:08 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,14 @@ int closed_qpsayntax(t_list *lst)
 		return (1);
 	return (0);
 }
+void status_code_of_syntax_error(int *status_code)
+{
+	ft_memset(status_code, 0, 4);
+	ft_memset(status_code, 1, 3);
+	ft_memset(status_code, 2, 2);
+}
 
-int check_syntax(t_list *lst)
+int check_syntax(t_list *lst, int *status_code)
 {
 	t_list *current;
 	
@@ -174,14 +180,15 @@ int check_syntax(t_list *lst)
 	if (closed_qpsayntax(current))
 	{
 		syntax_error_handling(current);
-		return (EXIT_CODEPARSING);
+		return (status_code_of_syntax_error(status_code), 1);
 	}
 	if (valid_syntax(current))
 	{
 		syntax_error_handling(current);
-		return (EXIT_CODEPARSING);
+		return (status_code_of_syntax_error(status_code), 1);
 	}
 	ft_lstclear(&current, &free);
+	*status_code = 0;
 	return (0);
 }
 
