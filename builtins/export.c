@@ -47,7 +47,7 @@ int ft_export(t_tree *root, char **env, int init)
 char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit, int *status)
 {
   static t_list **lst = NULL;
-  static int *status_exit = 0;
+  static int *status_exit;
   t_list *tmp;
 
   if (status)
@@ -59,7 +59,7 @@ char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit, int *s
   else if (lst)
   {
     if (!ft_strncmp(arg, "?", 2))
-      return (ft_itoa(*status_exit));
+      return (ft_itoa((*status_exit) >> 8));
     tmp = *lst;
     while (tmp)
     {

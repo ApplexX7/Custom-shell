@@ -6,11 +6,13 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 17:13:35 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:57:15 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
+
+
 
 int execute_cd(char *pathname)
 {
@@ -27,7 +29,7 @@ int change_dir(char *path_dir)
 	tmp = path_dir;
 	if (!path_dir)
 		return (write(2, "Malloc failed!!\n", 16),1);
-	if (!ft_strncmp(path_dir, ".", 2))
+	if (!ft_strncmp(path_dir, ".", 2) || !ft_strncmp(path_dir, "", 2))
 		execute_cd(path_dir);
 	else if (!ft_strncmp(path_dir, "..", 3))
 		execute_cd(path_dir);
@@ -53,7 +55,7 @@ int ft_cd(t_tree *root)
 	if (!root || !root->node)
 		return (1);
 	current = root->node;
-	if (!current->next || !ft_strncmp(current->next->content, "~", 2))
+	if (!current->next)
 	{
 		
 		path_dir = ft_strdup(getenv("HOME"));
@@ -71,6 +73,7 @@ int ft_cd(t_tree *root)
 		ft_memset(&status, EXIT_FILENOTEXIST, 2);
 		return (free(path_dir), status);
 	}
+	// ft_export
 	free(path_dir);
 	return (0);
 }

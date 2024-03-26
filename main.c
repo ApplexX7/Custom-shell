@@ -6,19 +6,18 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 15:53:53 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:50:30 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "parsing/minishell.h"
 #include <termios.h>
 
-struct termios original_terminos;
+struct termios	original_terminos;
 
-t_tree *spown_tree(t_list *lst)
+t_tree	*spown_tree(t_list *lst)
 {
-	t_tree *root;
+	t_tree	*root;
 
 	if (!lst)
 		return (NULL);
@@ -30,11 +29,11 @@ t_tree *spown_tree(t_list *lst)
 	return (root);
 }
 
-t_tree *parsing_check(char *promt, char **env, int *status_code)
+t_tree	*parsing_check(char *promt, char **env, int *status_code)
 {
-	t_list *lst;
-	t_tree *root;
-	
+	t_list	*lst;
+	t_tree	*root;
+
 	(void)env;
 	lst = split_tokens(promt);
 	if (!lst)
@@ -45,7 +44,7 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 		return (ft_lstclear(&lst, &free), NULL);
 	if (check_syntax(lst, status_code))
 		return (ft_lstclear(&lst, &free), NULL);
-  	lable_env_args(lst);
+	lable_env_args(lst);
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
@@ -56,12 +55,12 @@ t_tree *parsing_check(char *promt, char **env, int *status_code)
 	return (root);
 }
 
-int executing_part(t_tree *root, int *status_code, char **env)
+int	executing_part(t_tree *root, int *status_code, char **env)
 {
-	t_tree *head_of_root;
+	t_tree	*head_of_root;
 
 	head_of_root = root;
-    if (open_pipes(root))
+	if (open_pipes(root))
 		return (0);
 	*status_code = executing_tree(root, env, head_of_root);
 	manage_fds(0, CLOSE_ALL);
@@ -69,12 +68,12 @@ int executing_part(t_tree *root, int *status_code, char **env)
 	return (0);
 }
 
-void sigint(int signo)
+void	sigint(int signo)
 {
-	(void) signo;
+	(void)signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		// write(1, "\n", 1);
+		write(1, "\n", 1);
 		return ;
 	}
 	write(1, "\n", 1);
@@ -83,9 +82,9 @@ void sigint(int signo)
 	rl_redisplay();
 }
 
-void sigquit(int signo)
+void	sigquit(int signo)
 {
-	(void) signo;
+	(void)signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
 		tcsetattr(STDIN_FILENO, TCSANOW, &original_terminos);
@@ -96,7 +95,7 @@ void sigquit(int signo)
 	return ;
 }
 
-int recept_signals(void)
+int	recept_signals(void)
 {
 	rl_catch_signals = 0;
 	signal(SIGINT, &sigint);
@@ -104,19 +103,19 @@ int recept_signals(void)
 	return (0);
 }
 
-char **create_env(void)
+char	**create_env(void)
 {
-	char **env;
-	char *buffer;
-	size_t size = PATH_MAX;
+	char	**env;
+	char	*buffer;
+	size_t	size;
 
+	size = PATH_MAX;
 	env = malloc(sizeof(char *) * 5);
 	if (!env)
 		return (NULL);
 	env[0] = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	if (!env[0])
 		return (NULL);
-	printf("%s\n", env[0]);
 	buffer = malloc(sizeof(char) * size);
 	if (!buffer)
 		return (NULL);
@@ -136,16 +135,15 @@ char **create_env(void)
 	return (env);
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	char 		*promt;
-	static int 	status_code;
-	t_tree 		*root;
+	char		*promt;
+	static int	status_code = 0;
+	t_tree		*root;
 
-	(void) argc;
-	(void) argv;
-  	get_exported_arg_value(NULL, NULL, 0, &status_code);
-	status_code = 0;
+	(void)argc;
+	(void)argv;
+	get_exported_arg_value(NULL, NULL, 0, &status_code);
 	tcgetattr(STDIN_FILENO, &original_terminos);
 	recept_signals();
 	if (!env || !env[0])
@@ -154,10 +152,10 @@ int main(int argc, char **argv, char **env)
 		if (!env)
 			return (0);
 		ft_export(NULL, env, 1);
-		free_2d_arr((void**)env);
+		free_2d_arr((void **)env);
 	}
 	else
-	  	ft_export(NULL, env, 1);
+		ft_export(NULL, env, 1);
 	while (1)
 	{
 		promt = readline("minishell2.5>$ ");
@@ -170,12 +168,10 @@ int main(int argc, char **argv, char **env)
 		root = parsing_check(promt, env, &status_code);
 		if (root)
 		{
-			 executing_part(root, &status_code, env);
+			executing_part(root, &status_code, env);
 			freetree(&root);
 		}
 		free(promt);
-		printf("%d\n", status_code >> 8);
-
 	}
-  	get_exported_arg_value(NULL, NULL, 1, NULL); // free the export list
+	get_exported_arg_value(NULL, NULL, 1, NULL); // free the export list
 }
