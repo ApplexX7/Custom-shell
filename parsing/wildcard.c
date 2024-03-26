@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/20 17:56:38 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:23:16 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ t_list *lst_copy_portion(t_list *start, t_list *end)
 void set_ends(int *open_end, int *open_start, t_list *lst)
 {
 
-  *open_end = ((char *)lst->content)[ft_strlen(lst->content) - 1] == '*';
-  *open_start = ((char *)lst->content)[0] == '*';
+  *open_end = (((char *)ft_lstlast(lst)->content)[ft_strlen(ft_lstlast(lst)->content) - 1] == '*' && !ft_lstlast(lst)->is_op);
+  *open_start = (((char *)lst->content)[0] == '*' && !lst->is_op);
 }
 
 // allocs: arr
@@ -109,7 +109,7 @@ int split_and_add(t_list *tmp, t_list **dest)
 // allocs: new
 // it frees lst on sucess
 // it also set the open_end bit and open_start bit
-int split_by_star(t_list **lst, int *open_end, int *open_start)
+int split_by_star(t_list **lst)
 {
   t_list *new;
   t_list *tmp;
@@ -122,7 +122,6 @@ int split_by_star(t_list **lst, int *open_end, int *open_start)
       return (ft_lstclear(&new, &free), 1);
     tmp = tmp->next;
   }
-  set_ends(open_end, open_start, tmp);
   if (split_and_add(tmp, &new))
     return (ft_lstclear(&new, &free), 1);
   if (tmp->next && !is_wildcard(tmp->next))
@@ -288,10 +287,11 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
     portion = lst_copy_portion(start, end);
     if (!portion)
       return (1);
-    if (split_by_star(&portion, &open_end, &open_start))
+    set_ends(&open_end, &open_start, portion);
+    if (split_by_star(&portion))
       return (ft_lstclear(&portion, &free), 1);
-    if (combine_wildcard_tokens(&portion))
-      return (ft_lstclear(&portion, &free), 1);
+    //if (combine_wildcard_tokens(&portion))
+      //return (ft_lstclear(&portion, &free), 1);
     if (add_if_matched(dest, portion, (int [2]){open_end, open_start}, &matched))
       return (ft_lstclear(&portion, &free), 1);
     if (add_if_nomatch(dest, start, end, matched))
