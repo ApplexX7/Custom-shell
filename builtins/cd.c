@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 22:44:11 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:37:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int ft_cd(t_tree *root)
 	}
 	getcwd(buffer, PATH_MAX);
 	add_env_arg(ft_strdup("PWD"), buffer, NULL);
-	printf("%s\n", buffer);
-	// free(path_dir);
+	free(path_dir);
 	return (0);
 }

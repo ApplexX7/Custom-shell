@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:46:30 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 21:27:37 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:14:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int ft_exit(t_tree *node, t_tree *root_of_tree)
 			write(2,"minishell: exit: numeric argument required\n", 43);
 		}
 	}
+	get_exported_arg_value(NULL, NULL, 1);
 	freetree(&root_of_tree);
 	exit(number);
 }

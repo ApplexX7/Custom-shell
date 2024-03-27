@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 00:51:19 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:18:26 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,8 +292,8 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
     set_ends(&open_end, &open_start, portion);
     if (split_by_star(&portion))
       return (ft_lstclear(&portion, &free), 1);
-    //if (combine_wildcard_tokens(&portion))
-      //return (ft_lstclear(&portion, &free), 1);
+    // if (combine_wildcard_tokens(&portion))
+    //   return (ft_lstclear(&portion, &free), 1);
     if (add_if_matched(dest, portion, (int [2]){open_end, open_start}, &matched))
       return (ft_lstclear(&portion, &free), 1);
     remove_points_dir(start, dest, &matched);

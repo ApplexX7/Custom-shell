@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 16:58:36 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:14:26 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (promt == NULL)
 				printf("exit\n");
+			get_exported_arg_value(NULL, NULL, 1);
 			exit(0);
 		}
 		root = parsing_check(promt, env, &status_code);
@@ -172,5 +173,4 @@ int	main(int argc, char **argv, char **env)
 		}
 		free(promt);
 	}
-	get_exported_arg_value(NULL, NULL, 1); // free the export list
 }

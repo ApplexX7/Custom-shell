@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 18:03:55 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:12:27 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,21 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 {
 	static t_list *head = NULL;
 	t_list *current;
-    int *pidarr = malloc(sizeof(int));
+  int *pidarr;
 	
-    current = NULL;
+  current = NULL;
 	if (action == CAPTURED)
 	{
+        pidarr = malloc(sizeof(int));
         *pidarr = pid;
-		current = ft_lstnew(pidarr);
+		    current = ft_lstnew(pidarr);
         if (current)
+		      ft_lstadd_back(&head, current);
+        else
         {
-		    ft_lstadd_back(&head, current);
+         ft_lstclear(&head, &free); 
+         current = NULL;
         }
-        current = NULL;
 	}
 	else if (action == WAIT)
 	{
@@ -79,7 +82,7 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 		while (current)
 		{
 			if (waitpid(*(int *)current->content, last_status, 0) == -1)
-				return (ft_lstclear(&head, &free),1);
+				return (ft_lstclear(&head, &free),  head = NULL,1);
 			current = current->next;
 		}
 		ft_lstclear(&head, &free);
