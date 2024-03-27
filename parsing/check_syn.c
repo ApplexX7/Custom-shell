@@ -6,17 +6,11 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 18:05:12 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:17:06 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	syntax_error_handling(t_list *copy)
-{
-	ft_lstclear(&copy, &free);
-	printf("bash: syntax error in tokens\n");
-}
 
 int	valid_parentis(t_list *lst)
 {
@@ -43,6 +37,23 @@ int	valid_parentis(t_list *lst)
 	return (0);
 }
 
+int	hanlde_syntaxafterparentis(t_list *list)
+{
+	t_list	*current;
+
+	current = list;
+	while (current)
+	{
+		if ((!ft_strncmp(current->content, ")", 2) && !current->is_op)
+			&& (current->next != NULL && (!ft_redirectionop(current->next)
+					&& !ft_special_operators(current->next)))
+			&& ft_strncmp(current->content, ")", 2) && !current->next->is_op)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
 int	valid_syntax(t_list *lst)
 {
 	if (check_opsyntax(lst))
@@ -52,6 +63,8 @@ int	valid_syntax(t_list *lst)
 	if (handle_oppositions(lst))
 		return (1);
 	if (valid_parentis(lst))
+		return (1);
+	if (hanlde_syntaxafterparentis(lst))
 		return (1);
 	return (0);
 }

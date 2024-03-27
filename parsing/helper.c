@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 17:45:40 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:17:12 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ void	status_code_of_syntax_error(int *status_code)
 	ft_memset(status_code, 0, 4);
 	ft_memset(status_code, 1, 3);
 	ft_memset(status_code, 2, 2);
+}
+
+void	syntax_error_handling(t_list *copy)
+{
+	ft_lstclear(&copy, &free);
+	printf("bash: syntax error in tokens\n");
 }
 
 /*
