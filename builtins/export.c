@@ -1,12 +1,31 @@
 
 #include "../parsing/minishell.h"
 
+// allocs: value
+int get_local_env_representation(t_list **local_env, char ***dest)
+{
+  static t_list **env = NULL;
+  char **result;
+
+  if (local_env)
+    env = local_env;
+  else
+  {
+    result = convert_list_to_arr(*env);
+    if (!result)
+      return (1);
+    *dest = result;
+  }
+  return (0);
+}
+
 int init_envs(t_list **local_env, char **env)
 {
   get_exported_arg_value(NULL, local_env, 0);
   ft_env(NULL, local_env);
   ft_unset(NULL, local_env);
   add_env_arg(NULL, NULL, local_env);
+  get_local_env_representation(local_env, NULL);
   if (init_local_env(local_env, env))
     return (perror("init_local_env: malloc"), 1);
   return (0);
