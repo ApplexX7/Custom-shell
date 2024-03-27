@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 23:23:16 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:51:19 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ int add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched)
   return (0);
 }
 
-void remove_points_dir(t_list *start, t_list **lst)
+void remove_points_dir(t_list *start, t_list **lst, int *matched)
 {
   t_list *tmp;
   t_list *tmp2;
@@ -270,6 +270,8 @@ void remove_points_dir(t_list *start, t_list **lst)
         lst_remove_node(lst, tmp);
       tmp = tmp2;
     }
+    if (ft_lstsize(*lst) == 0)
+      *matched = 0;
   }
 }
 
@@ -294,10 +296,10 @@ int get_matched_list(t_list *start, t_list *end, t_list **dest)
       //return (ft_lstclear(&portion, &free), 1);
     if (add_if_matched(dest, portion, (int [2]){open_end, open_start}, &matched))
       return (ft_lstclear(&portion, &free), 1);
+    remove_points_dir(start, dest, &matched);
     if (add_if_nomatch(dest, start, end, matched))
       return (ft_lstclear(&portion, &free), 1);
   }
-  remove_points_dir(start, dest);
   ft_lstclear(&portion, &free);
   return (0);
 }
