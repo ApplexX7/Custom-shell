@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 18:47:40 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:15:59 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,15 +178,31 @@ int ft_open_redirections(t_list *lst);
 // wildcard
 int expand_wildcard();
 
+// wildcard helpers
+t_list	*get_current_files(void);
+t_list	*lst_copy_portion(t_list *start, t_list *end);
+int	is_matched(char *str, t_list *wildcard, int open_end, int open_start);
+void	remove_points_dir(t_list *start, t_list **lst, int *matched);
+int	get_matched_list(t_list *start, t_list *end, t_list **dest);
+
+// wildcard helpers 2
+int	split_by_star(t_list **lst);
+void	set_ends(int *open_end, int *open_start, t_list *lst);
+int	add_if_nomatch(t_list **dest, t_list *start, t_list *end, int matched);
+int	add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched);
+int	split_and_add(t_list *tmp, t_list **dest);
+
 // set_tree_io
-t_list *check_combined_redirection(t_list *lst);
-int is_redirect_op(t_list *lst);
-int is_input_redirect(t_list *lst);
-int is_output_redirect(t_list *lst);
 int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_files);
-void remove_redirections(t_tree *node, t_list *start);
 int tree_set_io(t_tree *node);
 int is_herdoc(t_list *lst);
+
+// set_tree_io helpers
+void	remove_redirections(t_tree *node, t_list *start);
+t_list	*check_combined_redirection(t_list *lst);
+int	is_redirect_op(t_list *lst);
+int	is_input_redirect(t_list *lst);
+int	is_output_redirect(t_list *lst);
 
 // remove parenthesis
 void remove_parenthesis(t_list **lst);

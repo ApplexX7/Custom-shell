@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 20:01:09 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/27 20:04:58 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:48:38 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // this function shouldn't fail
 static int	handle_digit_arg(t_list *node)
 {
-		char *tmp;
+	char	*tmp;
 
 	if (ft_isdigit(((char *)node->content)[1]))
 	{
@@ -28,17 +28,30 @@ static int	handle_digit_arg(t_list *node)
 	return (0);
 }
 
-void skip_alpha_digit_inderscore(char **content)
+void	skip_alpha_digit_inderscore(char **content)
 {
 	while (ft_isalpha(**content) || ft_isdigit(**content) || **content == '_')
 		(*content)++;
+}
+
+// split env arg: $=== -> "$", "==="
+int	split_env_arg_and_add(t_list *node, t_list **dest, char *content)
+{
+	char	*tmp;
+
+	tmp = ft_substr(node->content, 0, content - (char *)node->content);
+	if (!tmp || new_and_add(dest, tmp, node->is_op))
+		return (free(tmp), 1);
+	free(tmp);
+	if (new_and_add(dest, content, node->is_op))
+		return (1);
+	return (0);
 }
 
 // allocs: tmp
 int	split_arg_node(t_list *node, t_list **dest)
 {
 	char	*content;
-	char	*tmp;
 
 	if (handle_digit_arg(node))
 		return (add_node(dest, node));
@@ -58,15 +71,8 @@ int	split_arg_node(t_list *node, t_list **dest)
 		if (new_and_add(dest, node->content, '\''))
 			return (1);
 	}
-	else
-	{
-		tmp = ft_substr(node->content, 0, content - (char *)node->content);
-		if (!tmp || new_and_add(dest, tmp, node->is_op))
-			return (free(tmp), 1);
-		free(tmp);
-		if (new_and_add(dest, content, node->is_op))
-			return (1);
-	}
+	else if (split_env_arg_and_add(node, dest, content))
+		return (1);
 	return (0);
 }
 
