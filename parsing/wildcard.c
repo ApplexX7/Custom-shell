@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 15:18:26 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:29:07 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,6 +324,7 @@ int add_matched_list(t_list **dest, t_list *lst)
     if (get_matched_list(start, end, &new))
       return (ft_lstclear(&new, &free), 1);
     lst = end->next;
+    bubbleSort(new);
     append_list(new, dest, '\'');
     lst_next_wildcard(lst, &start, &end);
   }
