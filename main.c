@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 21:50:30 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:28:39 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	sigquit(int signo)
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
 		tcsetattr(STDIN_FILENO, TCSANOW, &original_terminos);
-		write(1, "QUIT: 3\n", 8);
 		return ;
 	}
 	rl_redisplay();

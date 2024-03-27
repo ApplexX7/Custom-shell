@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 22:15:22 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:41:40 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void create_herdoc(t_list *current, int fd)
 		exit(0);
 	while (1)
 	{
+		rl_catch_signals = 0;
 		write(1, "here_doc> ", 10);
 		str = get_next_line(0);
 		if (!str)
@@ -75,7 +76,8 @@ int create_heredocchild(t_list *current)
 	else if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+		// signal(SIGINT, SIG_DFL);
 		create_herdoc(current, fd);
 	}
 	close(fd);
