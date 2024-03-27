@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 15:54:08 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:19:40 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ int check_syntax(t_list *lst, int *status_code)
 		return (status_code_of_syntax_error(status_code), 1);
 	}
 	ft_lstclear(&current, &free);
-	*status_code = 0;
 	return (0);
 }
 

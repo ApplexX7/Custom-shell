@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 15:16:29 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:03:55 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,63 @@ int manage_fds(int fd, t_fd_action action)
 
 int manage_pid(int pid, t_pid_action action, int *last_status)
 {
-	static int	pids[CHILD_MAX];
-	static int	pid_index = 0;
-	int			i;
-
-	i = 0;
-	if (action == CAPTURED && pid_index < CHILD_MAX)
+	static t_list *head = NULL;
+	t_list *current;
+    int *pidarr = malloc(sizeof(int));
+	
+    current = NULL;
+	if (action == CAPTURED)
 	{
-		pids[pid_index] = pid;
-		pid_index++;
+        *pidarr = pid;
+		current = ft_lstnew(pidarr);
+        if (current)
+        {
+		    ft_lstadd_back(&head, current);
+        }
+        current = NULL;
 	}
 	else if (action == WAIT)
 	{
-		while (i < pid_index)
+		current = head;
+		while (current)
 		{
-			if (waitpid(pids[i], last_status, 0) == -1)
-				return (1);
-			i++;
+			if (waitpid(*(int *)current->content, last_status, 0) == -1)
+				return (ft_lstclear(&head, &free),1);
+			current = current->next;
 		}
-		// while (waitpid(-1, NULL, 0) != -1)
-		// ;
-		pid_index = 0;
+		ft_lstclear(&head, &free);
+		head = NULL;
 	}
 	return (0);
 }
+
+
+// int manage_pid(int pid, t_pid_action action, int *last_status)
+// {
+// 	static int	pids[CHILD_MAX];
+// 	static int	pid_index = 0;
+// 	int			i;
+
+// 	i = 0;
+// 	if (action == CAPTURED && pid_index < CHILD_MAX)
+// 	{
+// 		pids[pid_index] = pid;
+// 		pid_index++;
+// 	}
+// 	else if (action == WAIT)
+// 	{
+// 		while (i < pid_index)
+// 		{
+// 			if (waitpid(pids[i], last_status, 0) == -1)
+// 				return (1);
+// 			i++;
+// 		}
+// 		// while (waitpid(-1, NULL, 0) != -1)
+// 		// ;
+// 		pid_index = 0;
+// 	}
+// 	return (0);
+// }
 
 int ft_open(char *file, int mode, int perms)
 {

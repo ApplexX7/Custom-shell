@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 21:37:36 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:15:22 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int create_heredocchild(t_list *current)
 {
 	int pid;
 	int fd;
+	int status;
 
 	fd = open("/tmp/herdoc.txt", O_CREAT | O_RDWR, 0644);
 	if (fd == -1)
@@ -82,7 +83,9 @@ int create_heredocchild(t_list *current)
 	if (fd == -1)
 		return (-1);
 	unlink("/tmp/herdoc.txt");
-	waitpid(pid, NULL, 0);
+	waitpid(pid,&status, 0);
+	if (WIFSIGNALED(status))
+		return (-1);
 	manage_fds(fd, CAPTURE);
 	return (fd);
 }
