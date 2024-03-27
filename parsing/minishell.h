@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 22:12:48 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:58:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
 t_list *convert_arr_to_list(char **arr);
 void append_list(t_list *source, t_list **dest, char op);
-char *get_env_value(char *arg);
+char *get_env_value(char *arg, int *status);
 t_list *get_right_node(t_list *head ,t_list *node);
 void lst_delete_node(t_list **lst, t_list *node);
 int arr_len(char **arr);
@@ -229,7 +229,7 @@ int ft_echo(t_tree *root);
 
 // export
 int ft_export(t_tree *root, char **env, int init);
-char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit, int *status);
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
 int init_local_env(t_list **local_env, char **env);
 int add_export_node(t_list *lst, t_list **local_env);
 int search_and_add(t_list **local_env, char *key, char *value);

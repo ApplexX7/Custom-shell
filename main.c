@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 14:28:39 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:58:36 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	get_exported_arg_value(NULL, NULL, 0, &status_code);
+	get_env_value(NULL, &status_code);
 	tcgetattr(STDIN_FILENO, &original_terminos);
 	recept_signals();
 	if (!env || !env[0])
@@ -172,5 +172,5 @@ int	main(int argc, char **argv, char **env)
 		}
 		free(promt);
 	}
-	get_exported_arg_value(NULL, NULL, 1, NULL); // free the export list
+	get_exported_arg_value(NULL, NULL, 1); // free the export list
 }

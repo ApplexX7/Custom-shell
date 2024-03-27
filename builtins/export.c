@@ -3,7 +3,7 @@
 
 int init_envs(t_list **local_env, char **env)
 {
-  get_exported_arg_value(NULL, local_env, 0, NULL);
+  get_exported_arg_value(NULL, local_env, 0);
   ft_env(NULL, local_env);
   ft_unset(NULL, local_env);
   add_env_arg(NULL, NULL, local_env);
@@ -20,7 +20,7 @@ int add_env_arg(char *key, char *value, t_list **env)
     local_env = env;
   else
   {
-    return (export_add_key_value(local_env, key, value));
+    return (search_and_add(local_env, key, value));
   }
   return (0);
 }
@@ -58,22 +58,18 @@ int ft_export(t_tree *root, char **env, int init)
   return (0);
 }
 
-char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit, int *status)
+char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit)
 {
   static t_list **lst = NULL;
-  static int *status_exit;
   t_list *tmp;
 
-  if (status)
-    status_exit = status;
   if (free_bit)
     (ft_lstclear(lst, &free), *lst = NULL);
   else if (local_lst)
     lst = local_lst;
   else if (lst)
   {
-    if (!ft_strncmp(arg, "?", 2))
-      return (ft_itoa((*status_exit) >> 8));
+    
     tmp = *lst;
     while (tmp)
     {
