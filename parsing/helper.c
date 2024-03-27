@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 21:39:37 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:45:40 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,26 @@ void freetree(t_tree **root)
 	*root = NULL;
 }
 
+
+void	appendto_list(t_list *source, t_list **dest)
+{
+	t_list	*tmp;
+
+	while (source)
+	{
+		tmp = source;
+		source = source->next;
+		tmp->next = NULL;
+		ft_lstadd_back(dest, tmp);
+	}
+}
+
+void	status_code_of_syntax_error(int *status_code)
+{
+	ft_memset(status_code, 0, 4);
+	ft_memset(status_code, 1, 3);
+	ft_memset(status_code, 2, 2);
+}
 
 /*
 void lst_remove_node(t_list **lst, t_list *node)

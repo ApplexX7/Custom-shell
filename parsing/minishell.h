@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 17:13:16 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:19:21 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,16 @@ typedef enum pid_action {
 	WAIT,
 } t_pid_action;
 
-// expand args
+// expand herdoc args
 int expand_herdoc(t_list **lst);
+void	lst_delete_node(t_list **lst, t_list *node);
+int	addback_node(t_list **dest, t_list *node);
+int	add_env_args(char *arg, t_list **dest);
+t_list	*convert_to_list(char **arr);
+void	push_to_front(t_list **source, t_list *dest);
+
+
+// expand args
 void push_to_front(t_list **source, t_list *dest);
 void do_nothing(void *arg);
 t_list *convert_arr_to_list(char **arr);
@@ -106,11 +114,15 @@ int join_values(char **arr, char **dest);
 
 // split tokens
 t_list 	*split_tokens(char *av);
-char 	**ft_srtok(char *av);
-char	**ft_split(char const *s, char c);
 void    lable_list(t_list *lst);
-void print_ouput(t_list *node);
-void print_ouput_op(t_list *node);
+int	ft_isnotdouble(int c);
+int	ft_isspecial(int c);
+int	ft_issspace(int c);
+int     ft_tokencharcters(char *av, t_list **head, int *index);
+int     ft_normalcharacters(char *av, t_list **head, int *index);
+int     add_tolist(char *av, t_list **head, int index, int start);
+void    print_ouput(t_list *node);
+void    print_ouput_op(t_list *node);
 
 
 // combine_list
@@ -118,6 +130,17 @@ int combine_list(t_list **lst);
 
 //check syntax error
 int check_syntax(t_list *lst, int *status_code);
+void	status_code_of_syntax_error(int *status_code);
+int	ft_redirectionop(t_list *current);
+int	ft_special_operators(t_list *current);
+int	check_opsyntax(t_list *lst);
+int	ft_handle_parentiserror(t_list *lst);
+int	handle_oppositions(t_list *lst);
+int	closed_qpsayntax(t_list *lst);
+int	valid_syntax(t_list *lst);
+int	valid_parentis(t_list *lst);
+void	syntax_error_handling(t_list *copy);
+
 
 // helpers
 void lst_remove_node(t_list **lst, t_list *node);
@@ -139,6 +162,7 @@ int min(int a, int b);
 int max(int a, int b);
 int arr_len(char **arr);
 int handle_ambiguous_redirection(t_list *file);
+void	appendto_list(t_list *source, t_list **dest);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -148,6 +172,7 @@ void labling_prio(t_list *list);
 /*build tree*/
 void inheritance_builting(t_tree *root, int fbuiltins);
 t_tree *build_tree(t_list *list);
+t_tree	*insert_tree(t_list *list, t_tree **root);
 void treeprint(t_tree *root, int level);
 void freetree(t_tree **root);
 int is_pipe(t_list *lst);

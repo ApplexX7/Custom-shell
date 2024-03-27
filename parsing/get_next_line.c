@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:14:56 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/26 18:30:05 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:22:50 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0
 		|| BUFFER_SIZE >= 2147483647)
 		return (free(str), str = NULL, NULL);
 	buffer = (char *)malloc((BUFFER_SIZE + 1));

@@ -12,19 +12,19 @@
 
 #include "minishell.h"
 
-void inheritance_builting(t_tree *root, int fbuiltins)
+void	inheritance_builting(t_tree *root, int fbuiltins)
 {
-    if (!root)
-        return;
-    else if (is_pipe(root->node) && root->fbuiltins == 1)
-    {
-        inheritance_builting(root->left, 1);
-        inheritance_builting(root->right, 1);
-    }
-    else
-    {
-        root->fbuiltins = fbuiltins;
-        inheritance_builting(root->left, fbuiltins);
-        inheritance_builting(root->right, fbuiltins);
-    }
+	if (!root)
+		return ;
+	else if (is_pipe(root->node) && root->fbuiltins == 1)
+	{
+		inheritance_builting(root->left, 1);
+		inheritance_builting(root->right, 1);
+	}
+	else
+	{
+		root->fbuiltins = fbuiltins;
+		inheritance_builting(root->left, fbuiltins);
+		inheritance_builting(root->right, fbuiltins);
+	}
 }

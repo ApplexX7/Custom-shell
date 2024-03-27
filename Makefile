@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/27 17:03:30 by mohilali         ###   ########.fr        #
+#    Updated: 2024/03/27 17:48:01 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,13 @@ SRC = main.c parsing/ft_split_tokens.c parsing/labling.c parsing/debug.c parsing
 	parsing/remove_parenthesis.c parsing/handle_redirections_bottom.c parsing/open_pipes.c p_execution/execute_tree.c p_execution/garbege_collector.c \
 	p_execution/change_state.c p_execution/create_chlidren.c p_execution/open_files.c p_execution/path.c parsing/split_env_args.c \
 	builtins/env.c builtins/echo.c builtins/export.c builtins/builtins_helpers.c parsing/mask.c builtins/cd.c parsing/inheritance.c parsing/lable_env_args.c\
-	builtins/unset.c parsing/expand_forherdoc.c builtins/pwd.c builtins/ft_exit.c
+	builtins/unset.c parsing/expand_forherdoc.c builtins/pwd.c builtins/ft_exit.c parsing/ft_split_tokens_helper.c parsing/expand_herdoc_helpers.c parsing/check_syn_helpers.c \
+	
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
 #TODO: remove -g
-CFALGS =  #-Wall -Wextra -Werror -g
+CFALGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 NAME = mini
 READLINEDIR  =  $(shell brew --prefix readline)
