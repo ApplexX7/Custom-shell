@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 18:30:09 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:47:40 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,12 @@ void print_ouput_op(t_list *node);
 
 // combine_list
 int combine_list(t_list **lst);
+
+// combine_list helpers
+int	is_useless_token(t_list *node);
+int	handle_consecutive_quotes(t_list *node);
+void	del_useless_tokens(t_list **lst);
+int	is_literal(t_list *node);
 
 //check syntax error
 int check_syntax(t_list *lst, int *status_code);
