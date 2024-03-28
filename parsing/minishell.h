@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 23:17:35 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:01:54 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #include <termios.h>
 
 
-
+struct termios	original_terminos;
 // #include <libc.h>
 
 // FILE*gfp;
@@ -86,6 +86,18 @@ typedef enum pid_action {
 	CAPTURED,
 	WAIT,
 } t_pid_action;
+
+
+
+//minihsell_parts
+int init_minihsell_arg(int *status_code, char **env);
+char	*get_cwd(void);
+t_tree	*parsing_check(char *promt, char **env, int *status_code);
+t_tree	*spown_tree(t_list *lst);
+int	executing_part(t_tree *root, int *status_code, char **env);
+char	**create_env(void);
+int	recept_signals(void);
+void	sigquit(int signo);
 
 // expand herdoc args
 int expand_herdoc(t_list **lst);

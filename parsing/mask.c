@@ -6,16 +6,16 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 10:20:58 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 18:27:56 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:56:37 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void full_withzero(char **s)
+void	full_withzero(char **s)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	str = *s;
 	i = 0;
@@ -25,10 +25,11 @@ void full_withzero(char **s)
 		i++;
 	}
 }
-void full_withone(char **s)
+
+void	full_withone(char **s)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	str = *s;
 	i = 0;
@@ -39,38 +40,35 @@ void full_withone(char **s)
 	}
 }
 
-int there_is_expand(t_list *start, t_list *end)
+int	there_is_expand(t_list *start, t_list *end)
 {
-	t_list * current_start;
+	t_list	*current_start;
 
 	current_start = start;
 	while (current_start && current_start != end)
 	{
-		if (ft_strchr(current_start->content, '$') && (!current_start->is_op || current_start->is_op == '\"'))
+		if (ft_strchr(current_start->content, '$') && (!current_start->is_op
+				|| current_start->is_op == '\"'))
 			return (0);
 		current_start = current_start->next;
 	}
 	return (1);
 }
 
-int masking(t_list *start, t_list *end, t_list *dest)
+int	masking_data(t_list *start, t_list *end, t_list *dest, char *tmp)
 {
-	char *new = NULL;
-	char *tmp2 = NULL;
-	char *tmp;
+	char	*new;
+	char	*tmp2;
 
-	if (there_is_expand(start, end))
-	{
-		//dest->mask = NULL;
-		return (0);
-	}
+	new = NULL;
+	tmp2 = NULL;
 	while (start && start != end)
 	{
 		tmp = ft_strdup(start->content);
 		if (!tmp)
-			return(free(new),1);
-		if (ft_strchr(start->content, '$') && (!start->is_op || start->is_op == '\"'))
-		
+			return (free(new), 1);
+		if (ft_strchr(start->content, '$') && (!start->is_op
+				|| start->is_op == '\"'))
 			full_withone(&tmp);
 		else
 			full_withzero(&tmp);
@@ -83,5 +81,17 @@ int masking(t_list *start, t_list *end, t_list *dest)
 		start = start->next;
 	}
 	dest->mask = new;
+	return (0);
+}
+
+int	masking(t_list *start, t_list *end, t_list *dest)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (there_is_expand(start, end))
+		return (0);
+	if (masking_data(start, end, dest, tmp))
+		return (1);
 	return (0);
 }
