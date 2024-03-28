@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/28 00:14:19 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/28 00:49:16 by ayait-el         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC = main.c parsing/ft_split_tokens.c parsing/labling.c parsing/debug.c parsing
 	p_execution/change_state.c p_execution/create_chlidren.c p_execution/open_files.c p_execution/path.c parsing/split_env_args.c \
 	builtins/env.c builtins/echo.c builtins/export.c builtins/builtins_helpers.c parsing/mask.c builtins/cd.c parsing/inheritance.c parsing/lable_env_args.c\
 	builtins/unset.c parsing/expand_forherdoc.c builtins/pwd.c builtins/ft_exit.c parsing/expand_args_helpers.c parsing/expand_args_helpers2.c\
-	parsing/combine_list_helpers.c parsing/set_tree_io_helpers.c parsing/wildcard_helpers.c parsing/wildcard_helpers2.c
+	parsing/combine_list_helpers.c parsing/set_tree_io_helpers.c parsing/wildcard_helpers.c parsing/wildcard_helpers2.c builtins/export_helpers.c\
+	builtins/export_helpers2.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc

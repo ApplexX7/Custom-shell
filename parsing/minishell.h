@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 23:15:59 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:49:54 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ char *get_env_value(char *arg, int *status);
 t_list *convert_arr_to_list(char **arr);
 void do_nothing(void *arg);
 int	ft_lstjoin(t_list *lst, char **dest);
+int	get_local_env_representation(t_list **local_env, char ***dest);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -263,17 +264,22 @@ int ft_echo(t_tree *root);
 
 // export
 int ft_export(t_tree *root, char **env, int init);
-char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
-int init_local_env(t_list **local_env, char **env);
-int add_export_node(t_list *lst, t_list **local_env);
 int search_and_add(t_list **local_env, char *key, char *value);
-int is_valid_arg_name(char *start, char *end);
 int check_export_syntax(char *content);
-int print_export(t_list *lst, int fd);
-int get_key_value(char *content, char **key, char **value, int *join);
 int concat_and_add(char *key, char *value, t_list **local_env);
-int export_add_key_value(t_list **dest, char *key, char *value);
-int add_env_arg(char *key, char *value, t_list **env);
+
+// export helpers
+int	add_env_arg(char *key, char *value, t_list **env);
+char	*get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
+int	add_export_node(t_list *lst, t_list **local_env);
+int	is_valid_arg_name(char *start, char *end);
+int	get_key_value(char *content, char **key, char **value, int *join);
+
+// export helpers 2
+int	init_local_env(t_list **local_env, char **env);
+int	print_export(t_list *lst, int fd);
+int	export_add_key_value(t_list **dest, char *key, char *value);
+int	init_envs(t_list **local_env, char **env);
 
 //exit
 int ft_exit(t_tree *node, t_tree *root_of_tree);

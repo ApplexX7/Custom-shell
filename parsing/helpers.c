@@ -457,3 +457,20 @@ int	ft_lstjoin(t_list *lst, char **dest)
 	return (0);
 }
 
+// allocs: value
+int	get_local_env_representation(t_list **local_env, char ***dest)
+{
+	static t_list	**env = NULL;
+	char			**result;
+
+	if (local_env)
+		env = local_env;
+	else
+	{
+		result = convert_list_to_arr(*env);
+		if (!result)
+			return (1);
+		*dest = result;
+	}
+	return (0);
+}
