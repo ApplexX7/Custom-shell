@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:07:00 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/28 18:07:24 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:11:23 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	set_input_fd(t_tree *node, int fd)
 }*/
 int	tree_copy_output(char *output_file, int out_fd, t_tree *to)
 {
+	char	*new;
+
 	if (!to)
 		return (0);
 	if (output_file)
