@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:56:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:25:51 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int     ft_normalcharacters(char *av, t_list **head, int *index);
 int     add_tolist(char *av, t_list **head, int index, int start);
 void    print_ouput(t_list *node);
 void    print_ouput_op(t_list *node);
-
+int join_mask(t_list *start, t_list *end, t_list *dest);
 
 // combine_list
 int combine_list(t_list **lst);

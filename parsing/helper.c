@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void freetree(t_tree **root)
+void	freetree(t_tree **root)
 {
 	if (!(*root))
 		return ;
@@ -26,7 +26,6 @@ void freetree(t_tree **root)
 	free((*root));
 	*root = NULL;
 }
-
 
 void	appendto_list(t_list *source, t_list **dest)
 {
@@ -55,9 +54,9 @@ void	syntax_error_handling(t_list *copy)
 }
 
 /*
-void lst_remove_node(t_list **lst, t_list *node)
+void	lst_remove_node(t_list **lst, t_list *node)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *lst;
 	if (tmp == node)
@@ -79,7 +78,7 @@ void lst_remove_node(t_list **lst, t_list *node)
 */
 
 /*
-int is_space(t_list *node)
+int	is_space(t_list *node)
 {
 	if (!strncmp(node->content, " ", 2) && !node->is_op)
 		return (1);
@@ -89,9 +88,9 @@ int is_space(t_list *node)
 */
 
 /*
-void del_spaces(t_list **lst)
+void	del_spaces(t_list **lst)
 {
-	t_list *tmp;
+	t_list	*tmp;
   t_list *tmp2;
 
 	tmp = *lst;
@@ -108,14 +107,14 @@ void del_spaces(t_list **lst)
 }
 */
 
-t_list *skip_spaces(t_list *start)
+t_list	*skip_spaces(t_list *start)
 {
 	while (start && is_space(start))
 		start = start->next;
 	return (start);
 }
 
-int is_parentis(t_list *node)
+int	is_parentis(t_list *node)
 {
 	if (!ft_strncmp(node->content, "(", 2) && !node->is_op)
 		return (1);
@@ -124,10 +123,10 @@ int is_parentis(t_list *node)
 	return (0);
 }
 
-void del_parentis(t_list **lst)
+void	del_parentis(t_list **lst)
 {
-	t_list *tmp;
-  t_list *tmp2;
+	t_list	*tmp;
+	t_list	*tmp2;
 
 	tmp = *lst;
 	while (tmp)
