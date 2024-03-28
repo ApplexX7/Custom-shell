@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 18:08:47 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:13:32 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void set_back_io(int input, int output)
 		return ;
 	}
 	if (input != 0)
-		close(input);
+		ft_close(input);
 	if (dup2(output, STDOUT_FILENO) == -1)
 	{
 		perror("dup");
 		return ;
 	}
 	if (output != 1)
-		close(output);
+		ft_close(output);
 }
 
 int dup_input(int fd_in)
@@ -37,7 +37,7 @@ int dup_input(int fd_in)
 		perror("dup2 :");
 		return (1);
 	}
-	close(fd_in);
+	ft_close(fd_in);
 	return (0);
 }
 
@@ -57,7 +57,7 @@ int input_files(t_tree *node)
 		fd_in = open_files(current->content, 1);
 		if (fd_in == -1)
 			return (-1);
-		close(fd_in);
+		ft_close(fd_in);
 		current = current->next;
 	}
 	fd_in = open_files(current->content, 1);
@@ -75,7 +75,7 @@ int dup_output(int fd_out)
 		perror("dup2 :");
 		return (1);
 	}
-	close(fd_out);
+	ft_close(fd_out);
 	return (0);
 }
 
@@ -98,7 +98,7 @@ int output_files(t_tree *root)
 			fd_out = open_files(current->content, 3);
 		if (fd_out == -1)
 			return (1);
-		close(fd_out);
+		ft_close(fd_out);
 		current = current->next;
 	}
 	if (handle_ambiguous_redirection(current))
