@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:01:54 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:49:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #include <termios.h>
 
 
-struct termios	original_terminos;
+struct termios	c;
 // #include <libc.h>
 
 // FILE*gfp;

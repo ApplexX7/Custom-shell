@@ -6,13 +6,13 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:08:40 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:44:04 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing/minishell.h"
 
-int global_sign_forherdoc = 0;
+int g_lobal_sign_forherdoc = 0;
 
 void	sigint(int signo)
 {
@@ -34,8 +34,11 @@ void	sigquit(int signo)
 	(void)signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		if (global_sign_forherdoc == 0)
+		if (g_lobal_sign_forherdoc == 0)
+		{
 			tcsetattr(STDIN_FILENO, TCSANOW, &original_terminos);
+			write(1, "Quit: 3\n", 8);
+		}
 		return ;
 	}
 	rl_redisplay();

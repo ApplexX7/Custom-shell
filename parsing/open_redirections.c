@@ -6,13 +6,13 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:09:13 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:45:45 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int global_sign_forherdoc;
+extern int	g_lobal_sign_forherdoc;
 
 void	sigquit2(int signo)
 {
@@ -77,16 +77,13 @@ int	create_heredocchild(t_list *current)
 	fd = open("/tmp/herdoc.txt", O_CREAT | O_RDWR, 0644);
 	if (fd == -1)
 		return (-1);
-	global_sign_forherdoc = 1;
+	g_lobal_sign_forherdoc = 1;
 	pid = fork();
 	if (pid == -1)
-		return (global_sign_forherdoc = 0, -1);
+		return (g_lobal_sign_forherdoc = 0, -1);
 	else if (pid == 0)
-	{
-		(signal(SIGINT, SIG_DFL));
-		signal(SIGQUIT, &sigquit2);
-		(create_herdoc(current, fd));
-	}
+		(signal(SIGINT, SIG_DFL), signal(SIGQUIT, &sigquit2),
+			create_herdoc(current, fd));
 	close(fd);
 	fd = open("/tmp/herdoc.txt", O_RDWR, 0644);
 	if (fd == -1)
@@ -94,10 +91,9 @@ int	create_heredocchild(t_list *current)
 	unlink("/tmp/herdoc.txt");
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
-		return (global_sign_forherdoc = 0,-1);
+		return (g_lobal_sign_forherdoc = 0, -1);
 	manage_fds(fd, CAPTURE);
-	global_sign_forherdoc = 0;
-	return (fd);
+	return (g_lobal_sign_forherdoc = 0, fd);
 }
 
 int	ft_open_herdocs(t_list *list)
