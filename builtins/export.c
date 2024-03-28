@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:35:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/28 00:49:03 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/28 01:08:41 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ int	ft_export(t_tree *root, char **env, int init)
 	{
 		if (set_fd(&fd, root))
 			return (ft_putstr_fd("export: error opening file\n", fd), 1);
-		if (print_export(local_env, fd))
-			return (1);
+    tmp = copy_lst(local_env);
+    if (!tmp && local_env)
+      return (1);
+		if (print_export(tmp, fd))
+			return (ft_lstclear(&tmp, &free), 1);
+    ft_lstclear(&tmp, &free);
 	}
 	return (0);
 }
