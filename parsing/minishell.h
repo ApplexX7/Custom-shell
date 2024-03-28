@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:56:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:02:19 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int arr_len(char **arr);
 int handle_ambiguous_redirection(t_list *file);
 void	appendto_list(t_list *source, t_list **dest);
 int add_node(t_list **dest, t_list *node);
-char *get_env_value(char *arg, int *status);
+int get_env_value(char *arg, int *status, char **dest);
 t_list *convert_arr_to_list(char **arr);
 void do_nothing(void *arg);
 int	ft_lstjoin(t_list *lst, char **dest);

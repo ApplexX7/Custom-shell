@@ -367,7 +367,7 @@ int	arr_size(char **arr)
 	return (i);
 }
 
-char	*get_env_value(char *arg, int *status)
+int get_env_value(char *arg, int *status, char **dest)
 {
 	char		*value;
 	static int	*status_exit;
@@ -375,15 +375,24 @@ char	*get_env_value(char *arg, int *status)
 	if (status)
 	{
 		status_exit = status;
-		return (NULL);
+		return (0);
 	}
 	if (!ft_strncmp(arg, "?", 2))
-		return (ft_itoa((*status_exit) >> 8));
-	value = get_exported_arg_value(arg, NULL, 0);
-	if (value)
-		return (ft_strdup(value));
-	else
-		return (NULL);
+  {
+    value = ft_itoa((*status_exit) >> 8);
+    if (!value)
+      return (perror("get_env_value"), 1);
+		return (*dest = value, 0);
+  }
+  else
+  {
+    value = get_exported_arg_value(arg, NULL, 0);
+    *dest = ft_strdup(value);
+    if (!(*dest) && value)
+      return (1);
+    else
+      return (0);
+  }
 }
 
 // allocs: content, mask, new_node

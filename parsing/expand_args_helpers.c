@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 18:31:41 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/27 18:31:43 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:03:43 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	join_values(char **arr, char **dest)
 	while (arr[i])
 	{
 		tmp = str;
-		value = get_env_value(arr[i], NULL);
-		if (!value)
+		if (get_env_value(arr[i], NULL, &value))
 			return (free(str), 1);
 		str = ft_strjoin(str, value);
 		free(value);
