@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/27 23:15:31 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/28 00:14:19 by ayait-el         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ READLINEDIR  =  $(shell brew --prefix readline)
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline
+	$(CC) -lreadline  $(OBJCT) -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline -g
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@ -I$(READLINEDIR)/include
