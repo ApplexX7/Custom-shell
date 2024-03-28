@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:49:05 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:56:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #include <termios.h>
 
 
-struct termios	c;
+struct termios	original_terminos;
 // #include <libc.h>
 
 // FILE*gfp;
@@ -110,19 +110,26 @@ void	push_to_front(t_list **source, t_list *dest);
 
 // expand args
 void push_to_front(t_list **source, t_list *dest);
-void do_nothing(void *arg);
-t_list *convert_arr_to_list(char **arr);
 void append_list(t_list *source, t_list **dest, char op);
-char *get_env_value(char *arg, int *status);
 t_list *get_right_node(t_list *head ,t_list *node);
 void lst_delete_node(t_list **lst, t_list *node);
-int arr_len(char **arr);
-int lst_add_env_arg(char *arg, t_list **dest);
+int	arr_size(char **arr);
 //int lst_add_env_arg(t_list **dest, t_list *node, char *value);
-int add_node(t_list **dest, t_list *node);
 int expand_args(t_list **lst);
-int join_values(char **arr, char **dest);
 
+// expand helpers
+int join_values(char **arr, char **dest);
+int	join_before(t_list *before, t_list **lst, t_list *current);
+int	join_after(t_list *after, t_list **lst, t_list *current);
+int lst_add_env_arg(char *arg, t_list **dest);
+int	get_empty_str_arr(char ***dest);
+
+// expand helpers 2
+int	set_ones_arr(char *str, char *mask, char ***ones);
+int	set_zeros_arr(char *str, char *mask, char ***zeros);
+int	fil_split_arr(t_list **splited, char **zeros, char **ones, char *mask);
+t_list	*get_splited_list(char *str, char *mask);
+int	handle_empty_string_case(char **value, t_list *node);
 
 // split tokens
 t_list 	*split_tokens(char *av);
@@ -139,6 +146,12 @@ void    print_ouput_op(t_list *node);
 
 // combine_list
 int combine_list(t_list **lst);
+
+// combine_list helpers
+int	is_useless_token(t_list *node);
+int	handle_consecutive_quotes(t_list *node);
+void	del_useless_tokens(t_list **lst);
+int	is_literal(t_list *node);
 
 //check syntax error
 int check_syntax(t_list *lst, int *status_code);
@@ -175,6 +188,12 @@ int max(int a, int b);
 int arr_len(char **arr);
 int handle_ambiguous_redirection(t_list *file);
 void	appendto_list(t_list *source, t_list **dest);
+int add_node(t_list **dest, t_list *node);
+char *get_env_value(char *arg, int *status);
+t_list *convert_arr_to_list(char **arr);
+void do_nothing(void *arg);
+int	ft_lstjoin(t_list *lst, char **dest);
+int	get_local_env_representation(t_list **local_env, char ***dest);
 
 //labling priority
 t_list *find_roottree(t_list **list);
@@ -197,15 +216,31 @@ int ft_open_redirections(t_list *lst);
 // wildcard
 int expand_wildcard();
 
+// wildcard helpers
+t_list	*get_current_files(void);
+t_list	*lst_copy_portion(t_list *start, t_list *end);
+int	is_matched(char *str, t_list *wildcard, int open_end, int open_start);
+void	remove_points_dir(t_list *start, t_list **lst, int *matched);
+int	get_matched_list(t_list *start, t_list *end, t_list **dest);
+
+// wildcard helpers 2
+int	split_by_star(t_list **lst);
+void	set_ends(int *open_end, int *open_start, t_list *lst);
+int	add_if_nomatch(t_list **dest, t_list *start, t_list *end, int matched);
+int	add_if_matched(t_list **dest, t_list *portion, int ends[2], int *matched);
+int	split_and_add(t_list *tmp, t_list **dest);
+
 // set_tree_io
-t_list *check_combined_redirection(t_list *lst);
-int is_redirect_op(t_list *lst);
-int is_input_redirect(t_list *lst);
-int is_output_redirect(t_list *lst);
 int set_io(t_tree *node, t_list *start, t_list **input_files, t_list **output_files);
-void remove_redirections(t_tree *node, t_list *start);
 int tree_set_io(t_tree *node);
 int is_herdoc(t_list *lst);
+
+// set_tree_io helpers
+void	remove_redirections(t_tree *node, t_list *start);
+t_list	*check_combined_redirection(t_list *lst);
+int	is_redirect_op(t_list *lst);
+int	is_input_redirect(t_list *lst);
+int	is_output_redirect(t_list *lst);
 
 // remove parenthesis
 void remove_parenthesis(t_list **lst);
@@ -266,17 +301,22 @@ int ft_echo(t_tree *root);
 
 // export
 int ft_export(t_tree *root, char **env, int init);
-char *get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
-int init_local_env(t_list **local_env, char **env);
-int add_export_node(t_list *lst, t_list **local_env);
 int search_and_add(t_list **local_env, char *key, char *value);
-int is_valid_arg_name(char *start, char *end);
 int check_export_syntax(char *content);
-int print_export(t_list *lst, int fd);
-int get_key_value(char *content, char **key, char **value, int *join);
 int concat_and_add(char *key, char *value, t_list **local_env);
-int export_add_key_value(t_list **dest, char *key, char *value);
-int add_env_arg(char *key, char *value, t_list **env);
+
+// export helpers
+int	add_env_arg(char *key, char *value, t_list **env);
+char	*get_exported_arg_value(char *arg, t_list **local_lst, int free_bit);
+int	add_export_node(t_list *lst, t_list **local_env);
+int	is_valid_arg_name(char *start, char *end);
+int	get_key_value(char *content, char **key, char **value, int *join);
+
+// export helpers 2
+int	init_local_env(t_list **local_env, char **env);
+int	print_export(t_list *lst, int fd);
+int	export_add_key_value(t_list **dest, char *key, char *value);
+int	init_envs(t_list **local_env, char **env);
 
 //exit
 int ft_exit(t_tree *node, t_tree *root_of_tree);

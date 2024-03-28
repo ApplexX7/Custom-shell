@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/28 15:26:19 by mohilali         ###   ########.fr        #
+#    Updated: 2024/03/28 16:53:56 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,13 @@ SRC = minishell_parts.c main.c parsing/ft_split_tokens.c parsing/labling.c parsi
 	p_execution/change_state.c p_execution/create_chlidren.c p_execution/open_files.c p_execution/path.c parsing/split_env_args.c \
 	builtins/env.c builtins/echo.c builtins/export.c builtins/builtins_helpers.c parsing/mask.c builtins/cd.c parsing/inheritance.c parsing/lable_env_args.c\
 	builtins/unset.c parsing/expand_forherdoc.c builtins/pwd.c builtins/ft_exit.c parsing/ft_split_tokens_helper.c parsing/expand_herdoc_helpers.c parsing/check_syn_helpers.c \
-	
+ 	parsing/expand_args_helpers.c parsing/expand_args_helpers2.c parsing/combine_list_helpers.c parsing/set_tree_io_helpers.c parsing/wildcard_helpers.c parsing/wildcard_helpers2.c builtins/export_helpers.c \
+	builtins/export_helpers2.c
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
 #TODO: remove -g
-CFALGS = #-Wall -Wextra -Werror -g
+CFALGS =  -Wall -Wextra -Werror -g
 RM = rm -rf
 NAME = mini
 READLINEDIR  =  $(shell brew --prefix readline)
@@ -29,7 +30,7 @@ READLINEDIR  =  $(shell brew --prefix readline)
 all : $(NAME)
 
 $(NAME) : $(OBJCT)
-	$(CC) -lreadline  $(OBJCT) -g -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline
+	$(CC) -lreadline  $(OBJCT) -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline -g
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@ -I$(READLINEDIR)/include

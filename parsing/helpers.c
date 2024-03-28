@@ -341,3 +341,136 @@ int handle_ambiguous_redirection(t_list *file)
   free(new);
   return (0);
 }
+
+void	append_list(t_list *source, t_list **dest, char op)
+{
+	t_list	*tmp;
+
+	while (source)
+	{
+		tmp = source;
+		source = source->next;
+		tmp->next = NULL;
+		tmp->is_op = op;
+		ft_lstadd_back(dest, tmp);
+	}
+}
+
+// arr should be null terminated
+int	arr_size(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
+
+char	*get_env_value(char *arg, int *status)
+{
+	char		*value;
+	static int	*status_exit;
+
+	if (status)
+	{
+		status_exit = status;
+		return (NULL);
+	}
+	if (!ft_strncmp(arg, "?", 2))
+		return (ft_itoa((*status_exit) >> 8));
+	value = get_exported_arg_value(arg, NULL, 0);
+	if (value)
+		return (ft_strdup(value));
+	else
+		return (NULL);
+}
+
+// allocs: content, mask, new_node
+int	add_node(t_list **dest, t_list *node)
+{
+	char	*content;
+	t_list	*new_node;
+	char	*mask;
+
+	content = ft_strdup(node->content);
+	if (!content)
+		return (1);
+	if (node->mask)
+	{
+		mask = ft_strdup(node->mask);
+		if (!mask)
+			return (free(content), 1);
+	}
+	else
+		mask = NULL;
+	new_node = ft_lstnew(content);
+	if (!new_node)
+		return (free(content), 1);
+	new_node->is_op = node->is_op;
+	new_node->fd = node->fd;
+	new_node->mask = mask;
+	ft_lstadd_back(dest, new_node);
+	return (0);
+}
+
+t_list	*convert_arr_to_list(char **arr)
+{
+	int		i;
+	t_list	*new;
+	t_list	*node;
+
+	new = NULL;
+	i = 0;
+	while (arr[i])
+	{
+		node = ft_lstnew(arr[i]);
+		if (!node)
+			return (ft_lstclear(&new, &do_nothing), NULL);
+		ft_lstadd_back(&new, node);
+		i++;
+	}
+	return (new);
+}
+
+void	do_nothing(void *arg)
+{
+	(void)arg;
+}
+
+int	ft_lstjoin(t_list *lst, char **dest)
+{
+	char	*tmp;
+	char	*result;
+
+	result = NULL;
+	while (lst)
+	{
+		tmp = result;
+		result = ft_strjoin(result, lst->content);
+		free(tmp);
+		if (!result && tmp)
+			return (perror("ft_lstjoin"), 1);
+		lst = lst->next;
+	}
+	*dest = result;
+	return (0);
+}
+
+// allocs: value
+int	get_local_env_representation(t_list **local_env, char ***dest)
+{
+	static t_list	**env = NULL;
+	char			**result;
+
+	if (local_env)
+		env = local_env;
+	else
+	{
+		result = convert_list_to_arr(*env);
+		if (!result)
+			return (1);
+		*dest = result;
+	}
+	return (0);
+}
