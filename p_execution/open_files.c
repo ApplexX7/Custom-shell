@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 13:46:33 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:51:23 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ int	set_file_io(t_tree *content)
 		dup_iofile(content->fd, content->out_fd);
 		return (0);
 	}
-	close(5);
 	return (1);
 }

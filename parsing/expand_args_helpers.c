@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 18:31:41 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/28 18:03:43 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:40:50 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	lst_add_env_arg(char *arg, t_list **dest)
 	new_lst = convert_arr_to_list(arr);
 	if (!new_lst)
 		return (free_2d_arr((void **)arr), 1);
-	append_list(new_lst, dest, 0);
+	append_list(new_lst, dest, '\'');
 	free(arr);
 	return (0);
 }

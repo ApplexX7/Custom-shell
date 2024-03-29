@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   back_to_prevsatte.c                                :+:      :+:    :+:   */
+/*   back_to_prevstate.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:17:44 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 22:18:57 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:54:06 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	set_back_io(int input, int output)
 		return ;
 	}
 	if (input != 0)
-		close(input);
+		ft_close(input);
 	if (dup2(output, STDOUT_FILENO) == -1)
 	{
 		perror("dup");
 		return ;
 	}
 	if (output != 1)
-		close(output);
+		ft_close(output);
 }
 
 int	dup_output(int fd_out)
@@ -37,7 +37,7 @@ int	dup_output(int fd_out)
 		perror("dup2 :");
 		return (1);
 	}
-	close(fd_out);
+	ft_close(fd_out);
 	return (0);
 }
 
@@ -48,6 +48,6 @@ int	dup_input(int fd_in)
 		perror("dup2 :");
 		return (1);
 	}
-	close(fd_in);
+	ft_close(fd_in);
 	return (0);
 }

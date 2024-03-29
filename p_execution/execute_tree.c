@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 15:18:22 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:27:12 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ int	is_andor(t_tree *root)
 
 int	set_up_executions(t_tree *root)
 {
-	if (expand_wildcard(&root->node))
-		return (1);
 	if (inheritance_bottom(root))
+		return (1);
+  if (expand_args(&root->node))
+    return (1);
+	if (expand_wildcard(&root->node))
 		return (1);
 	del_spaces(&root->node);
 	return (0);
@@ -66,8 +68,6 @@ int	executing_tree(t_tree *root, char **env, t_tree *head_of_root)
 	{
 		if (set_up_executions(root))
 			return (ft_memset(&status_code, EXIT_FILENOTEXIST, 2), status_code);
-		if (expand_args(&root->node))
-			return (1);
 		if (!root->fbuiltins && its_builtins(root))
 			return (execute_builtins(root, env, head_of_root));
 		else if (create_chdilren(root, env, head_of_root))
