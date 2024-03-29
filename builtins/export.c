@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:35:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 16:47:28 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:38:42 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	ft_export(t_tree *root, char **env, int init)
 int	search_and_add(t_list **local_env, char *key, char *value)
 {
 	t_list	*lst;
+	char *tmp;
 
 	lst = *local_env;
 	while (lst)
@@ -74,15 +75,21 @@ int	search_and_add(t_list **local_env, char *key, char *value)
 					ft_strlen(lst->content))))
 		{
 			free(lst->content);
+			tmp = key;
 			key = ft_strjoin(key, "=");
+			free(tmp);
 			if (!key)
 				return (perror("search_and_add"), 1);
+			tmp = value;
 			value = ft_strjoin(key, value);
+			free(key);
+			free(tmp);
 			if (!value)
 				return (perror("search_and_add"), 1);
 			lst->content = ft_strdup(value);
 			if (lst->content == NULL)
 				return (perror("search_and_add"), 1);
+			free(value);
 			return (0);
 		}
 		lst = lst->next;

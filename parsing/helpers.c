@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:11:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 22:11:23 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:29:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void del_parentis(t_list **lst)
 		tmp2 = tmp->next;
 		if (is_parentis(tmp))
 		{
-			printf("hello\n");
 			lst_remove_node(lst, tmp);
 			// tmp = tmp2;
 		}
