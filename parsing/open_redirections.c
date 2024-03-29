@@ -47,7 +47,7 @@ void	create_herdoc(t_list *current, int fd)
 	char	*limite;
 
 	if (!current)
-		exit (0);
+		exit(0);
 	limite = ft_strdup(current->content);
 	if (!limite)
 		exit(1);
@@ -56,7 +56,8 @@ void	create_herdoc(t_list *current, int fd)
 		str = readline("here_doc> ");
 		if (!str)
 			exit(0);
-		if (!ft_strncmp(str, limite, ft_strlen(str)) && ft_strlen(str) ==  ft_strlen(limite))
+		if (!ft_strncmp(str, limite, ft_strlen(str))
+			&& ft_strlen(str) == ft_strlen(limite))
 		{
 			free(str);
 			ft_close(fd);
