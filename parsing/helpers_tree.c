@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 17:22:09 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 18:00:26 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:15:05 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,32 @@ int	handle_ambiguous_redirection(t_list *file)
 	return (0);
 }
 
-char	*get_env_value(char *arg, int *status)
-{
-	char		*value;
-	static int	*status_exit;
-
-	if (status)
-	{
-		status_exit = status;
-		return (NULL);
-	}
-	if (!ft_strncmp(arg, "?", 2))
-		return (ft_itoa((*status_exit) >> 8));
-	value = get_exported_arg_value(arg, NULL, 0);
-	if (value)
-		return (ft_strdup(value));
-	else
-		return (NULL);
+int get_env_value(char *arg, int *status, char **dest)                 
+{                                                                      
+        char            *value;
+        static int      *status_exit;
+                                   
+        if (status)          
+        {
+                status_exit = status;               
+                return (0); 
+        }                                                              
+        if (!ft_strncmp(arg, "?", 2))
+  {      
+    value = ft_itoa((*status_exit) >> 8);
+    if (!value)                    
+      return (perror("get_env_value"), 1);
+                return (*dest = value, 0);
+  }
+  else
+  {
+    value = get_exported_arg_value(arg, NULL, 0);
+    *dest = ft_strdup(value);
+    if (!(*dest) && value)
+      return (1);
+    else
+      return (0);
+  }
 }
 
 int	new_and_add(t_list **head, void *content, char is_op)

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 14:06:31 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:29:38 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,19 @@ int	expand_in_herdoc(t_list *current, char *str, int fd)
 void	create_herdoc(t_list *current, int fd)
 {
 	char	*str;
-	char	*tmp;
 	char	*limite;
 
 	if (!current)
 		exit (0);
-	tmp = ft_strdup(current->content);
-	limite = ft_strjoin(tmp, "\n");
-	free(tmp);
+	limite = ft_strdup(current->content);
 	if (!limite)
-		exit(0);
+		exit(1);
 	while (1)
 	{
 		str = readline("here_doc> ");
 		if (!str)
 			exit(0);
-		if (!ft_strncmp(str, limite, ft_strlen(str)))
+		if (!ft_strncmp(str, limite, ft_strlen(str)) && ft_strlen(str) ==  ft_strlen(limite))
 		{
 			free(str);
 			ft_close(fd);
