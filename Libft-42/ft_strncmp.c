@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:53:25 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 14:16:21 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:38:17 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	while (n > 0 && *s1 && *s2)
 	{
 		if (*s1 != *s2)
-			break;
+			break ;
 		s1++;
 		s2++;
 		n--;

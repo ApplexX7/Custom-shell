@@ -54,6 +54,7 @@ void	remove_parenthesis(t_list **lst)
 		return ;
 	tmp = start->next;
 	set_end(tmp, &end);
-	if (end && (end == ft_lstlast(*lst) || (is_space(end->next) && skip_spaces(end->next) == skip_spaces(ft_lstlast(*lst)))))
+	if (end && (end == ft_lstlast(*lst) || (is_space(end->next)
+				&& skip_spaces(end->next) == skip_spaces(ft_lstlast(*lst)))))
 		remove_inclosing_parenth(start, end, lst);
 }

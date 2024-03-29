@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 09:42:23 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/26 18:46:32 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:36:53 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*res;
+	char		*res;
 	size_t		i;
 
 	i = 0;

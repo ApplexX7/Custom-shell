@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 22:27:00 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:55:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	executing_command(t_tree *content, char **env)
 	cmd = setup_command(content);
 	if (!cmd)
 		exit(errno);
+	get_local_env_representation(NULL, &env);
 	if (execve(path, cmd, env) == -1)
 	{
+		free_2d_arr((void **)env);
 		perror("Execve");
 		exit(errno);
 	}
@@ -46,10 +48,7 @@ int	create_chdilren(t_tree *content, char **env, t_tree *head_of_root)
 	status = 0;
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		return (1);
-	}
+		return (perror("fork"), 1);
 	else if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);

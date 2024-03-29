@@ -12,10 +12,10 @@
 
 #include "../parsing/minishell.h"
 
-int ft_pwd(t_tree *root)
+int	ft_pwd(t_tree *root)
 {
-	char *buffer;
-	size_t size;
+	char	*buffer;
+	size_t	size;
 
 	size = 1024;
 	buffer = malloc(sizeof(char) * size);

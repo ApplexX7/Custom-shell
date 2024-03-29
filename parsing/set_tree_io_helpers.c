@@ -43,7 +43,7 @@ t_list	*check_combined_redirection(t_list *lst)
 {
 	int	level;
 
-  lst = skip_spaces(lst);
+	lst = skip_spaces(lst);
 	if (lst && is_open_parenth(lst))
 	{
 		level = 0;
