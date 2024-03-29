@@ -6,45 +6,16 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 18:08:47 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:31:41 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
-void set_back_io(int input, int output)
+int	input_files(t_tree *node)
 {
-	if (dup2(input, STDIN_FILENO) == -1)
-	{
-		perror("dup");
-		return ;
-	}
-	if (input != 0)
-		close(input);
-	if (dup2(output, STDOUT_FILENO) == -1)
-	{
-		perror("dup");
-		return ;
-	}
-	if (output != 1)
-		close(output);
-}
-
-int dup_input(int fd_in)
-{
-	if (dup2(fd_in, STDIN_FILENO) == -1)
-	{
-		perror("dup2 :");
-		return (1);
-	}
-	close(fd_in);
-	return (0);
-}
-
-int input_files(t_tree *node)
-{
-	t_list *current;
-	int fd_in;
+	t_list	*current;
+	int		fd_in;
 
 	node->fd = dup(STDIN_FILENO);
 	if (node->fd == -1)
@@ -60,6 +31,8 @@ int input_files(t_tree *node)
 		close(fd_in);
 		current = current->next;
 	}
+	if (expand_args(&current))
+		return (-1);
 	fd_in = open_files(current->content, 1);
 	if (fd_in == -1)
 		return (-1);
@@ -68,21 +41,25 @@ int input_files(t_tree *node)
 	return (0);
 }
 
-int dup_output(int fd_out)
+int	ouput_files_open(t_tree *root, t_list *current, int fd_out)
 {
-	if (dup2(fd_out, STDOUT_FILENO) == -1)
-	{
-		perror("dup2 :");
+	if (handle_ambiguous_redirection(current))
+		return (-1);
+	if (root->open_mod == O_TRUNC)
+		fd_out = open_files(current->content, 2);
+	else if (root->open_mod == O_APPEND)
+		fd_out = open_files(current->content, 3);
+	if (fd_out == -1)
+		return (-1);
+	if (dup_output(fd_out))
 		return (1);
-	}
-	close(fd_out);
 	return (0);
 }
 
-int output_files(t_tree *root)
+int	output_files(t_tree *root)
 {
-	t_list *current;
-	int fd_out;
+	t_list	*current;
+	int		fd_out;
 
 	root->out_fd = dup(STDOUT_FILENO);
 	if (root->out_fd == -1)
@@ -101,24 +78,35 @@ int output_files(t_tree *root)
 		close(fd_out);
 		current = current->next;
 	}
-	if (handle_ambiguous_redirection(current))
-		return (-1);
-	if (root->open_mod == O_TRUNC)
-		fd_out = open_files(current->content, 2);
-	else if (root->open_mod == O_APPEND)
-		fd_out = open_files(current->content, 3);
-	if (fd_out == -1)
-		return (-1);
+	if (ouput_files_open(root, current, fd_out))
+		return (1);
+	return (0);
+}
+
+int	complite_woksdup(t_tree *root, int fd_out)
+{
+	fd_out = root->out_fd;
+	root->out_fd = dup(STDOUT_FILENO);
 	if (dup_output(fd_out))
+		return (1);
+	return (0);
+}
+int complite_woksdup_input(t_tree *root, int fd_in)
+{
+	fd_in = root->fd;
+	root->fd = dup(STDIN_FILENO);
+	if (dup_input(fd_in))
 		return (1);
 	return (0);
 }
 
 int	ft_dup_parent(t_tree *root)
 {
-	int fd_out = 1;
-	int fd_in = 0;
+	int	fd_out;
+	int	fd_in;
 
+	fd_out = 1;
+	fd_in = 0;
 	if (root->input_files != NULL)
 	{
 		if (input_files(root))
@@ -126,9 +114,7 @@ int	ft_dup_parent(t_tree *root)
 	}
 	else if (root->fd != 0)
 	{
-		fd_in = root->fd;
-		root->fd = dup(STDIN_FILENO);
-		if (dup_input(fd_in))
+		if (complite_woksdup_input(root, fd_in))
 			return (1);
 	}
 	if (root->output_files != NULL)
@@ -137,11 +123,7 @@ int	ft_dup_parent(t_tree *root)
 			return (1);
 	}
 	else if (root->out_fd != 1)
-	{
-		fd_out = root->out_fd;
-		root->out_fd = dup(STDOUT_FILENO);
-		if (dup_output(fd_out))
+		if (complite_woksdup(root, fd_out))
 			return (1);
-	}
 	return (0);
 }

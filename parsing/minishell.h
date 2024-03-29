@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 18:25:51 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:20:36 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,12 +277,23 @@ void dup_iofile(int fd_in, int fd_out);
 int set_file_io(t_tree *content);
 int	ft_dup_parent(t_tree *root);
 void set_back_io(int input, int output);
-void handle_error();
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
 int check_operators(t_tree *root ,char **env, t_tree *head_of_root);
 int its_builtins(t_tree *root);
 int execute_builtins(t_tree *root, char **env, t_tree *head_of_root);
+
+//executing && || op
+int execute_andoperator(t_tree *root, char **env, t_tree *head_of_root);
+int execute_or_operatore(t_tree *root , char **env, t_tree *head_of_root);
+int check_operators(t_tree *root ,char **env, t_tree *head_of_root);
+int its_builtins(t_tree *root);
+int execute_builtins(t_tree *root, char **env, t_tree *head_of_tree);
+
+
+//dup states
+void set_back_io(int input, int output);
+
 
 // split_env_arg
 int split_env_arg(t_list **lst);
@@ -290,6 +301,9 @@ int split_arg_node(t_list *node, t_list **dest);
 
 // lable_env_args
 void lable_env_args(t_list *lst);
+int dup_output(int fd_out);
+int dup_input(int fd_in);
+
 
 // builtins
 

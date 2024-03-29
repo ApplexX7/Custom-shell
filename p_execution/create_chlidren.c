@@ -6,16 +6,16 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/26 15:20:09 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:27:00 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
-void executing_command(t_tree *content, char **env)
+void	executing_command(t_tree *content, char **env)
 {
-	char **cmd;
-	char *path;
+	char	**cmd;
+	char	*path;
 
 	path = valid_path(content->node->content);
 	if (!path)
@@ -25,7 +25,7 @@ void executing_command(t_tree *content, char **env)
 	}
 	if (set_file_io(content))
 	{
-		handle_error();
+		perror("dup");
 		exit(errno);
 	}
 	cmd = setup_command(content);
@@ -38,11 +38,11 @@ void executing_command(t_tree *content, char **env)
 	}
 }
 
-int create_chdilren(t_tree *content, char **env, t_tree *head_of_root)
+int	create_chdilren(t_tree *content, char **env, t_tree *head_of_root)
 {
-	int pid;
-	int status;
-	
+	int	pid;
+	int	status;
+
 	status = 0;
 	pid = fork();
 	if (pid == -1)
