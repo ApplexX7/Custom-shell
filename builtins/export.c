@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:35:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 15:43:08 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:47:28 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static int	export_all_args(t_list *start, t_list **local_env)
 {
+	int return_value;
+
+	return_value = 0;
 	while (start)
 	{
 		if (check_export_syntax(start->content))
@@ -21,9 +24,11 @@ static int	export_all_args(t_list *start, t_list **local_env)
 			if (add_export_node(start, local_env))
 				return (1);
 		}
+		else
+			return_value = 1;
 		start = start->next;
 	}
-	return (0);
+	return (return_value);
 }
 
 // allocs: local_env
@@ -31,8 +36,10 @@ int	ft_export(t_tree *root, char **env, int init)
 {
 	static t_list	*local_env = NULL;
 	t_list			*tmp;
+	int				status;
 	int				fd;
 
+	status = 0;
 	if (init)
 		return (init_envs(&local_env, env));
 	tmp = root->node;
@@ -40,7 +47,7 @@ int	ft_export(t_tree *root, char **env, int init)
 	if (tmp)
 	{
 		if (export_all_args(tmp, &local_env))
-			return (1 << 8);
+			return (ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
 	}
 	else
 	{
@@ -48,9 +55,9 @@ int	ft_export(t_tree *root, char **env, int init)
 			return (ft_putstr_fd("export: error opening file\n", fd), 1);
 		tmp = copy_lst(local_env);
 		if (!tmp && local_env)
-			return (1 << 8);
+			return (ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
 		if (print_export(tmp, fd))
-			return (ft_lstclear(&tmp, &free), 1 << 8);
+			return (ft_lstclear(&tmp, &free),ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
 		ft_lstclear(&tmp, &free);
 	}
 	return (0);
