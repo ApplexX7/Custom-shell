@@ -6,11 +6,27 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 15:48:48 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:02:25 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
+
+int	wait_for_childs(t_list **head, int *last_status)
+{
+	t_list	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (waitpid(*(int *)current->content, last_status, 0) == -1)
+			return (ft_lstclear(head, &free), *head = NULL, 1);
+		current = current->next;
+	}
+	ft_lstclear(head, &free);
+	*head = NULL;
+	return (0);
+}
 
 int	manage_pid(int pid, t_pid_action action, int *last_status)
 {
@@ -34,45 +50,11 @@ int	manage_pid(int pid, t_pid_action action, int *last_status)
 	}
 	else if (action == WAIT)
 	{
-		current = head;
-		while (current)
-		{
-			if (waitpid(*(int *)current->content, last_status, 0) == -1)
-				return (ft_lstclear(&head, &free), head = NULL, 1);
-			current = current->next;
-		}
-		ft_lstclear(&head, &free);
-		head = NULL;
+		if (wait_for_childs(&head, last_status))
+			return (1);
 	}
 	return (0);
 }
-
-// int manage_pid(int pid, t_pid_action action, int *last_status)
-// {
-// 	static int	pids[CHILD_MAX];
-// 	static int	pid_index = 0;
-// 	int			i;
-
-// 	i = 0;
-// 	if (action == CAPTURED && pid_index < CHILD_MAX)
-// 	{
-// 		pids[pid_index] = pid;
-// 		pid_index++;
-// 	}
-// 	else if (action == WAIT)
-// 	{
-// 		while (i < pid_index)
-// 		{
-// 			if (waitpid(pids[i], last_status, 0) == -1)
-// 				return (1);
-// 			i++;
-// 		}
-// 		// while (waitpid(-1, NULL, 0) != -1)
-// 		// ;
-// 		pid_index = 0;
-// 	}
-// 	return (0);
-// }
 
 int	ft_open(char *file, int mode, int perms)
 {

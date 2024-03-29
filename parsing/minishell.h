@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 15:09:45 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:08:59 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ int open_pipes(t_tree *root);
 int inheritance_bottom(t_tree *root);
 
 //manage pids and fds and executing 
-int	executing_tree(t_tree *root, char **env, t_tree *head_of_root);
+int	executing_tree(t_tree *root, char **env, t_tree *head_of_root, int *status);
 int	manage_pid(int pid, t_pid_action action, int *last_status);
 int ft_open(char *file, int mode, int perms);
 int ft_close(int fd);
@@ -283,20 +283,22 @@ int	ft_dup_parent(t_tree *root);
 void set_back_io(int input, int output);
 char **setup_command(t_tree *content);
 int is_andor(t_tree *root);
-int check_operators(t_tree *root ,char **env, t_tree *head_of_root);
+int check_operators(t_tree *root ,char **env, t_tree *head_of_root,int *status);
 int its_builtins(t_tree *root);
 int execute_builtins(t_tree *root, char **env, t_tree *head_of_root);
 
 //executing && || op
-int execute_andoperator(t_tree *root, char **env, t_tree *head_of_root);
-int execute_or_operatore(t_tree *root , char **env, t_tree *head_of_root);
-int check_operators(t_tree *root ,char **env, t_tree *head_of_root);
+int execute_andoperator(t_tree *root, char **env, t_tree *head_of_root, int *status);
+int execute_or_operatore(t_tree *root , char **env, t_tree *head_of_root, int *status);
 int its_builtins(t_tree *root);
 int execute_builtins(t_tree *root, char **env, t_tree *head_of_tree);
 
 
 //dup states
 void set_back_io(int input, int output);
+int	ouput_files_open(t_tree *root, t_list *current, int fd_out);
+int	input_files(t_tree *node);
+int	output_files(t_tree *root);
 
 
 // split_env_arg
