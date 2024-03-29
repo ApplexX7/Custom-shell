@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 21:24:58 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:46:56 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	set_file_io(t_tree *content)
 	int	fd_in;
 	int	fd_out;
 
-	if (content->input_files != NULL)
+	if (content->input_file != NULL)
 	{
-		
+		fd_in = open_files(content->input_file, 1);
 		content->fd = fd_in;
 	}
 	else if (content->input_file == NULL)

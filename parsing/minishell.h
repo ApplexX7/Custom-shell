@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 18:39:24 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:44:00 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ void				syntax_error_handling(t_list *copy);
 void				syntax_error_handling(t_list *copy);
 
 // helpers
+int	handle_ambiguous_redirection_bottom(t_list *file);
+
 void				lst_remove_node(t_list **lst, t_list *node);
 int					is_space(t_list *node);
 int					is_wildcard(t_list *node);
