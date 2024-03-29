@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 23:15:29 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:06:31 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	create_herdoc(t_list *current, int fd)
 	char	*tmp;
 	char	*limite;
 
+	if (!current)
+		exit (0);
 	tmp = ft_strdup(current->content);
 	limite = ft_strjoin(tmp, "\n");
 	free(tmp);
@@ -107,7 +109,7 @@ int	ft_open_herdocs(t_list *list)
 	{
 		if (!ft_strncmp(current->content, "<<", 3) && !current->is_op)
 		{
-			fd = create_heredocchild(current->next);
+			fd = create_heredocchild(skip_spaces(current->next));
 			if (fd == -1)
 				return (1);
 			current->fd = fd;

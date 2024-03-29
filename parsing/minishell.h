@@ -6,11 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/28 22:20:36 by mohilali         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/29 03:20:07 by ayait-el         ###   ########.fr       */
->>>>>>> e9c36e0508e6eb612d8e8c07d9bc72bff1ba4c24
+/*   Updated: 2024/03/29 14:02:49 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +143,7 @@ int     add_tolist(char *av, t_list **head, int index, int start);
 void    print_ouput(t_list *node);
 void    print_ouput_op(t_list *node);
 int join_mask(t_list *start, t_list *end, t_list *dest);
-
+t_list	*skip_spaces(t_list *start);
 // combine_list
 int combine_list(t_list **lst);
 
