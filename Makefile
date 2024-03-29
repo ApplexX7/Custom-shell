@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/28 16:53:56 by mohilali         ###   ########.fr        #
+#    Updated: 2024/03/29 02:51:22 by ayait-el         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = minishell_parts.c main.c parsing/ft_split_tokens.c parsing/labling.c parsi
  	parsing/expand_args_helpers.c parsing/expand_args_helpers2.c parsing/combine_list_helpers.c parsing/set_tree_io_helpers.c parsing/wildcard_helpers.c parsing/wildcard_helpers2.c builtins/export_helpers.c \
 	builtins/export_helpers2.c
 
+
 OBJCT = ${SRC:.c=.o}
 CC = cc
 #TODO: remove -g
@@ -26,18 +27,32 @@ CFALGS =  -Wall -Wextra -Werror -g
 RM = rm -rf
 NAME = mini
 READLINEDIR  =  $(shell brew --prefix readline)
+LIBS = Libft-42/libft_bonus.a
+
+define MAKE_LIB
+	make $1 -C $2
+
+endef
 
 all : $(NAME)
 
-$(NAME) : $(OBJCT)
+$(NAME) : $(OBJCT) $(LIBS)
 	$(CC) -lreadline  $(OBJCT) -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline -g
 
 %.o : %.c
 	$(CC) $(CFALGS) -c $< -o $@ -I$(READLINEDIR)/include
 clean : 
 	$(RM) $(OBJCT)
+	$(foreach lib,$(LIBS),$(call MAKE_LIB,clean,$(word 1,$(subst /, ,$(lib)))))
 
 fclean : clean
 	$(RM) $(NAME)
+	$(RM) $(LIBS)
 
 re : fclean all
+
+%.a: force
+	$(foreach lib,$(LIBS),$(call MAKE_LIB,bonus,$(word 1,$(subst /, ,$(lib)))))
+
+force: ;
+.PHONEY: all clean fclean re force
