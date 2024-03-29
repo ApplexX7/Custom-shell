@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:08 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 18:02:37 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:39:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	init_minihsell_arg(int *status_code, char **env)
 {
 	
 	get_env_value(NULL, status_code, NULL);
-	tcgetattr(STDIN_FILENO, &original_terminos);
+	tcgetattr(STDIN_FILENO, &g_original_terminos);
 	recept_signals();
 	if (!env || !env[0])
 	{

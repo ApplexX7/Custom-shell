@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:44:04 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:40:11 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sigint(int signo)
 	(void)signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		tcsetattr(STDIN_FILENO, TCSANOW, &original_terminos);
+		tcsetattr(STDIN_FILENO, TCSANOW, &g_original_terminos);
 		write(1, "\n", 1);
 		return ;
 	}
@@ -36,7 +36,7 @@ void	sigquit(int signo)
 	{
 		if (g_lobal_sign_forherdoc == 0)
 		{
-			tcsetattr(STDIN_FILENO, TCSANOW, &original_terminos);
+			tcsetattr(STDIN_FILENO, TCSANOW, &g_original_terminos);
 			write(1, "Quit: 3\n", 8);
 		}
 		return ;
