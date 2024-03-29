@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 18:02:19 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 03:20:07 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,10 +261,13 @@ int inheritance_bottom(t_tree *root);
 
 //manage pids and fds and executing 
 int	executing_tree(t_tree *root, char **env, t_tree *head_of_root);
-int	manage_fds(int fd, t_fd_action action);
 int	manage_pid(int pid, t_pid_action action, int *last_status);
 int ft_open(char *file, int mode, int perms);
 int ft_close(int fd);
+
+
+// manage_fds
+int	manage_fds(int fd, t_fd_action action);
 
 //executing part
 

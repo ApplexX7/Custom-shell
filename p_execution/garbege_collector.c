@@ -6,75 +6,31 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 23:14:59 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 03:23:21 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
-int manage_fds(int fd, t_fd_action action)
+int	manage_pid(int pid, t_pid_action action, int *last_status)
 {
-	static int 	fds[OPEN_MAX];
-	int			i;
+	static t_list	*head = NULL;
+	t_list			*current;
+	int				*pidarr;
 
-	i = 0;
-	if (action == CAPTURE)
-	{
-    while (fds[i] != 0 && i < OPEN_MAX)
-      i++;
-    if (i < OPEN_MAX)
-      fds[i] = fd;
-	}
-	else if (action == CLOSE_ALL)
-	{
-		while (i < OPEN_MAX)
-		{
-      if (fds[i] != 1 && fds[i] != 0)
-      {
-        if (close(fds[i]))
-          return (1);
-        fds[i] = 0;
-      }
-			i++;
-		}
-	}
-  else if (action == CLOSE)
-  {
-    while (i < OPEN_MAX)
-    {
-      if (fds[i] == fd)
-      {
-        if (close(fds[i]) == -1)
-          return (1);
-        fds[i] = 0;
-        return (0);
-      }
-      i++;
-    }
-  }
-	return (0);
-}
-
-
-int manage_pid(int pid, t_pid_action action, int *last_status)
-{
-	static t_list *head = NULL;
-	t_list *current;
-  int *pidarr;
-	
-  current = NULL;
+	current = NULL;
 	if (action == CAPTURED)
 	{
-        pidarr = malloc(sizeof(int));
-        *pidarr = pid;
-		    current = ft_lstnew(pidarr);
-        if (current)
-		      ft_lstadd_back(&head, current);
-        else
-        {
-         ft_lstclear(&head, &free); 
-         current = NULL;
-        }
+		pidarr = malloc(sizeof(int));
+		*pidarr = pid;
+		current = ft_lstnew(pidarr);
+		if (current)
+			ft_lstadd_back(&head, current);
+		else
+		{
+			ft_lstclear(&head, &free);
+			current = NULL;
+		}
 	}
 	else if (action == WAIT)
 	{
@@ -82,7 +38,7 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 		while (current)
 		{
 			if (waitpid(*(int *)current->content, last_status, 0) == -1)
-				return (ft_lstclear(&head, &free),  head = NULL,1);
+				return (ft_lstclear(&head, &free), head = NULL, 1);
 			current = current->next;
 		}
 		ft_lstclear(&head, &free);
@@ -90,7 +46,6 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 	}
 	return (0);
 }
-
 
 // int manage_pid(int pid, t_pid_action action, int *last_status)
 // {
@@ -119,19 +74,19 @@ int manage_pid(int pid, t_pid_action action, int *last_status)
 // 	return (0);
 // }
 
-int ft_open(char *file, int mode, int perms)
+int	ft_open(char *file, int mode, int perms)
 {
-  int fd;
+	int	fd;
 
-  fd = open(file, mode, perms);
-  manage_fds(fd, CAPTURE);
-  return (fd);
+	fd = open(file, mode, perms);
+	manage_fds(fd, CAPTURE);
+	return (fd);
 }
 
-int ft_close(int fd)
+int	ft_close(int fd)
 {
-  if (manage_fds(fd, CLOSE))
-    return (-1);
-  else
-    return (0);
+	if (manage_fds(fd, CLOSE))
+		return (-1);
+	else
+		return (0);
 }
