@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:08 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 18:02:50 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:19:17 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_tree	*parsing_check(char *promt, char **env, int *status_code)
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
-	del_spaces(&lst);
+	//del_spaces(&lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);

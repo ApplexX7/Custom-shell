@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 23:17:48 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:38:46 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	lst_next_wildcard(t_list *head, t_list **start, t_list **end)
 			s = head;
 	}
 	e = head;
-	if (e->next && e->next->is_op != 0)
-		e = e->next;
+  while (e->next && !is_space(e->next))
+    e = e->next;
+	//if (e->next && e->next->is_op != 0)
+		//e = e->next;
 	*start = s;
 	*end = e;
 	return (0);
