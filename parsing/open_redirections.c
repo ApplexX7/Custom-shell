@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 14:27:10 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:10:26 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,19 @@ int	expand_in_herdoc(t_list *current, char *str, int fd)
 void	create_herdoc(t_list *current, int fd)
 {
 	char	*str;
-	char	*tmp;
 	char	*limite;
 
-	tmp = ft_strdup(current->content);
-	limite = ft_strjoin(tmp, "\n");
-	free(tmp);
+	if (!current)
+		exit (0);
+	limite = ft_strdup(current->content);
 	if (!limite)
-		exit(0);
+		exit(1);
 	while (1)
 	{
 		str = readline("here_doc> ");
 		if (!str)
 			exit(0);
-		if (!ft_strncmp(str, limite, ft_strlen(str)) && ft_strlen(str) == ft_strlen(limite))
+		if (!ft_strncmp(str, limite, ft_strlen(str)) && ft_strlen(str) ==  ft_strlen(limite))
 		{
 			free(str);
 			ft_close(fd);
@@ -107,7 +106,7 @@ int	ft_open_herdocs(t_list *list)
 	{
 		if (!ft_strncmp(current->content, "<<", 3) && !current->is_op)
 		{
-			fd = create_heredocchild(current->next);
+			fd = create_heredocchild(skip_spaces(current->next));
 			if (fd == -1)
 				return (1);
 			current->fd = fd;

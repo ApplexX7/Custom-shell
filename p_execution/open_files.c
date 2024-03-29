@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:25:52 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 16:43:24 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:46:33 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	open_files(char *file_name, int level)
 {
-	int fd = -1;
+	int	fd;
 
+	fd = -1;
 	if (level == 1)
 		fd = ft_open(file_name, O_RDONLY, 0644);
 	else if (level == 2)
@@ -25,12 +26,12 @@ int	open_files(char *file_name, int level)
 	if (fd == -1)
 	{
 		perror("fd :");
-		return(-1);
+		return (-1);
 	}
 	return (fd);
 }
 
-void dup_iofile(int fd_in, int fd_out)
+void	dup_iofile(int fd_in, int fd_out)
 {
 	if (dup2(fd_in, STDIN_FILENO) == -1)
 	{
@@ -42,18 +43,18 @@ void dup_iofile(int fd_in, int fd_out)
 		perror("dup2-- out:");
 		exit(errno);
 	}
-  	manage_fds(0, CLOSE_ALL);
+	manage_fds(0, CLOSE_ALL);
 }
 
-int set_file_io(t_tree *content)
+int	set_file_io(t_tree *content)
 {
-	int fd_in;
-	int fd_out;
+	int	fd_in;
+	int	fd_out;
 
 	if (content->input_file != NULL)
 	{
 		fd_in = open_files(content->input_file, 1);
-		content->fd =  fd_in;
+		content->fd = fd_in;
 	}
 	else if (content->input_file == NULL)
 		fd_in = content->fd;
@@ -69,5 +70,6 @@ int set_file_io(t_tree *content)
 		dup_iofile(content->fd, content->out_fd);
 		return (0);
 	}
+	close(5);
 	return (1);
 }

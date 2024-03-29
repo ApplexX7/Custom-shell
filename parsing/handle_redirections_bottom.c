@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 18:09:24 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:23:15 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	handle_input_redirection(t_tree *node, t_list *pos)
 		node->fd = pos->fd;
 	else
 	{
-		node->fd = ft_open(pos->next->content, O_RDONLY, 0644);
+		node->fd = ft_open(skip_spaces(pos->next)->content, O_RDONLY, 0644);
 		if (node->fd == -1)
 			return (perror("open"), 1);
 	}
@@ -37,14 +37,14 @@ static int	handle_ouput_redirection(t_tree *node, t_list *pos)
 	node->output_file = NULL;
 	if (is_herdoc(pos))
 	{
-		node->out_fd = ft_open(pos->next->content,
+		node->out_fd = ft_open(skip_spaces(pos->next)->content,
 				O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (node->fd == -1)
 			return (perror("open"), 1);
 	}
 	else
 	{
-		node->out_fd = ft_open(pos->next->content, O_WRONLY | O_TRUNC | O_CREAT,
+		node->out_fd = ft_open(skip_spaces(pos->next)->content, O_WRONLY | O_TRUNC | O_CREAT,
 				0644);
 		if (node->out_fd == -1)
 			return (perror("open"), 1);
@@ -54,7 +54,7 @@ static int	handle_ouput_redirection(t_tree *node, t_list *pos)
 
 int	set_single_io(t_tree *node, t_list *pos)
 {
-	if (handle_ambiguous_redirection(pos->next))
+	if (handle_ambiguous_redirection(skip_spaces(pos->next)))
 		return (1);
 	if (is_input_redirect(pos))
 	{
@@ -82,8 +82,8 @@ void	remove_redirectiosn2(t_tree *node)
 	{
 		if (is_redirect_op(tmp))
 		{
-			tmp2 = tmp->next->next;
-			lst_remove_node(&head, tmp->next);
+			tmp2 = skip_spaces(skip_spaces(tmp->next)->next);
+			lst_remove_node(&head, skip_spaces(tmp->next));
 			lst_remove_node(&head, tmp);
 			tmp = tmp2;
 		}
@@ -106,7 +106,7 @@ int	handle_redirections_bottom(t_tree *node)
 		{
 			if (set_single_io(node, tmp))
 				return (1);
-			tmp = tmp->next->next;
+			tmp = skip_spaces(skip_spaces(tmp->next)->next);
 		}
 		else
 			tmp = tmp->next;

@@ -1,485 +1,76 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helpers.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/28 18:11:48 by mohilali          #+#    #+#             */
+/*   Updated: 2024/03/29 15:09:27 by ayait-el         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-void lst_remove_node(t_list **lst, t_list *node)
+int	is_wildcard(t_list *node)
 {
-  t_list *tmp;
-
-  tmp = *lst;
-  if (tmp == node)
-  {
-    *lst = node->next;
-    ft_lstdelone(node, &free);
-    return ;
-  }
-  while (tmp->next)
-  {
-    if (tmp->next == node)
-    {
-      tmp->next = node->next;
-      ft_lstdelone(node, &free);
-      return ;
-    }
-    tmp = tmp->next;
-  }
-}
-
-int is_wildcard(t_list *node)
-{
-  if (ft_strchr(node->content, '*') && !node->is_op)
-    return (1);
-  else
-    return (0);
-}
-
-
-int is_space(t_list *node)
-{
-  if (node && !strncmp(node->content, " ", 2) && !node->is_op)
-    return (1);
-  else
-    return (0);
-}
-
-void del_spaces(t_list **lst)
-{
-  t_list *tmp;
-  t_list *tmp2;
-
-  tmp = *lst;
-  while (tmp)
-  {
-    tmp2 = tmp->next;
-    if (is_space(tmp))
-      lst_remove_node(lst, tmp);
-    tmp = tmp2;
-  }
-}
-
-int new_and_add(t_list **head, void *content, char is_op)
-{
-  char *duped_content;
-  t_list *new;
-
-  duped_content = ft_strdup(content);
-  if (!duped_content)
-    return (1);
-  new = ft_lstnew(duped_content);
-  if (!new)
-    return (free(duped_content), 1);
-  new->is_op = is_op;
-  ft_lstadd_back(head, new);
-  return (0);
-}
-
-// allocs: arr
-char **convert_list_to_arr(t_list *lst)
-{
-  int len;
-  char **arr;
-  int i;
-
-  len = ft_lstsize(lst);
-  arr = (char **) malloc(sizeof(char *) * (len + 1));
-  if (!arr)
-    return (NULL);
-  i = 0;
-  while (i < len)
-  {
-    arr[i] = (char *) lst->content;
-    lst = lst->next;
-    i++;
-  }
-  arr[i] = NULL;
-  return (arr);
-}
-
-t_list *copy_lst(t_list *lst)
-{
-  char *content;
-  t_list *new;
-  t_list *node;
-
-  new = NULL;
-  while (lst)
-  {
-    content = ft_strdup(lst->content);
-    if (!content)
-      return (ft_lstclear(&new, &free), NULL);
-    node = ft_lstnew(content);
-    if (!node)
-      return (ft_lstclear(&new, &free), free(content), NULL);
-    node->is_op = lst->is_op;
-    node->mask = ft_strdup(lst->mask);
-    if (!node->mask && lst->mask)
-      return (ft_lstclear(&new, &free), NULL);
-    ft_lstadd_back(&new, node);
-    lst = lst->next;
-  }
-  return (new);
-}
-
-void free_2d_arr(void **arr)
-{
-  int i;
-
-  i = 0;
-  while (arr[i])
-  {
-    free(arr[i]);
-    i++;
-  }
-  free(arr);
-}
-
-// allocs: new
-char *join_list(t_list *lst)
-{
-  char *new;
-  char *tmp;
-
-  new = malloc(1);
-  if (!new)
-    return (NULL);
-  new[0] = '\0';
-  while (lst)
-  {
-    tmp = new;
-    new = ft_strjoin(new, lst->content);
-    free(tmp);
-    if (!new)
-      return (NULL);
-    lst = lst->next;
-  }
-  return (new);
-}
-
-int should_join_mask(t_list *start, t_list *end)
-{
-  int join;
-
-  join = 0;
-  while (start != end)
-  {
-    if (start->mask)
-      join = 1;
-    start = start->next;
-  }
-  return (join);
-}
-
-//allocs: tmp, tmp3
-int join_mask(t_list *start, t_list *end, t_list *dest)
-{
-  char *tmp;
-  char *tmp2;
-  char *tmp3;
-
-  tmp = NULL;
-  if (should_join_mask(start, end))
-  {
-    while (start != end)
-    {
-      if (!start->mask)
-      {
-        tmp2 = ft_strdup(start->content);
-        full_withzero(&tmp2);
-      }
-      else
-      {
-        tmp2 = start->mask;
-        start->mask = NULL;
-      }
-      if (!tmp2)
-        return (free(tmp), perror("join_mask"), 1);
-      tmp3 = tmp;
-      tmp = ft_strjoin(tmp, tmp2);
-      free(tmp2);
-      free(tmp3);
-      if (!tmp)
-        return (perror("join_mask"), 1);
-      start = start->next;
-    }
-  }
-  return (dest->mask = tmp, 0);
-}
-
-// allocs: str, new
-// TODO: change this to have is_op passed as an arg
-int join_and_add(t_list **dest, t_list *start, t_list *end)
-{
-  t_list *tmp;
-  char *str;
-  t_list *new;
-
-  tmp = start;
-  while (tmp->next != end)
-    tmp = tmp->next;
-  tmp->next = NULL;
-  str = join_list(start);
-  tmp->next = end;
-  if (!str)
-    return (1);
-  new = ft_lstnew(str);
-  if (!new)
-    return (free(str), 1);
-  new->is_op = start->is_op;
-  if (join_mask(start, end, new))
-    return (ft_lstdelone(new, &free), 1);
-  ft_lstadd_back(dest, new);
-  return (0);
-}
-
-int is_open_parenth(t_list *node)
-{
-  if (!ft_strncmp(node->content, "(", 2) && !node->is_op)
-    return (1);
-  else
-    return (0);
-}
-
-int is_close_parenth(t_list *node)
-{
-  if (!ft_strncmp(node->content, ")", 2) && !node->is_op)
-    return (1);
-  else
-    return (0);
-}
-
-// note: only use in set_single_io
-int is_herdoc(t_list *lst)
-{
-  if (!ft_strncmp(lst->content, ">>", 3) || !ft_strncmp(lst->content, "<<", 3))
-    return (1);
-  else
-    return (0);
-}
-
-int min(int a, int b)
-{
-  if (a < b)
-    return (a);
-  else
-    return (b);
-}
-
-int max(int a, int b)
-{
-  if (a > b)
-    return (a);
-  else
-    return (b);
-}
-
-void swap(t_list *a, t_list *b)  
-{  
-  void *tmp;
-
-  tmp = a->content;
-  a->content = b->content;
-  b->content = tmp;
-}  
-
-void bubbleSort(t_list *start)
-{
-  int swapped;
-  t_list *ptr1;
-  t_list *lptr;
-
-  lptr = NULL;
-  if (start == NULL)
-    return;
-
-  swapped = 1;
-  while (swapped)
-  {
-    swapped = 0;
-    ptr1 = start;
-
-    while (ptr1->next != lptr) {
-      if (ft_strncmp(ptr1->content, ptr1->next->content, max(ft_strlen(ptr1->next->content), ft_strlen(ptr1->content)) + 1) > 0)
-      {
-        swap(ptr1, ptr1->next);
-        swapped = 1;
-      }
-      ptr1 = ptr1->next;
-    }
-    lptr = ptr1;
-  }
-}
-
-int arr_len(char **arr)
-{
-  int i;
-
-  i = 0;
-  while (arr[i])
-    i++;
-  return (i);
-}
-
-// allocs: new
-int handle_ambiguous_redirection(t_list *file)
-{
-  t_list *tmp;
-  t_list *new;
-
-  tmp = file->next;
-  file->next = NULL;
-  new = copy_lst(file);
-  file->next = tmp; // reset the state
-  if (!new)
-    return (perror("malloc"), 1);
-  if (expand_args(&new))
-    return (1);
-  if (ft_lstsize(new) != 1)
-    return (ft_lstclear(&new, &free), ft_putstr_fd("ambiguous redirection\n", 2), 1);
-  free(file->content);
-  file->content = new->content;
-  free(new->mask);
-  free(new);
-  return (0);
-}
-
-void	append_list(t_list *source, t_list **dest, char op)
-{
-	t_list	*tmp;
-
-	while (source)
-	{
-		tmp = source;
-		source = source->next;
-		tmp->next = NULL;
-		tmp->is_op = op;
-		ft_lstadd_back(dest, tmp);
-	}
-}
-
-// arr should be null terminated
-int	arr_size(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
-
-int get_env_value(char *arg, int *status, char **dest)
-{
-	char		*value;
-	static int	*status_exit;
-
-	if (status)
-	{
-		status_exit = status;
-		return (0);
-	}
-	if (!ft_strncmp(arg, "?", 2))
-  {
-    value = ft_itoa((*status_exit) >> 8);
-    if (!value)
-      return (perror("get_env_value"), 1);
-		return (*dest = value, 0);
-  }
-  else
-  {
-    value = get_exported_arg_value(arg, NULL, 0);
-    *dest = ft_strdup(value);
-    if (!(*dest) && value)
-      return (1);
-    else
-      return (0);
-  }
-}
-
-// allocs: content, mask, new_node
-int	add_node(t_list **dest, t_list *node)
-{
-	char	*content;
-	t_list	*new_node;
-	char	*mask;
-
-	content = ft_strdup(node->content);
-	if (!content)
+	if (ft_strchr(node->content, '*') && !node->is_op)
 		return (1);
-	if (node->mask)
-	{
-		mask = ft_strdup(node->mask);
-		if (!mask)
-			return (free(content), 1);
-	}
 	else
-		mask = NULL;
-	new_node = ft_lstnew(content);
-	if (!new_node)
-		return (free(content), 1);
-	new_node->is_op = node->is_op;
-	new_node->fd = node->fd;
-	new_node->mask = mask;
-	ft_lstadd_back(dest, new_node);
-	return (0);
+		return (0);
 }
 
-t_list	*convert_arr_to_list(char **arr)
+int	should_join_mask(t_list *start, t_list *end)
 {
-	int		i;
-	t_list	*new;
-	t_list	*node;
+	int	join;
 
-	new = NULL;
-	i = 0;
-	while (arr[i])
+	join = 0;
+	while (start != end)
 	{
-		node = ft_lstnew(arr[i]);
-		if (!node)
-			return (ft_lstclear(&new, &do_nothing), NULL);
-		ft_lstadd_back(&new, node);
-		i++;
+		if (start->mask)
+			join = 1;
+		start = start->next;
 	}
-	return (new);
+	return (join);
+}
+
+// allocs: tmp, tmp3
+int	join_mask(t_list *start, t_list *end, t_list *dest)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*tmp3;
+
+	tmp = NULL;
+	if (should_join_mask(start, end))
+	{
+		while (start != end)
+		{
+			if (!start->mask)
+			{
+				tmp2 = ft_strdup(start->content);
+				full_withzero(&tmp2);
+			}
+			else
+			{
+				tmp2 = start->mask;
+				start->mask = NULL;
+			}
+			if (!tmp2)
+				return (free(tmp), perror("join_mask"), 1);
+			tmp3 = tmp;
+			tmp = ft_strjoin(tmp, tmp2);
+			free(tmp2);
+			free(tmp3);
+			if (!tmp)
+				return (perror("join_mask"), 1);
+			start = start->next;
+		}
+	}
+	return (dest->mask = tmp, 0);
 }
 
 void	do_nothing(void *arg)
 {
 	(void)arg;
-}
-
-int	ft_lstjoin(t_list *lst, char **dest)
-{
-	char	*tmp;
-	char	*result;
-
-	result = NULL;
-	while (lst)
-	{
-		tmp = result;
-		result = ft_strjoin(result, lst->content);
-		free(tmp);
-		if (!result && tmp)
-			return (perror("ft_lstjoin"), 1);
-		lst = lst->next;
-	}
-	*dest = result;
-	return (0);
-}
-
-// allocs: value
-int	get_local_env_representation(t_list **local_env, char ***dest)
-{
-	static t_list	**env = NULL;
-	char			**result;
-
-	if (local_env)
-		env = local_env;
-	else
-	{
-		result = convert_list_to_arr(*env);
-		if (!result)
-			return (1);
-		*dest = result;
-	}
-	return (0);
 }

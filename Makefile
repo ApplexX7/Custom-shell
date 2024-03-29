@@ -6,18 +6,20 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/29 03:20:24 by ayait-el         ###   ########.fr        #
+#    Updated: 2024/03/29 14:16:08 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = minishell_parts.c main.c parsing/ft_split_tokens.c parsing/labling.c parsing/debug.c parsing/new_expand_args.c parsing/check_syn.c parsing/combine_list.c parsing/helper.c \
-	parsing/labling_priority.c parsing/build_tree.c parsing/open_redirections.c parsing/get_next_line.c parsing/helpers.c parsing/wildcard.c parsing/set_tree_io.c \
+	parsing/labling_priority.c parsing/build_tree.c parsing/open_redirections.c parsing/helpers.c parsing/wildcard.c parsing/set_tree_io.c \
 	parsing/remove_parenthesis.c parsing/handle_redirections_bottom.c parsing/open_pipes.c p_execution/execute_tree.c p_execution/garbege_collector.c \
 	p_execution/change_state.c p_execution/create_chlidren.c p_execution/open_files.c p_execution/path.c parsing/split_env_args.c \
 	builtins/env.c builtins/echo.c builtins/export.c builtins/builtins_helpers.c parsing/mask.c builtins/cd.c parsing/inheritance.c parsing/lable_env_args.c\
 	builtins/unset.c parsing/expand_forherdoc.c builtins/pwd.c builtins/ft_exit.c parsing/ft_split_tokens_helper.c parsing/expand_herdoc_helpers.c parsing/check_syn_helpers.c \
  	parsing/expand_args_helpers.c parsing/expand_args_helpers2.c parsing/combine_list_helpers.c parsing/set_tree_io_helpers.c parsing/wildcard_helpers.c parsing/wildcard_helpers2.c builtins/export_helpers.c \
-	builtins/export_helpers2.c p_execution/manage_fds.c
+	builtins/export_helpers2.c parsing/helpers_two.c parsing/helpers_tree.c parsing/helpers_five.c parsing/helpers_sex.c parsing/helpers_for.c \
+	p_execution/execute_andor.c  p_execution/execute_builtins.c p_execution/back_to_prevstate.c \
+	
 
 
 OBJCT = ${SRC:.c=.o}

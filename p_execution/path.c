@@ -12,10 +12,10 @@
 
 #include "../parsing/minishell.h"
 
-char **find_pathenv(void)
+char	**find_pathenv(void)
 {
-	char *env;
-	char **path_arr;
+	char	*env;
+	char	**path_arr;
 
 	env = getenv("PATH");
 	if (!env)
@@ -24,7 +24,7 @@ char **find_pathenv(void)
 		if (!env)
 			exit(0);
 	}
-	path_arr = ft_split(env , ':');
+	path_arr = ft_split(env, ':');
 	if (!path_arr)
 	{
 		free(env);
@@ -33,11 +33,11 @@ char **find_pathenv(void)
 	return (path_arr);
 }
 
-char *ft_commands_path(char **path, char *cmd)
+char	*ft_commands_path(char **path, char *cmd)
 {
-	int index;
-	char *tmp;
-	char *path_cmd;
+	int		index;
+	char	*tmp;
+	char	*path_cmd;
 
 	index = 0;
 	while (path[index])
@@ -55,7 +55,7 @@ char *ft_commands_path(char **path, char *cmd)
 	return (NULL);
 }
 
-char *valid_path(char *cmd)
+char	*valid_path(char *cmd)
 {
 	char	**path;
 	char	*path_cmd;
@@ -67,8 +67,8 @@ char *valid_path(char *cmd)
 		if (access(cmd + 1, X_OK))
 			return (cmd);
 	}
-	else 
+	else
 		path_cmd = ft_commands_path(path, cmd);
-	free_2d_arr((void**)path);
+	free_2d_arr((void **)path);
 	return (path_cmd);
 }
