@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 23:15:29 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:27:10 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	create_herdoc(t_list *current, int fd)
 		str = readline("here_doc> ");
 		if (!str)
 			exit(0);
-		if (!ft_strncmp(str, limite, ft_strlen(str)))
+		if (!ft_strncmp(str, limite, ft_strlen(str)) && ft_strlen(str) == ft_strlen(limite))
 		{
 			free(str);
 			ft_close(fd);

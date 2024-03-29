@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:37:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/27 22:37:17 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:15:51 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_list	*check_combined_redirection(t_list *lst)
 {
 	int	level;
 
+  lst = skip_spaces(lst);
 	if (lst && is_open_parenth(lst))
 	{
 		level = 0;

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:59:24 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 22:16:58 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:48:46 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	remove_parenthesis(t_list **lst)
 	t_list	*tmp;
 
 	tmp = *lst;
-	start = tmp;
+	start = skip_spaces(tmp);
 	end = NULL;
-	if (tmp && !is_open_parenth(tmp))
+	if (start && !is_open_parenth(start))
 		return ;
-	tmp = tmp->next;
+	tmp = start->next;
 	set_end(tmp, &end);
-	if (end && end == ft_lstlast(*lst))
+	if (end && (end == ft_lstlast(*lst) || (is_space(end->next) && skip_spaces(end->next) == skip_spaces(ft_lstlast(*lst)))))
 		remove_inclosing_parenth(start, end, lst);
 }

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 13:38:46 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:43:51 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	lst_next_wildcard(t_list *head, t_list **start, t_list **end)
 	{
 		while (s->next != head)
 			s = s->next;
-		if (s->is_op == 0)
+		if (s->is_op == 0 && ((char *)s->content)[0] != '$')
 			s = head;
 	}
 	e = head;

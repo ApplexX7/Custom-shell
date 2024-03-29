@@ -36,7 +36,7 @@ int is_wildcard(t_list *node)
 
 int is_space(t_list *node)
 {
-  if (!strncmp(node->content, " ", 2) && !node->is_op)
+  if (node && !strncmp(node->content, " ", 2) && !node->is_op)
     return (1);
   else
     return (0);
