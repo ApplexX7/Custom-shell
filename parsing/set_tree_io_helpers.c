@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:37:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 21:57:26 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:38:56 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int is_and_or_or(t_list *node)
 t_list	*check_combined_redirection(t_list *lst)
 {
 	int	level;
+  int count;
 
+  count = 0;
 	lst = skip_spaces(lst);
 	if (lst && is_open_parenth(lst))
 	{
@@ -54,14 +56,19 @@ t_list	*check_combined_redirection(t_list *lst)
 				level++;
 			else if (is_close_parenth(lst))
 			{
-				if (level == 0)
-					return (lst->next);
-				else
-					level--;
+			if (level == 0)
+        	{
+          	if (count)
+            	return (lst->next);
+          	else
+            	return (NULL);
+        	}
+			else
+				level--;
 			}
       		else if (level == 0 && is_and_or_or(lst))
-        		return (NULL);
-			lst = lst->next;
+        	count++;
+				lst = lst->next;
 		}
 	}
 	return (NULL);

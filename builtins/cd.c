@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 17:53:52 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:22:32 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	change_pwd(char *path_dir)
 		return (1);
 	if (change_dir(path_dir))
 	{
-		ft_memset(&status, EXIT_FILENOTEXIST, 2);
-		return (free(path_dir), status);
+		// ft_memset(&status, EXIT_FILENOTEXIST, 2);
+		return (1);
 	}
 	getcwd(buffer, PATH_MAX);
 	add_env_arg(ft_strdup("PWD"), buffer, NULL);
@@ -86,5 +86,7 @@ int	ft_cd(t_tree *root)
 	}
 	else
 		path_dir = ft_strdup(current->next->content);
-	return (change_pwd(path_dir));
+	if (change_pwd(path_dir))
+		return (ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
+	return (0);
 }
