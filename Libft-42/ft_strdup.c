@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:51:12 by mohilali          #+#    #+#             */
-/*   Updated: 2024/02/26 18:45:45 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:36:39 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,3 @@ char	*ft_strdup(const char *s1)
 	dest[i] = 0;
 	return (dest);
 }
-

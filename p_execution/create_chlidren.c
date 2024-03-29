@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 16:56:21 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:55:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	executing_command(t_tree *content, char **env)
 	cmd = setup_command(content);
 	if (!cmd)
 		exit(errno);
+	get_local_env_representation(NULL, &env);
 	if (execve(path, cmd, env) == -1)
 	{
+		free_2d_arr((void **)env);
 		perror("Execve");
 		exit(errno);
 	}

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 17:46:57 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:34:23 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static int	handle_ouput_redirection(t_tree *node, t_list *pos)
 	}
 	else
 	{
-		node->out_fd = ft_open(skip_spaces(pos->next)->content, O_WRONLY | O_TRUNC | O_CREAT,
-				0644);
+		node->out_fd = ft_open(skip_spaces(pos->next)->content,
+				O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		if (node->out_fd == -1)
 			return (perror("open"), 1);
 	}

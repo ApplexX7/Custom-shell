@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/29 17:26:45 by mohilali         ###   ########.fr        #
+#    Updated: 2024/03/29 19:44:10 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ CFALGS =  -Wall -Wextra -Werror -g
 RM = rm -rf
 NAME = mini
 READLINEDIR  =  $(shell brew --prefix readline)
-LIBS = Libft-42/libft_bonus.a
+LIBS = Libft-42/libft.a
 
 define MAKE_LIB
 	make $1 -C $2

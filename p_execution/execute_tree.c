@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 18:16:45 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:47:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	set_up_executions(t_tree *root)
 	return (0);
 }
 
-int	executing_tree(t_tree *root, char **env, t_tree *head_of_root, int *status_code)
+int	executing_tree(t_tree *root, char **env,
+	t_tree *head_of_root, int *status_code)
 {
 	if (root->left == NULL && root->right == NULL)
 	{
