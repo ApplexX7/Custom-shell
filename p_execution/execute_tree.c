@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 22:14:54 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:57:19 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	set_up_executions(t_tree *root)
 {
 	if (expand_wildcard(&root->node))
 		return (1);
+	del_spaces(&root->node);
 	if (inheritance_bottom(root))
 		return (1);
 	return (0);

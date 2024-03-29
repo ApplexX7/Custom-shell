@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:28:03 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 22:31:41 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:55:47 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	input_files(t_tree *node)
 		fd_in = open_files(current->content, 1);
 		if (fd_in == -1)
 			return (-1);
-		close(fd_in);
+		ft_close(fd_in);
 		current = current->next;
 	}
 	if (expand_args(&current))
@@ -53,6 +53,7 @@ int	ouput_files_open(t_tree *root, t_list *current, int fd_out)
 		return (-1);
 	if (dup_output(fd_out))
 		return (1);
+	ft_close(fd_out);
 	return (0);
 }
 
@@ -75,7 +76,7 @@ int	output_files(t_tree *root)
 			fd_out = open_files(current->content, 3);
 		if (fd_out == -1)
 			return (1);
-		close(fd_out);
+		ft_close(fd_out);
 		current = current->next;
 	}
 	if (ouput_files_open(root, current, fd_out))

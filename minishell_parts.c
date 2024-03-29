@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:08 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 15:49:21 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:19:17 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_tree	*parsing_check(char *promt, char **env, int *status_code)
 	if (combine_list(&lst))
 		return (ft_lstclear(&lst, &free), NULL);
 	labling_prio(lst);
-	del_spaces(&lst);
+	//del_spaces(&lst);
 	root = spown_tree(lst);
 	if (!root)
 		return (ft_lstclear(&lst, &free), NULL);
@@ -87,7 +87,7 @@ char	*get_cwd(void)
 int	init_minihsell_arg(int *status_code, char **env)
 {
 	
-	get_env_value(NULL, status_code);
+	get_env_value(NULL, status_code, NULL);
 	tcgetattr(STDIN_FILENO, &original_terminos);
 	recept_signals();
 	if (!env || !env[0])

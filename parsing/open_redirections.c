@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:05:51 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 16:45:45 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:15:29 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	create_heredocchild(t_list *current)
 	int	fd;
 	int	status;
 
-	fd = open("/tmp/herdoc.txt", O_CREAT | O_RDWR, 0644);
+	fd = ft_open("/tmp/herdoc.txt", O_CREAT | O_RDWR, 0644);
 	if (fd == -1)
 		return (-1);
 	g_lobal_sign_forherdoc = 1;
@@ -84,8 +84,8 @@ int	create_heredocchild(t_list *current)
 	else if (pid == 0)
 		(signal(SIGINT, SIG_DFL), signal(SIGQUIT, &sigquit2),
 			create_herdoc(current, fd));
-	close(fd);
-	fd = open("/tmp/herdoc.txt", O_RDWR, 0644);
+	ft_close(fd);
+	fd = ft_open("/tmp/herdoc.txt", O_RDWR, 0644);
 	if (fd == -1)
 		return (-1);
 	unlink("/tmp/herdoc.txt");

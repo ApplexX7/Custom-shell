@@ -13,6 +13,7 @@ OBJCTB = ${SRCSB:.c=.o}
 CC = cc
 RM = rm -rf
 NAME = libft.a
+BONUS_NAME = libft_bonus.a
 GFLAGS = -Wall -Wextra -Werror -g
 
 all : ${NAME}
@@ -24,13 +25,16 @@ ${NAME} :  ${OBJCT}
 %.o: %.c libft.h
 		${CC} ${GFLAGS} -c $< -o ${<:.c=.o}
 
-bonus: ${NAME} ${OBJCTB}
-		ar -rcs ${NAME} ${OBJCTB}
+bonus: ${BONUS_NAME}
+
+${BONUS_NAME}: ${OBJCTB} ${OBJCT}
+		ar -rcs ${BONUS_NAME} ${OBJCTB} ${OBJCT}
 
 clean :
 		${RM} ${OBJCT} ${OBJCTB}
 fclean : clean
 		${RM} ${NAME}
+		${RM} ${BONUS_NAME}
 
 re : fclean all
 
