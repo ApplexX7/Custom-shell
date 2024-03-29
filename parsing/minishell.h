@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 15:09:45 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:35:34 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void do_nothing(void *arg);
 int	ft_lstjoin(t_list *lst, char **dest);
 int	get_local_env_representation(t_list **local_env, char ***dest);
 t_list *skip_spaces(t_list *start);
+int	handle_ambiguous_redirection_bottom(t_list *file);
 
 //labling priority
 t_list *find_roottree(t_list **list);

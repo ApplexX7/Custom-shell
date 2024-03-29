@@ -6,7 +6,7 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:37:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 14:15:51 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:40:25 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ void	remove_redirections(t_tree *node, t_list *start)
 		start = tmp;
 	}
 	node->node = head;
+}
+
+int is_and_or_or(t_list *node)
+{
+	if (!ft_strncmp(node->content, "&&", 3) && !node->is_op)
+		return (1);
+	else if (!ft_strncmp(node->content, "||", 3) && !node->is_op)
+		return (1);
+  else
+    return (0);
 }
 
 // check if there is a combined redirection in the current node
@@ -49,6 +59,8 @@ t_list	*check_combined_redirection(t_list *lst)
 				else
 					level--;
 			}
+      else if (level == 0 && is_and_or_or(lst))
+        return (NULL);
 			lst = lst->next;
 		}
 	}
