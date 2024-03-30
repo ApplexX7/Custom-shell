@@ -6,13 +6,13 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 18:40:11 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:16:20 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing/minishell.h"
 
-int g_lobal_sign_forherdoc = 0;
+int	g_lobal_sign_forherdoc = 0;
 
 void	sigint(int signo)
 {

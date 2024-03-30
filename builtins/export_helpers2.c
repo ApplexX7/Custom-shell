@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_helpers2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:46:43 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/28 00:50:53 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:17:28 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	print_export(t_list *lst, int fd)
 {
 	char	*eq;
 
-	bubbleSort(lst);
+	bubblesort(lst);
 	while (lst)
 	{
 		ft_putstr_fd("declare -x ", fd);

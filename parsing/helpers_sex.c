@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 17:36:56 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 19:33:44 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:17:14 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	swap(t_list *a, t_list *b)
 	b->content = tmp;
 }
 
-void	bubbleSort(t_list *start)
+void	bubblesort(t_list *start)
 {
 	int		swapped;
 	t_list	*ptr1;

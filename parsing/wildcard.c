@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 13:43:51 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:18:07 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	lst_next_wildcard(t_list *head, t_list **start, t_list **end)
 	e = head;
 	while (e->next && !is_space(e->next))
 		e = e->next;
-	// if (e->next && e->next->is_op != 0)
-	// e = e->next;
 	*start = s;
 	*end = e;
 	return (0);
@@ -133,7 +131,7 @@ int	add_matched_list(t_list **dest, t_list *lst)
 		if (get_matched_list(start, end, &new))
 			return (ft_lstclear(&new, &free), 1);
 		lst = end->next;
-		bubbleSort(new);
+		bubblesort(new);
 		append_list(new, dest, '\'');
 		lst_next_wildcard(lst, &start, &end);
 	}

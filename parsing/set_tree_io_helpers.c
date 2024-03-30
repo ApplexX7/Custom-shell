@@ -6,35 +6,35 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:37:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 22:38:56 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:39:20 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	remove_redirections(t_tree *node, t_list *start)
+static t_list	*search_for_peer_parenth(t_list *start, int count, int level)
 {
-	t_list	*tmp;
-	t_list	*head;
-
-	head = node->node;
 	while (start)
 	{
-		tmp = start->next;
-		lst_remove_node(&head, start);
-		start = tmp;
+		if (is_open_parenth(start))
+			level++;
+		else if (is_close_parenth(start))
+		{
+			if (level == 0)
+			{
+				if (count)
+					return (start->next);
+				else
+					return (NULL);
+			}
+			else
+				level--;
+		}
+		else if (level == 0 && is_and_or_or(start))
+			count++;
+		start = start->next;
 	}
-	node->node = head;
-}
-
-int is_and_or_or(t_list *node)
-{
-	if (!ft_strncmp(node->content, "&&", 3) && !node->is_op)
-		return (1);
-	else if (!ft_strncmp(node->content, "||", 3) && !node->is_op)
-		return (1);
-  else
-    return (0);
+	return (NULL);
 }
 
 // check if there is a combined redirection in the current node
@@ -42,34 +42,15 @@ int is_and_or_or(t_list *node)
 t_list	*check_combined_redirection(t_list *lst)
 {
 	int	level;
-  int count;
+	int	count;
 
-  count = 0;
+	count = 0;
 	lst = skip_spaces(lst);
 	if (lst && is_open_parenth(lst))
 	{
 		level = 0;
 		lst = lst->next;
-		while (lst)
-		{
-			if (is_open_parenth(lst))
-				level++;
-			else if (is_close_parenth(lst))
-			{
-			if (level == 0)
-        	{
-          	if (count)
-            	return (lst->next);
-          	else
-            	return (NULL);
-        	}
-			else
-				level--;
-			}
-      		else if (level == 0 && is_and_or_or(lst))
-        	count++;
-				lst = lst->next;
-		}
+		return (search_for_peer_parenth(lst, count, level));
 	}
 	return (NULL);
 }

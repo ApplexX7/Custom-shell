@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:24:05 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/18 17:16:53 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:35:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ char	*valid_path(char *cmd)
 	path_cmd = NULL;
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd + 1, X_OK))
+		if (!access(cmd + 1, X_OK))
 			return (cmd);
+		write(2, "minishell: NOT a exetuble command\n",34);
+		exit(EXIT_NOTEXECUTABLE);
 	}
 	else
 		path_cmd = ft_commands_path(path, cmd);

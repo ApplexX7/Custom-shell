@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:58:54 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 23:17:06 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:23:03 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ int	closed_qpsayntax(t_list *lst)
 	int		count_single_quots;
 
 	current = lst;
-	count_leftparentis = 0;
-	count_rightparentis = 0;
-	count_double_qoutes = 0;
-	count_single_quots = 0;
+	init_variables(&count_leftparentis, &count_rightparentis,
+		&count_single_quots, &count_double_qoutes);
 	while (current)
 	{
 		if (!ft_strncmp(current->content, "(", 2) && !current->is_op)
