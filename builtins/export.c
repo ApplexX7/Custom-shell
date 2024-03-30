@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:35:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 23:38:42 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:02:57 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	export_all_args(t_list *start, t_list **local_env)
 {
-	int return_value;
+	int	return_value;
 
 	return_value = 0;
 	while (start)
@@ -31,13 +31,30 @@ static int	export_all_args(t_list *start, t_list **local_env)
 	return (return_value);
 }
 
+int	handle_export_no_args(t_list *local_env, t_tree *root)
+{
+	int		fd;
+	t_list	*tmp;
+	int		status;
+
+	if (set_fd(&fd, root))
+		return (ft_putstr_fd("export: error opening file\n", fd), 1);
+	tmp = copy_lst(local_env);
+	if (!tmp && local_env)
+		return (ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
+	if (print_export(tmp, fd))
+		return (ft_lstclear(&tmp, &free), ft_memset(&status, EXIT_FILENOTEXIST,
+				2), status);
+	ft_lstclear(&tmp, &free);
+	return (0);
+}
+
 // allocs: local_env
 int	ft_export(t_tree *root, char **env, int init)
 {
 	static t_list	*local_env = NULL;
 	t_list			*tmp;
 	int				status;
-	int				fd;
 
 	status = 0;
 	if (init)
@@ -50,23 +67,36 @@ int	ft_export(t_tree *root, char **env, int init)
 			return (ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
 	}
 	else
-	{
-		if (set_fd(&fd, root))
-			return (ft_putstr_fd("export: error opening file\n", fd), 1);
-		tmp = copy_lst(local_env);
-		if (!tmp && local_env)
-			return (ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
-		if (print_export(tmp, fd))
-			return (ft_lstclear(&tmp, &free),ft_memset(&status, EXIT_FILENOTEXIST, 2), status);
-		ft_lstclear(&tmp, &free);
-	}
+		return (handle_export_no_args(local_env, root));
+	return (0);
+}
+
+int	change_env_value(t_list *node, char *key, char *value)
+{
+	char	*tmp;
+
+	free(node->content);
+	tmp = key;
+	key = ft_strjoin(key, "=");
+	free(tmp);
+	if (!key)
+		return (perror("change_env_value"), 1);
+	tmp = value;
+	value = ft_strjoin(key, value);
+	free(key);
+	free(tmp);
+	if (!value)
+		return (perror("change_env_value"), 1);
+	node->content = ft_strdup(value);
+	if (node->content == NULL)
+		return (perror("change_env_value"), 1);
+	free(value);
 	return (0);
 }
 
 int	search_and_add(t_list **local_env, char *key, char *value)
 {
 	t_list	*lst;
-	char *tmp;
 
 	lst = *local_env;
 	while (lst)
@@ -74,22 +104,8 @@ int	search_and_add(t_list **local_env, char *key, char *value)
 		if (!ft_strncmp(lst->content, key, min(ft_strlen(key),
 					ft_strlen(lst->content))))
 		{
-			free(lst->content);
-			tmp = key;
-			key = ft_strjoin(key, "=");
-			free(tmp);
-			if (!key)
-				return (perror("search_and_add"), 1);
-			tmp = value;
-			value = ft_strjoin(key, value);
-			free(key);
-			free(tmp);
-			if (!value)
-				return (perror("search_and_add"), 1);
-			lst->content = ft_strdup(value);
-			if (lst->content == NULL)
-				return (perror("search_and_add"), 1);
-			free(value);
+			if (change_env_value(lst, key, value))
+				return (1);
 			return (0);
 		}
 		lst = lst->next;
