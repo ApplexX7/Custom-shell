@@ -6,20 +6,20 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:02:47 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 00:16:20 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 01:43:07 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing/minishell.h"
 
-int	g_lobal_sign_forherdoc = 0;
+int		g_lobal_sign_forherdoc = 0;
 
 void	sigint(int signo)
 {
 	(void)signo;
 	if (waitpid(-1, NULL, WNOHANG) != -1)
 	{
-		tcsetattr(STDIN_FILENO, TCSANOW, &g_original_terminos);
+		reset_tty();
 		write(1, "\n", 1);
 		return ;
 	}
@@ -36,7 +36,7 @@ void	sigquit(int signo)
 	{
 		if (g_lobal_sign_forherdoc == 0)
 		{
-			tcsetattr(STDIN_FILENO, TCSANOW, &g_original_terminos);
+			reset_tty();
 			write(1, "Quit: 3\n", 8);
 		}
 		return ;
@@ -83,6 +83,7 @@ int	main(int argc, char **argv, char **env)
 	t_tree		*root;
 
 	((void)argc, (void)argv);
+	reset_tty();
 	if (init_minihsell_arg(&status_code, env))
 		return (0);
 	while (1)
@@ -97,10 +98,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		root = parsing_check(promt, env, &status_code);
 		if (root)
-		{
-			executing_part(root, &status_code, env);
-			freetree(&root);
-		}
+			(executing_part(root, &status_code, env), freetree(&root));
 		free(promt);
 	}
 }

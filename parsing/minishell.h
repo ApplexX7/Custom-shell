@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 00:26:55 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 01:43:44 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,9 @@
 # include <sys/stat.h>
 # include <termios.h>
 
-struct termios		g_original_terminos;
-
 // exit status
 # define EXIT_CODEPARSING 258
 # define EXIT_NOTCOMMAND 127
-# define EXIT_NOTEXECUTABLE 126
 # define EXIT_FILENOTEXIST 1
 # define EXIT_ABOVETYPE 255
 
@@ -75,6 +72,7 @@ int					executing_part(t_tree *root, int *status_code, char **env);
 char				**create_env(void);
 int					recept_signals(void);
 void				sigquit(int signo);
+void				reset_tty(void);
 
 // expand herdoc args
 int					expand_herdoc(t_list **lst);
