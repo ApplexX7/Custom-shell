@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 14:58:20 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 17:02:25 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:02:41 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	wait_for_childs(t_list **head, int *last_status)
 	{
 		if (waitpid(*(int *)current->content, last_status, 0) == -1)
 			return (ft_lstclear(head, &free), *head = NULL, 1);
+		if (WIFSIGNALED(*last_status))
+			ft_memset(last_status, EXIT_TERMINATESIGNAL, 2);
 		current = current->next;
 	}
 	ft_lstclear(head, &free);
