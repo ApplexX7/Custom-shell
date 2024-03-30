@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:31:45 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 21:42:36 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:17:40 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ static int	handle_ouput_redirection(t_tree *node, t_list *pos)
 
 int	set_single_io(t_tree *node, t_list *pos)
 {
-	if (handle_ambiguous_redirection_bottom(skip_spaces(pos->next)))
-		return (1);
+	if (!(!ft_strncmp(pos->content, "<<", 3) && !pos->is_op))
+	{
+		if (handle_ambiguous_redirection_bottom(skip_spaces(pos->next)))
+			return (1);
+	}
 	if (is_input_redirect(pos))
 	{
 		if (handle_input_redirection(node, pos))
