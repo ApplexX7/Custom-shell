@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:25:09 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 02:35:55 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:29:14 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,3 @@ int	ft_echo(t_tree *root)
 		ft_close(fd);
 	return (0);
 }
-
-/*
-int	main(void)
-{
-  t_list *node;
-	t_tree	t;
-
-  node = NULL;
-  ft_lstadd_back(&node, ft_lstnew("echo"));
-  //ft_lstadd_back(&node, ft_lstnew("-n"));
-  ft_lstadd_back(&node, ft_lstnew("hello"));
-  ft_lstadd_back(&node, ft_lstnew("world"));
-  ft_lstadd_back(&node, ft_lstnew("hello"));
-  t = {node, NULL, NULL, 0, 1, NULL, "test"};
-  ft_echo (&t);
-}
-*/

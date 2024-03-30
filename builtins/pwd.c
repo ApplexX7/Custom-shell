@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 13:56:50 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/25 17:13:49 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:40:58 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_pwd(t_tree *root)
 	char	*buffer;
 	size_t	size;
 
-	size = 1024;
+	size = PATH_MAX;
 	buffer = malloc(sizeof(char) * size);
 	if (!buffer)
 		return (write(2, "Failed to allocated\n", 20), 1);
@@ -25,5 +25,6 @@ int	ft_pwd(t_tree *root)
 		return (EXIT_FILENOTEXIST);
 	ft_putstr_fd(buffer, root->out_fd);
 	ft_putchar_fd('\n', root->out_fd);
+	free(buffer);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combine_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 18:41:07 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/27 18:45:09 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:26:38 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,67 +117,3 @@ int	combine_list(t_list **lst)
 	*lst = new;
 	return (0);
 }
-
-/*
-int	main(void)
-{
-	t_list	*lst;
-	t_list	*first;
-	t_list	*mid;
-	t_list	*end;
-
-  lst = NULL;
-  first = ft_lstnew(ft_strdup("first"));
-  mid = ft_lstnew(ft_strdup("mid"));
-  end = ft_lstnew(ft_strdup("end"));
-  ft_lstadd_back(&lst, first);
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, mid);
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, end);
-  lst_remove_node(&lst, first);
-  lst_remove_node(&lst, mid);
-  lst_remove_node(&lst, end);
-  printf("%s\n", join_list(lst));
-}
-*/
-
-/*
-int	main(void)
-{
-	t_list	*lst;
-	t_list	*first;
-	t_list	*mid;
-	t_list	*end;
-
-  lst = NULL;
-  first = ft_lstnew(ft_strdup("first"));
-  mid = ft_lstnew(ft_strdup("mid"));
-  end = ft_lstnew(ft_strdup("end"));
-  ft_lstadd_back(&lst, first);
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, mid);
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, ft_lstnew("--"));
-  ft_lstadd_back(&lst, end);
-  lst_remove_node(&lst, first);
-  lst_remove_node(&lst, mid);
-  lst_remove_node(&lst, end);
-  print_ouput(lst);
-}
-*/

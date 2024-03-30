@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 02:19:31 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:21:59 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 # define EXIT_NOTCOMMAND 127
 # define EXIT_FILENOTEXIST 1
 # define EXIT_ABOVETYPE 255
-# define EXIT_TERMINATESIGNAL 130
+# define EXIT_TERMSIGINT 130
+# define EXIT_TERMSIGQUIT 131
 # define EXIT_PERMDIED 126
 
 typedef struct s_tree

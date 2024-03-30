@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:59:07 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 00:18:07 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:28:35 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,68 +36,6 @@ int	lst_next_wildcard(t_list *head, t_list **start, t_list **end)
 	*end = e;
 	return (0);
 }
-
-// allocs: new
-/*
-t_list	*combine_wildcard_tokens(t_list *unsplited, t_list *splited)
-{
-  t_list *new;
-
-  new = NULL;
-  if (!is_wildcard(unsplited))
-  {
-	if (((char *)unsplited->next->content)[0] != '*')
-	{
-		if (join_and_add(&new, splited, splited->next))
-		return (ft_lstclear(&new, &free), NULL);
-		splited = splited->next->next;
-	}
-	else
-	{
-		while (splited->next->next)
-		{
-		if (new_and_add(&new, splited, splited->is_op))
-			return (ft_lstclear(&new, &free), NULL);
-		splited = splited->next;
-		}
-	}
-  }
-  if (unsplited->next && unsplited->next->next && !is_wildcard())
-}
-*/
-
-/*
-// allocs: new
-// frees splited on success
-int	combine_wildcard_tokens(t_list **splited)
-{
-	t_list	*new;
-	t_list	*tmp;
-
-	tmp = *splited;
-	if (!tmp)
-		return (0);
-	new = NULL;
-	if (tmp->is_op && tmp->next && !tmp->next->is_op)
-	{
-		if (join_and_add(&new, tmp, tmp->next->next))
-			return (ft_lstclear(&new, &free), 1);
-		tmp = tmp->next->next;
-	}
-	while (tmp && !tmp->is_op && (!tmp->next || !tmp->next->is_op))
-	{
-		if (new_and_add(&new, tmp->content, tmp->is_op))
-			return (ft_lstclear(&new, &free), 1);
-		tmp = tmp->next;
-	}
-	if (tmp)
-	{
-		if (join_and_add(&new, tmp, NULL))
-			return (ft_lstclear(&new, &free), 1);
-	}
-	return (ft_lstclear(splited, &free), *splited = new, 0);
-}
-*/
 
 // add the rest of lst to dest
 static int	add_rest_of_lst(t_list *lst, t_list **dest)

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/28 18:40:13 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:27:02 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,3 @@ t_list	*skip_spaces(t_list *start)
 		start = start->next;
 	return (start);
 }
-
-// int	is_parentis(t_list *node)
-// {
-// 	if (!ft_strncmp(node->content, "(", 2) && !node->is_op)
-// 		return (1);
-// 	if (!ft_strncmp(node->content, ")", 2) && !node->is_op)
-// 		return (1);
-// 	return (0);
-// }

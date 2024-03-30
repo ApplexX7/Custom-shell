@@ -6,25 +6,12 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:07:00 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/30 02:22:59 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:39:20 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-void	set_input_fd(t_tree *node, int fd)
-{
-	char	*new;
-
-  if (node)
-  {
-	node->fd = 0;
-	free(node->input_file);
-	node->input_file = NULL;
-	node->fd = fd;
-  }
-}*/
 int	tree_copy_output(char *output_file, int out_fd, t_tree *to)
 {
 	char	*new;
@@ -84,7 +71,7 @@ int	open_pipes(t_tree *root, int *last_status)
 	if (root->node && !ft_strncmp(root->node->content, "|", 2))
 	{
 		if (pipe(pip) == -1)
-			return (write(2, "pipe: failed to create pipe\n", 22),
+			return (write(2, "pipe: failed to create pipe\n", 28),
 				ft_memset(last_status, 1, 2), 1);
 		manage_fds(pip[0], CAPTURE);
 		manage_fds(pip[1], CAPTURE);
@@ -101,16 +88,3 @@ int	open_pipes(t_tree *root, int *last_status)
 		return (1);
 	return (0);
 }
-
-/*
-void	itter(t_tree *tree)
-{
-  if (tree->left == NULL && tree->right == NULL)
-  {
-	handle_redirections_bottom(tree);
-	return ;
-  }
-  itter(tree->left);
-  itter(tree->right);
-}
-*/
