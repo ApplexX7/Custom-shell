@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:10:28 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 02:27:02 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 04:55:12 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	status_code_of_syntax_error(int *status_code)
 void	syntax_error_handling(t_list *copy)
 {
 	ft_lstclear(&copy, &free);
-	printf("bash: syntax error in tokens\n");
+	write(2, "bash: syntax error in tokens\n", 29);
 }
 
 t_list	*skip_spaces(t_list *start)
