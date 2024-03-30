@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 21:44:00 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/29 23:58:45 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int					ft_normalcharacters(char *av, t_list **head, int *index);
 int					add_tolist(char *av, t_list **head, int index, int start);
 void				print_ouput(t_list *node);
 void				print_ouput_op(t_list *node);
-int					join_mask(t_list *start, t_list *end, t_list *dest);
 t_list				*skip_spaces(t_list *start);
 // combine_list
 int					combine_list(t_list **lst);
@@ -145,8 +144,6 @@ void				syntax_error_handling(t_list *copy);
 void				syntax_error_handling(t_list *copy);
 
 // helpers
-int	handle_ambiguous_redirection_bottom(t_list *file);
-
 void				lst_remove_node(t_list **lst, t_list *node);
 int					is_space(t_list *node);
 int					is_wildcard(t_list *node);
@@ -222,11 +219,14 @@ int					tree_set_io(t_tree *node);
 int					is_herdoc(t_list *lst);
 
 // set_tree_io helpers
-void				remove_redirections(t_tree *node, t_list *start);
 t_list				*check_combined_redirection(t_list *lst);
 int					is_redirect_op(t_list *lst);
 int					is_input_redirect(t_list *lst);
 int					is_output_redirect(t_list *lst);
+
+// set_tree_io helpers 2
+void	remove_redirections(t_tree *node, t_list *start);
+int	is_and_or_or(t_list *node);
 
 // remove parenthesis
 void				remove_parenthesis(t_list **lst);
@@ -349,6 +349,12 @@ int					masking(t_list *start, t_list *end, t_list *dest);
 void				full_withzero(char **s);
 void				full_withone(char **s);
 int					there_is_expand(t_list *start, t_list *end);
+
+// handle_ambiguous_redirection_bottom
+int	handle_ambiguous_redirection_bottom(t_list *file);
+
+// join_mask
+int	join_mask(t_list *start, t_list *end, t_list *dest);
 
 // debug
 void				test_export(char **env);
