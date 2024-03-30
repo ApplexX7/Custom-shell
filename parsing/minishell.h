@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 02:02:57 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:19:31 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ int					set_single_io(t_tree *node, t_list *pos);
 // open_pipes
 int					tree_copy_output(char *output_file, int out_fd, t_tree *to);
 int					tree_copy_input(char *input_file, int fd, t_tree *to);
-int					open_pipes(t_tree *root);
+int					open_pipes(t_tree *root, int *last_status);
 int					inheritance_bottom(t_tree *root);
 
 // manage pids and fds and executing
@@ -260,7 +260,7 @@ int					manage_fds(int fd, t_fd_action action);
 
 void				executing_command(t_tree *content, char **env);
 int					create_chdilren(t_tree *content, char **env,
-						t_tree *head_of_root);
+						t_tree *head_of_root, int *last_status);
 char				**find_pathenv(void);
 char				*valid_path(char *cmd);
 int					open_files(char *file_name, int level);
@@ -313,6 +313,7 @@ int					ft_export(t_tree *root, char **env, int init);
 int					search_and_add(t_list **local_env, char *key, char *value);
 int					check_export_syntax(char *content);
 int					concat_and_add(char *key, char *value, t_list **local_env);
+int					change_env_value(t_list *node, char *key, char *value);
 
 // export helpers
 int					add_env_arg(char *key, char *value, t_list **env);

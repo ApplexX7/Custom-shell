@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:35:14 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/30 02:02:57 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:07:49 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,27 +94,6 @@ int	change_env_value(t_list *node, char *key, char *value)
 	return (0);
 }
 
-int	search_and_add(t_list **local_env, char *key, char *value)
-{
-	t_list	*lst;
-
-	lst = *local_env;
-	while (lst)
-	{
-		if (!ft_strncmp(lst->content, key, min(ft_strlen(key),
-					ft_strlen(lst->content))))
-		{
-			if (change_env_value(lst, key, value))
-				return (1);
-			return (0);
-		}
-		lst = lst->next;
-	}
-	if (export_add_key_value(local_env, key, value))
-		return (ft_putstr_fd("export: error adding new entry\n", 2), 1);
-	return (0);
-}
-
 int	check_export_syntax(char *content)
 {
 	char	*eq;
@@ -130,63 +109,3 @@ int	check_export_syntax(char *content)
 		return (ft_putstr_fd("export: not a valid identifier\n", 2), 0);
 	return (1);
 }
-
-// allocs: new
-int	concat_and_add(char *key, char *value, t_list **local_env)
-{
-	char	*new;
-	t_list	*tmp;
-
-	tmp = *local_env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, key, min(ft_strlen(tmp->content),
-					ft_strlen(key))))
-		{
-			new = ft_strjoin(tmp->content, value);
-			(free(key), free(value));
-			if (!new)
-				return (perror("concat_and_add: malloc"), 1);
-			free(tmp->content);
-			tmp->content = new;
-			return (0);
-		}
-		tmp = tmp->next;
-	}
-	if (export_add_key_value(local_env, key, value))
-		return (perror("concat_and_add: malloc"), 1);
-	return (0);
-}
-
-/*
-int	main(int argc, char **argv, char **env)
-{
-  t_list *node;
-	t_tree	t;
-
-  node = NULL;
-  ft_lstadd_back(&node, ft_lstnew("export"));
-  ft_lstadd_back(&node, ft_lstnew("hello=ssss"));
-  ft_lstadd_back(&node, ft_lstnew("world="));
-  ft_lstadd_back(&node, ft_lstnew("=hello"));
-  ft_lstadd_back(&node, ft_lstnew("=hello"));
-  ft_lstadd_back(&node, ft_lstnew("a=hello"));
-  ft_lstadd_back(&node, ft_lstnew("aaaa=hello"));
-  ft_lstadd_back(&node, ft_lstnew("aa-aa=hello"));
-  ft_lstadd_back(&node, ft_lstnew("aaaa+=hello"));
-  ft_lstadd_back(&node, ft_lstnew("aaaa+=hello"));
-  ft_lstadd_back(&node, ft_lstnew("aaaa+=hello"));
-  ft_lstadd_back(&node, ft_lstnew("testest+=hello"));
-  ft_lstadd_back(&node, ft_lstnew("aaaa=hello"));
-  ft_lstadd_back(&node, ft_lstnew("arg"));
-  t = {node, NULL, NULL, 0, 1, NULL, NULL};
-  ft_export(&t, env);
-  //ft_lstclear(&node, &free);
-  node = NULL;
-  ft_lstadd_back(&node, ft_lstnew("export"));
-  t.node = node;
-  ft_export(&t, env);
-  printf("====================\n");
-  ft_env(&t, NULL);
-}
-*/

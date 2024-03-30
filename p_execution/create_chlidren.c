@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 10:20:39 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 19:55:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:23:30 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	executing_command(t_tree *content, char **env)
 	}
 }
 
-int	create_chdilren(t_tree *content, char **env, t_tree *head_of_root)
+int	create_chdilren(t_tree *content, char **env, t_tree *head_of_root,
+	int *last_status)
 {
 	int	pid;
 	int	status;
@@ -48,7 +49,7 @@ int	create_chdilren(t_tree *content, char **env, t_tree *head_of_root)
 	status = 0;
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), 1);
+		return (perror("fork"), ft_memset(last_status, 1, 2), 1);
 	else if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);

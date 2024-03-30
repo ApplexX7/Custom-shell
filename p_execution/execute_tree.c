@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:45:48 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/29 21:53:16 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:13:24 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	executing_tree(t_tree *root, char **env,
 			return (ft_memset(status_code, EXIT_FILENOTEXIST, 2), *status_code);
 		if (!root->fbuiltins && its_builtins(root))
 			return (execute_builtins(root, env, head_of_root));
-		else if (create_chdilren(root, env, head_of_root))
+		else if (create_chdilren(root, env, head_of_root, status_code))
 			return (-1);
 	}
 	else if (is_andor(root))

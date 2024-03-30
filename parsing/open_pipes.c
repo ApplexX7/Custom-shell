@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 18:07:00 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/28 23:02:42 by ayait-el         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:22:59 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	tree_copy_input(char *input_file, int fd, t_tree *to)
 	return (0);
 }
 
-int	open_pipes(t_tree *root)
+int	open_pipes(t_tree *root, int *last_status)
 {
 	int	pip[2];
 
@@ -83,8 +83,9 @@ int	open_pipes(t_tree *root)
 		return (0);
 	if (root->node && !ft_strncmp(root->node->content, "|", 2))
 	{
-		if (pipe(pip))
-			return (write(2, "failed to create pipe\n", 22), 1);
+		if (pipe(pip) == -1)
+			return (write(2, "pipe: failed to create pipe\n", 22),
+				ft_memset(last_status, 1, 2), 1);
 		manage_fds(pip[0], CAPTURE);
 		manage_fds(pip[1], CAPTURE);
 		if (tree_copy_output(NULL, pip[1], root->left))
@@ -94,9 +95,9 @@ int	open_pipes(t_tree *root)
 		if (tree_copy_output(root->output_file, root->out_fd, root->right))
 			return (write(2, "failed to copy tree input\n", 25), 1);
 	}
-	if (open_pipes(root->left))
+	if (open_pipes(root->left, last_status))
 		return (1);
-	if (open_pipes(root->right))
+	if (open_pipes(root->right, last_status))
 		return (1);
 	return (0);
 }

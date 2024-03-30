@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/30 00:53:32 by mohilali         ###   ########.fr        #
+#    Updated: 2024/03/30 02:09:16 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,8 @@ SRC = minishell_parts.c main.c parsing/ft_split_tokens.c parsing/labling.c parsi
 	builtins/export_helpers2.c parsing/helpers_two.c parsing/helpers_tree.c parsing/helpers_five.c parsing/helpers_sex.c parsing/helpers_for.c \
 	p_execution/execute_andor.c  p_execution/execute_builtins.c p_execution/back_to_prevstate.c p_execution/manage_fds.c \
 	p_execution/change_state_helpers.c parsing/set_tree_io_helpers2.c parsing/handle_ambiguous_redirection_bottom.c parsing/join_mask.c \
-	parsing/helpers_seven.c
+	parsing/helpers_seven.c builtins/export_helpers_tree.c
 	
-
 
 OBJCT = ${SRC:.c=.o}
 CC = cc

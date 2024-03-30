@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:08 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 01:35:56 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 02:20:01 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	executing_part(t_tree *root, int *status_code, char **env)
 	t_tree	*head_of_root;
 
 	head_of_root = root;
-	if (open_pipes(root))
+	if (open_pipes(root, status_code))
 		return (0);
 	*status_code = executing_tree(root, env, head_of_root, status_code);
 	manage_fds(0, CLOSE_ALL);
