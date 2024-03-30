@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 00:46:43 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/30 00:17:28 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:49:38 by ayait-el         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	export_add_key_value(t_list **dest, char *key, char *value)
 	if (value)
 	{
 		new = ft_strjoin(tmp, value);
-		free(value);
+		(free(value), free(tmp));
 		if (!new)
 			return (perror("export_add_key_value"), 1);
 	}
