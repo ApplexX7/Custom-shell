@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 00:21:07 by mohilali         ###   ########.fr       */
+/*   Updated: 2024/03/30 03:55:10 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	execute_cd(char *pathname)
 {
 	if (chdir(pathname))
-		return (write(2, "minishell: cd : No sush file or directory\n", 42), 1);
+		return (write(2, "minishell: cd: Not a directory\n", 31), 1);
 	return (0);
 }
 
@@ -28,7 +28,7 @@ int	change_dir(char *path_dir)
 	if (!path_dir)
 		return (write(2, "Malloc failed!!\n", 16), 1);
 	if (!ft_strncmp(path_dir, ".", 2) || !ft_strncmp(path_dir, "", 2))
-		execute_cd(path_dir);
+		execute_cd(".");
 	else if (!ft_strncmp(path_dir, "..", 3))
 		execute_cd(path_dir);
 	else
