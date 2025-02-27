@@ -60,3 +60,11 @@ Once the shell is running, you can enter commands at the prompt.
 * **Built-in Commands:** Use the built-in commands listed above (e.g., `cd /path/to/directory`, `exit`).
 
 ## Project Structure
+minishell/
+├── main.c       # Main source file
+├── Dockerfile   # Docker configuration file
+├── README.md    # This file
+├── parsing/     # Parsing files, headers, etc.
+├── p_execution/ # Execution files, etc.
+├── builtins/    #built-ins command in bash.
+├── Makefile     #management file for making the executable file.
