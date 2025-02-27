@@ -23,8 +23,8 @@ This project is a custom shell implementation written in C. It provides a basic 
 
 1.  **Clone the Repository:**
     ```bash
-    git clone <your_repository_url>
-    cd <your_repository_name>
+    git clone https://github.com/ApplexX7/minishell.git
+    cd minishell
     ```
 2.  **Build the Docker Image:**
     ```bash
@@ -40,8 +40,8 @@ This project is a custom shell implementation written in C. It provides a basic 
 
 1.  **Clone the Repository:**
     ```bash
-    git clone <your_repository_url>
-    cd <your_repository_name>
+    git clone https://github.com/ApplexX7/minishell.git
+    cd minishell
     ```
 2.  **Compile the Source Code:**
     ```bash
