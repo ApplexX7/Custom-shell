@@ -61,10 +61,18 @@ Once the shell is running, you can enter commands at the prompt.
 
 ## Project Structure
 minishell/
+
 ├── main.c       # Main source file
+
 ├── Dockerfile   # Docker configuration file
+
 ├── README.md    # This file
+
 ├── parsing/     # Parsing files, headers, etc.
+
 ├── p_execution/ # Execution files, etc.
+
 ├── builtins/    #built-ins command in bash.
+
 ├── Makefile     #management file for making the executable file.
+
