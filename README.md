@@ -1,0 +1,62 @@
+# Custom minishell Project (C)
+
+This project is a custom shell implementation written in C. It provides a basic command-line interface with support for executing external commands, handling simple built-in commands, and managing processes. It is designed to demonstrate fundamental operating system concepts and C programming skills.
+
+## Features
+
+* **Command Execution:** Executes external commands using `fork()`, `exec()`, and `wait()`.
+* **Built-in Commands:** (Expand this list with the actual built-in commands your shell supports, for example: `cd`, `exit`, `help`, etc.)
+    * `exit`: Exits the shell.
+    * `cd`: Changes the current working directory.
+    * (Add other built-in commands here)
+* **Basic Error Handling:** Handles common errors such as command not found.
+* **Dockerized:** Easily run the shell within a consistent environment using Docker.
+
+## Prerequisites
+
+* **Docker:** To run the project using Docker.
+* **GCC (Optional):** If you wish to compile the project directly without Docker.
+
+## Running the Shell
+
+### Using Docker (Recommended)
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone <your_repository_url>
+    cd <your_repository_name>
+    ```
+2.  **Build the Docker Image:**
+    ```bash
+    docker build -t custom-shell .
+    ```
+3.  **Run the Docker Container:**
+    ```bash
+    docker run -it custom-shell
+    ```
+    This will start the shell within the container. You can now interact with it by typing commands.
+
+### Compiling and Running Directly (Optional)
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone <your_repository_url>
+    cd <your_repository_name>
+    ```
+2.  **Compile the Source Code:**
+    ```bash
+    gcc -o shell shell.c #or whatever your main c file is named.
+    ```
+3.  **Run the Shell:**
+    ```bash
+    ./shell
+    ```
+
+## Usage
+
+Once the shell is running, you can enter commands at the prompt.
+
+* **External Commands:** Type the name of an executable file (e.g., `ls`, `pwd`) followed by any arguments.
+* **Built-in Commands:** Use the built-in commands listed above (e.g., `cd /path/to/directory`, `exit`).
+
+## Project Structure
