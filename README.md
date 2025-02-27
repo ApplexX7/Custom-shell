@@ -45,11 +45,11 @@ This project is a custom shell implementation written in C. It provides a basic 
     ```
 2.  **Compile the Source Code:**
     ```bash
-    gcc -o shell shell.c #or whatever your main c file is named.
+    make all clean #or whatever your main c file is named.
     ```
 3.  **Run the Shell:**
     ```bash
-    ./shell
+    ./minishell
     ```
 
 ## Usage
