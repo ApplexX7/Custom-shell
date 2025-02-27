@@ -6,7 +6,7 @@
 #    By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/15 11:53:36 by mohilali          #+#    #+#              #
-#    Updated: 2024/03/30 02:09:16 by mohilali         ###   ########.fr        #
+#    Updated: 2025/02/27 11:21:05 by mohilali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,9 @@ SRC = minishell_parts.c main.c parsing/ft_split_tokens.c parsing/labling.c parsi
 
 OBJCT = ${SRC:.c=.o}
 CC = cc
-#TODO: remove -g
-CFALGS =  -Wall -Wextra -Werror -g
+CFALGS =  -Wall -Wextra -Werror
 RM = rm -rf
-NAME = mini
-READLINEDIR  =  $(shell brew --prefix readline)
+NAME = minishell
 LIBS = Libft-42/libft.a
 
 define MAKE_LIB
@@ -40,10 +38,10 @@ endef
 all : $(NAME)
 
 $(NAME) : $(OBJCT) $(LIBS)
-	$(CC) -lreadline  $(OBJCT) -o $(NAME) Libft-42/libft.a -L$(READLINEDIR)/lib -lreadline -g
+	$(CC) $(OBJCT) -o $(NAME) $(LIBS) -lreadline -g
 
 %.o : %.c
-	$(CC) $(CFALGS) -c $< -o $@ -I$(READLINEDIR)/include
+	$(CC) $(CFALGS) -c $< -o $@
 clean : 
 	$(RM) $(OBJCT)
 	$(foreach lib,$(LIBS),$(call MAKE_LIB,clean,$(word 1,$(subst /, ,$(lib)))))

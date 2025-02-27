@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:26:17 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 03:21:59 by mohilali         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:22:29 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <termios.h>
+# include <sys/types.h>
+#include <sys/wait.h>
 
 // exit status
 # define EXIT_CODEPARSING 258

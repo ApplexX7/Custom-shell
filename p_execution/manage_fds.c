@@ -6,29 +6,29 @@
 /*   By: ayait-el <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 03:14:15 by ayait-el          #+#    #+#             */
-/*   Updated: 2024/03/29 03:21:32 by ayait-el         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:11:17 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
-static void	fd_capture(int fd, int fds[OPEN_MAX])
+static void	fd_capture(int fd, int fds[FOPEN_MAX])
 {
 	int	i;
 
 	i = 0;
-	while (fds[i] != 0 && i < OPEN_MAX)
+	while (fds[i] != 0 && i < FOPEN_MAX)
 		i++;
-	if (i < OPEN_MAX)
+	if (i < FOPEN_MAX)
 		fds[i] = fd;
 }
 
-static int	fd_close_all(int fds[OPEN_MAX])
+static int	fd_close_all(int fds[FOPEN_MAX])
 {
 	int	i;
 
 	i = 0;
-	while (i < OPEN_MAX)
+	while (i < FOPEN_MAX)
 	{
 		if (fds[i] != 1 && fds[i] != 0)
 		{
@@ -41,12 +41,12 @@ static int	fd_close_all(int fds[OPEN_MAX])
 	return (0);
 }
 
-static int	fd_close(int fd, int fds[OPEN_MAX])
+static int	fd_close(int fd, int fds[FOPEN_MAX])
 {
 	int	i;
 
 	i = 0;
-	while (i < OPEN_MAX)
+	while (i < FOPEN_MAX)
 	{
 		if (fds[i] == fd)
 		{
@@ -62,10 +62,8 @@ static int	fd_close(int fd, int fds[OPEN_MAX])
 
 int	manage_fds(int fd, t_fd_action action)
 {
-	static int	fds[OPEN_MAX] = {0};
-	int			i;
+	static int	fds[FOPEN_MAX] = {0};
 
-	i = 0;
 	if (action == CAPTURE)
 		fd_capture(fd, fds);
 	else if (action == CLOSE_ALL)

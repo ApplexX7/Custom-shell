@@ -4,13 +4,16 @@ FROM ubuntu:24.04
 RUN apt-get update --fix-missing && apt-get upgrade -y
 
 # Install build dependencies
-RUN apt-get install -y libreadline6 libreadline6-dev
+
+RUN apt -y  install build-essential libreadline-dev
+
+WORKDIR /minishell
 
 # Copy source code
-COPY ./builtins ./Libft-42 ./p_execution ./parsing main.c Makefile minishell_parts.c ./
+COPY . /minishell/
 
 # Build the application
-RUN make all
+RUN make all clean
 
 # Run the application
 CMD ["./minishell"]

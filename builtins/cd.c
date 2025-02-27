@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 15:21:18 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 03:55:10 by mohilali         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:08:35 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	execute_cd(char *pathname)
 int	change_dir(char *path_dir)
 {
 	struct stat	info;
-	char		*tmp;
 
-	tmp = path_dir;
 	if (!path_dir)
 		return (write(2, "Malloc failed!!\n", 16), 1);
 	if (!ft_strncmp(path_dir, ".", 2) || !ft_strncmp(path_dir, "", 2))
@@ -47,9 +45,7 @@ int	change_dir(char *path_dir)
 int	change_pwd(char *path_dir)
 {
 	char	*buffer;
-	int		status;
 
-	status = 0;
 	buffer = malloc(sizeof(char) * PATH_MAX);
 	if (!buffer)
 		return (1);

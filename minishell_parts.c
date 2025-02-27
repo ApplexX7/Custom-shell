@@ -6,11 +6,11 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:33:08 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/30 02:20:01 by mohilali         ###   ########.fr       */
+/*   Updated: 2025/02/27 10:49:50 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing/minishell.h"
+#include "./parsing/minishell.h"
 
 int	executing_part(t_tree *root, int *status_code, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: mohilali <mohilali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 17:21:49 by mohilali          #+#    #+#             */
-/*   Updated: 2024/03/27 17:39:29 by mohilali         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:10:20 by mohilali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ void	push_to_front(t_list **source, t_list *dest)
 
 char	*get_envarg_value(char *arg)
 {
-	int		i;
 	char	*value;
 
 	arg++;
-	i = 0;
 	value = get_exported_arg_value(arg, NULL, 0);
 	if (value)
 		return (value);
